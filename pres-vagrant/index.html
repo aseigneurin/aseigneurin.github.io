@@ -25,9 +25,6 @@
 			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
 		</script>
 
-		<!-- Live reload -->
-		<script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
-
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
@@ -217,7 +214,7 @@ end
 					<section>
 						<h2>Bilan</h2>
 						<p>3 VMs "isolées ensemble"</p>
-						<p>Up &amp; running en 2 minutes 30</p>
+						<p class="fragment">Up &amp; running en 2 minutes 30</p>
 					</section>
 					<section>
 						<h2>Limites</h2>
@@ -322,7 +319,39 @@ end
 					</section>
 					<section>
 						<h2>Bilan</h2>
-						<p>Complexe à mettre en place (preseeding...)</p>
+						<p>Configuration sur mesure</p>
+						<p class="fragment">Pas que Vagrant / VirtualBox</p>
+					</section>
+					<section>
+						<h2>Limites</h2>
+						<p>Complexe (preseeding)</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h1>Recommendations</h1>
+					</section>
+					<section>
+						<h2>Utiliser des base boxes de base</h2>
+						<ul>
+							<li>Si une base box standard convient</li>
+							<li>Si le provisioning est simple</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Utiliser des base boxes repackagées</h2>
+						<ul>
+							<li>Si une base box standard convient</li>
+							<li>Si le provisioning est long</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Utiliser des base boxes Packer</h2>
+						<ul>
+							<li>Si une base box standard ne convient pas</li>
+							<li>Si la target n'est pas (que) Vagrant</li>
+						</ul>
 					</section>
 				</section>
 
