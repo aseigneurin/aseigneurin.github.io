@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 
-		<title>Vagrant &amp; Packer</title>
+		<title>Vagrant &amp; Packer - Alexis Seigneurin</title>
 
 		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
 		<meta name="author" content="Hakim El Hattab">
@@ -36,12 +36,10 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section data-markdown>
-					# Vagrant & Packer
-					
-					Alexis Seigneurin
-
-					[@ASeigneurin](https://twitter.com/ASeigneurin)
+				<section>
+					<h1>Vagrant & Packer</h1>
+					<p>Alexis Seigneurin</p>
+					<p><a href="https://twitter.com/ASeigneurin">@aseigneurin</a></p>
 				</section>
 
 				<section>
@@ -59,19 +57,17 @@
 					<section>
 						<h1>Vagrant ?</h1>
 					</section>
-					<section data-markdown>
-						## Vagrant
-						
-						VMs redistribuables : Vagrantfile + base box.
-						
-						Plutôt orienté développeur.
+					<section>
+						<h2>Vagrant</h2>
+						<p>Orchestration de machines virtuelles</p>
+						<p>VMs redistribuables : Vagrantfile + base box</p>
+						<p>Plutôt orienté développeur</p>
 					</section>
-
 					<section>
 						<h2>Features</h2>
 						<ul>
-							<li>Virtualisation : VirtualBox, VMware, Hyper-V.</li>
-							<li class="fragment">Configuration réseau + répertoire partagés.</li>
+							<li>Virtualisation : VirtualBox, VMware, Hyper-V</li>
+							<li class="fragment">Configuration réseau + répertoire partagés</li>
 							<li class="fragment">Provisioning : Shell, Puppet, Chef...</li>
 						</ul>
 					</section>
@@ -109,8 +105,15 @@ end
 							<li class="fragment">$ vagrant ssh</li>
 							<li class="fragment">$ vagrant status</li>
 							<li class="fragment">$ vagrant provision</li>
+							<li class="fragment">$ vagrant suspend / halt</li>
 							<li class="fragment">$ vagrant destroy</li>
 						</ul>
+					</section>
+					<section>
+						<h2>Premier bilan</h2>
+						<p>VM headless</p>
+						<p class="fragment">Up &amp; running en 30 secondes</p>
+						<p class="fragment">Provisioning</p>
 					</section>
 				</section>
 
@@ -148,7 +151,7 @@ end
  <g>
   <title>Layer 1</title>
   <text fill="#000000" stroke="#000000" stroke-width="0" x="95" y="173" id="svg_2" font-size="24" font-family="serif" text-anchor="middle" xml:space="preserve">Apache #1</text>
-  <text id="svg_12" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="221.617188" x="154" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="0" stroke="#bf0000" fill="white">:8011</text>
+  <text id="svg_12" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="221.617188" x="154" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="0" stroke="#bf0000" fill="white">: 8011</text>
   <rect fill="#b2b2b2" stroke="#000000" stroke-width="2" x="19" y="133" width="151" height="67" id="svg_1"/>
   <rect fill="#b2b2b2" stroke="#000000" stroke-width="2" x="253.5" y="133" width="151" height="67" id="svg_3"/>
   <text fill="#000000" stroke="#000000" stroke-width="0" x="331" y="175.25" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" id="svg_4">192.168.1.12 : 80</text>
@@ -157,8 +160,8 @@ end
   <ellipse fill="#b2b2b2" stroke-width="2" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" cx="212.499998" cy="47.499998" id="svg_7" rx="78.500002" ry="34.5" stroke="#000000"/>
   <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="211" y="54" id="svg_8" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">192.168.1.10 : 80</text>
   <line fill="none" stroke-width="2" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="274" y1="75.499999" x2="327.999999" y2="125.499997" id="svg_11" stroke="#000000"/>
-  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" id="svg_10" y="52.5" x="334" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="0" stroke="#bf0000" fill="white">:8010</text>
-  <text style="cursor: move;" id="svg_13" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="221.609375" x="381" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="0" stroke="#bf0000" fill="white">:8012</text>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" id="svg_10" y="52.5" x="334" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="0" stroke="#bf0000" fill="white">: 8010</text>
+  <text style="cursor: move;" id="svg_13" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="221.609375" x="381" stroke-linecap="null" stroke-linejoin="round" stroke-dasharray="null" stroke-width="0" stroke="#bf0000" fill="white">: 8012</text>
  </g>
 </svg>
 					</section>
@@ -240,6 +243,7 @@ end
 						<p class="fragment">$ vagrant box list</p>
 					</section>
 					<section>
+						<h2>Procédure</h2>
 						<ul>
 							<li>$ VBoxManage list vms</li>
 							<li class="fragment">$ vagrant package --base &lt;...&gt; --output &lt;...&gt;.box</li>
@@ -353,6 +357,11 @@ end
 							<li>Si la target n'est pas (que) Vagrant</li>
 						</ul>
 					</section>
+				</section>
+
+				<section>
+					<h1>Merci !</h1>
+					<p><a href="http://aseigneurin.github.io/pres-vagrant">http://aseigneurin.github.io/pres-vagrant</a></p>
 				</section>
 
 			</div>
