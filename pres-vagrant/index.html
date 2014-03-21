@@ -25,6 +25,9 @@
 			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
 		</script>
 
+		<!-- Live reload -->
+		<script>if(location.hostname==='localhost'){document.write('<script src="http://'+location.hostname+':35729/livereload.js?snipver=1"></' + 'script>')}</script>
+
 		<!--[if lt IE 9]>
 		<script src="lib/js/html5shiv.js"></script>
 		<![endif]-->
@@ -37,9 +40,11 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h1>Vagrant & Packer</h1>
+					<h1>Vagrant &amp; Packer</h1>
 					<p>Alexis Seigneurin</p>
 					<p><a href="https://twitter.com/ASeigneurin">@aseigneurin</a></p>
+					<p>&nbsp;</p>
+					<p style="font-size: 0.6em">(Flèches droite/gauche et haut/bas pour naviguer, ESC pour tout afficher)</p>
 				</section>
 
 				<section>
