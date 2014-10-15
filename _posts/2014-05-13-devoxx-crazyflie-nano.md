@@ -2,9 +2,8 @@
 layout: post
 title:  "[DevoxxFR 2014] Crazyflie Nano"
 date:   2014-05-13 11:00:00
-categories: devoxx crazyflie
-abstract: >
-  Parce que le Devoxx ne parle pas que de Java, je voulais revenir sur le talk d’Arnaud Taffanel et de Marcus Eliasson sur la génèse du Crazyflie Nano, un quadricoptère de seulement 19 grammes.
+tags: devoxx crazyflie
+language: FR
 ---
 Parce que le Devoxx ne parle pas que de Java, je voulais revenir sur le talk d’Arnaud Taffanel et de Marcus Eliasson sur la génèse du Crazyflie Nano, un quadricoptère de seulement 19 grammes.
 
@@ -14,6 +13,6 @@ Le pilotage est effectué via ondes radio, en utilisant de préférence une mane
 
 Le Crazyflie Nano est aujourd’hui entièrement open-source : les plans peuvent être utilisés pour fabriquer soi-même un quadricoptère. Le logiciel est également open-source et il est donc possible de reprogrammer le drône (en langage C). Et c’est bien le but des concepteurs : laisser la communauté hacker la créature volante pour créer des projets dérivés.
 
-Le site du projet : http://www.bitcraze.se/
+Le site du projet : [www.bitcraze.se](http://www.bitcraze.se/)
 
 <img src="/images/crazyflie-nano.jpg"/>

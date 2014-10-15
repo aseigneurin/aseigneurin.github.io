@@ -2,9 +2,8 @@
 layout: post
 title:  "Retour sur le Breizh Camp 2014"
 date:   2014-05-23 11:00:00
-categories: java8 vagrant breizhcamp
-abstract: >
-  Le Breizh Camp 2014 est déjà terminé pour moi. Sur deux jours et demi, la conférence organisée sur le campus universitaire de Rennes a accueilli 250 personnes. Retour sur deux conférences auxquelles j’ai assisté.
+tags: java8 vagrant breizhcamp
+language: FR
 ---
 Le Breizh Camp 2014 est déjà terminé pour moi. Sur deux jours et demi, la conférence organisée sur le campus universitaire de Rennes a accueilli 250 personnes. Au programme, 80 talks, tous formats confondus (conférences, hands-on labs, tools in action, quickies) !
 
