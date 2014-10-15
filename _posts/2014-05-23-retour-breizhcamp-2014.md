@@ -3,11 +3,14 @@ layout: post
 title:  "Retour sur le Breizh Camp 2014"
 date:   2014-05-23 11:00:00
 categories: java8 vagrant breizhcamp
+abstract: >
+  Le Breizh Camp 2014 est déjà terminé pour moi. Sur deux jours et demi, la conférence organisée sur le campus universitaire de Rennes a accueilli 250 personnes. Retour sur deux conférences auxquelles j’ai assisté.
 ---
 Le Breizh Camp 2014 est déjà terminé pour moi. Sur deux jours et demi, la conférence organisée sur le campus universitaire de Rennes a accueilli 250 personnes. Au programme, 80 talks, tous formats confondus (conférences, hands-on labs, tools in action, quickies) !
 
-Retour sur deux conférences auxquelles j’ai assisté.
+<img src="/images/breizhcamp_2014.png" style="float:right; padding: 20px 0px 20px 30px"/>
 
+Retour sur deux conférences auxquelles j’ai assisté.
 
 # Continuous Delivery chez Capitaine Train
 
@@ -65,7 +68,8 @@ Deux présentations sur des sujets a priori différents mais, au final, des cons
 
 Sans que le terme ait été prononcé une seule fois, la problématique DevOps est bien présente chez Capitaine Train et chez Clever Cloud. Elle fait partie de la culture de ces deux startups et elle est indispensable à leur réussite.
 
-Auto-promo…
+# Auto-promo…
+
 J’étais moi-même speaker pour cette édition. J’ai présenté un quickie sur les interfaces fonctionnelles de Java 8. Petit moment de panique au moment de démarrer avec le crash de mon Mac, mais l’assistance était bienveillante. Bref, les slides sont dispos ici : http://aseigneurin.github.io/pres-java8-breizhcamp/
 
 J’ai également présenté un tools in action intitulé « Vagrant pour les développeurs ». Les slides sont également en ligne : http://aseigneurin.github.io/pres-vagrant-breizhcamp/. Je vais proposer cette présentation en Brown Bag Lunch. Rendez-vous très bientôt sur [Brown Bag Lunch France](http://www.brownbaglunch.fr/) ou sur [Twitter](https://twitter.com/aseigneurin).
