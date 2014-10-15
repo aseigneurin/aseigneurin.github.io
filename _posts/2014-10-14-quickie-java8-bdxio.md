@@ -2,9 +2,8 @@
 layout: post
 title:  "Quickie sur Java 8 à BDX.io"
 date:   2014-10-14 11:00:00
-categories: java8 bdx.io
-abstract: >
-  Le vendredi 17 octobre se tiendra la première édition de BDX.io, une conférence pour développeurs à Bordeaux. Au programme, 40 talks sur des sujets du moment. quickie sur les interfaces fonctionnelles en Java 8.
+tags: java8 bdx.io
+language: FR
 ---
 Le vendredi 17 octobre se tiendra la première édition de [BDX.io](http://www.bdx.io/), une conférence pour développeurs à Bordeaux. Au programme, 40 talks sur des sujets du moment : on y parlera de langages (Java, Go, Clojure…), de développement Web (AngularJS, Web Components…), de déploiement (Docker), de bases de données NoSQL (Mongo…), de Machine Learning, et j’en passe. Bref, pour cette première édition, BDX.io fait bien les choses avec un [programme](http://lanyrd.com/2014/bdxio/schedule/) très riche.
 
