@@ -7,7 +7,7 @@ language: FR
 ---
 Vous connaissez Vagrant ? [Vagrant](http://www.vagrantup.com/), c’est cet outil qui permet de démarrer des machines virtuelles avec une configuration donnée. Un très bon moyen de mettre au point et de diffuser des environnements de travail, et ce, de manière reproductible. Vagrant permet donc d’éviter le syndrome “works on my machine”.
 
-Plusieurs cas d’usages sont possibles. Le plus courant est celui de faire démarrer un développeur from scratch. Mettez à sa disposition un Vagrantfile, laissez-lui saisir `vagrant up et, en quelques secondes ou minutes, il disposera d’un environnement de développement avec l’ensemble des outils que vous aurez définis : Maven, ElasticSearch, NodeJS, etc.
+Plusieurs cas d’usages sont possibles. Le plus courant est celui de faire démarrer un développeur from scratch. Mettez à sa disposition un Vagrantfile, laissez-lui saisir `vagrant up` et, en quelques secondes ou minutes, il disposera d’un environnement de développement avec l’ensemble des outils que vous aurez définis : Maven, ElasticSearch, NodeJS, etc.
 
 Un autre cas d’usage est celui de reproduire un environnement complexe de production avec, par exemple, un load-balancer et plusieurs back-ends. C’est ce que permet le fonctionnement [multi-machine](http://docs.vagrantup.com/v2/multi-machine/index.html).
 
@@ -94,7 +94,7 @@ Nous obtenons un fichier de définition Packer (“template.json”). Les autres
     ./scripts/vbox.sh
     ./template.json
 
-La configuration doit être légèrement (bugs mineurs du convertisseur) : virtualbox doit être remplacé par virtualbox-iso, et la plupart des commands <wait> doivent être supprimées. La configuration du builder obtenue est alors :
+La configuration doit être légèrement (bugs mineurs du convertisseur) : `virtualbox` doit être remplacé par `virtualbox-iso`, et la plupart des commands `<wait>` doivent être supprimées. La configuration du builder obtenue est alors :
 
     {
         "boot_command": [
@@ -125,7 +125,7 @@ La configuration doit être légèrement (bugs mineurs du convertisseur) : virtu
 
 # Préparation de la box Amazon AWS
 
-Préparons maintenant le builder pour Amazon AWS. Dans ce cas, nous ne pourrons pas utiliser l’ISO d’installation. Nous partirons d’une AMI (Amazon Machine Image) préparée par l’éditeur et que nous sélectionnerons sur http://cloud-images.ubuntu.com/locator/ec2/.
+Préparons maintenant le builder pour Amazon AWS. Dans ce cas, nous ne pourrons pas utiliser l’ISO d’installation. Nous partirons d’une AMI (Amazon Machine Image) préparée par l’éditeur et que nous sélectionnerons sur [cloud-images.ubuntu.com/locator/ec2/](http://cloud-images.ubuntu.com/locator/ec2/).
 
 Notre builder sera configurée comme suit :
 
@@ -140,7 +140,8 @@ Notre builder sera configurée comme suit :
         "ami_name": "ubuntu-13.04__Node.JS"
     }
 
-Fin de la préparation du template Packer
+# Fin de la préparation du template Packer
+
 Il nous reste à modifier les provisioners :
 
 - Nous pouvons retirer l’installation de Ruby, Chef et Puppet qui ne nous intéressent pas.
@@ -197,13 +198,13 @@ Enfin, nous rajoutons un post-processeur qui créera les box Vagrant à partir d
         }
     ]
 
-Attention, sans le paramètre `keep_input_artifact` à `true, le post-processeur supprimera l’AMI ce qui rendra la box inutilisable…
+Attention, sans le paramètre `keep_input_artifact` à `true`, le post-processeur supprimera l’AMI ce qui rendra la box inutilisable…
 
 # Création de la box VirtualBox
 
-    Nous pouvons maintenant lancer la préparation des boxes. Packer lance par défaut la création de toutes les boxes en parallèle. Toutefois, pour commencer, nous allons uniquement builder l’image VirtualBox grâce au flag -only=virtualbox-iso”`.
+Nous pouvons maintenant lancer la préparation des boxes. Packer lance par défaut la création de toutes les boxes en parallèle. Toutefois, pour commencer, nous allons uniquement builder l’image VirtualBox grâce au flag `-only=virtualbox-iso`.
 
-    Packer va télécharger l’ISO Ubuntu et les “Guest Additions”. Une VM sera créée dans VirtualBox. Celle-ci va booter sur l’ISO et, quand le SSH sera prêt, le provisioning sera effectué (par scripts shell, dans notre cas). Enfin, une box Vagrant sera créée.
+Packer va télécharger l’ISO Ubuntu et les “Guest Additions”. Une VM sera créée dans VirtualBox. Celle-ci va booter sur l’ISO et, quand le SSH sera prêt, le provisioning sera effectué (par scripts shell, dans notre cas). Enfin, une box Vagrant sera créée.
 
     $ packer build -only=virtualbox-iso template.json
     virtualbox-iso output will be in this color.
@@ -289,9 +290,9 @@ La box contient une image disque pour VirtualBox ainsi que des fichiers de confi
 
 # Création de la box AWS
 
-    Lançons ensuite le build de l’image AWS avec l’option `-only=amazon-ebs. Les clés d’accès AWS seront spécifiées sur la ligne de commande.
+Lançons ensuite le build de l’image AWS avec l’option `-only=amazon-ebs`. Les clés d’accès AWS seront spécifiées sur la ligne de commande.
 
-    Packer va démarrer une instance EC2 puis, quand le SSH sera prêt, lancera le provisioning. L’instance sera ensuite arrêtée pour permettre la création d’une AMI. Enfin, une box Vagrant sera créée.
+Packer va démarrer une instance EC2 puis, quand le SSH sera prêt, lancera le provisioning. L’instance sera ensuite arrêtée pour permettre la création d’une AMI. Enfin, une box Vagrant sera créée.
 
     $ packer build -only=amazon-ebs -var "aws_access_key=<...>" -var "aws_secret_key=<...>" template.json
     amazon-ebs output will be in this color.
@@ -384,7 +385,7 @@ Nous pouvons alors créer une box Vagrant reposant sur notre base box :
     the comments in the Vagrantfile as well as documentation on
     `vagrantup.com` for more information on using Vagrant.
 
-Nous n’avons pas spécifié le provider (VirtualBox ou AWS). Ceci est défini avec le paramètre `--provider` de la commande `update.
+Nous n’avons pas spécifié le provider (VirtualBox ou AWS). Ceci est défini avec le paramètre `--provider` de la commande `up`.
 
 Pour lancer la VM en local, dans VirtualBox, nous lançons donc :
 
