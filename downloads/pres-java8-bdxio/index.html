@@ -4,9 +4,9 @@
     <title>Java 8 - Les interfaces fonctionnelles - Alexis Seigneurin</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <style type="text/css">
-      @import url(fonts/css_family_Yanone+Kaffeesatz);
-      @import url(fonts/css_family_Droid+Serif:400,700,400italic);
-      @import url(fonts/css_family_Ubuntu+Mono:400,700,400italic);
+      @import url(//fonts.googleapis.com/css?family=Droid+Serif);
+      @import url(//fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(//fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
 
       body {
         font-family: 'Droid Serif';
@@ -35,6 +35,9 @@
       .center p {
         font-size: 28px;
       }
+      .remark-code {
+        font-size: 24px;
+      }
     </style>
   </head>
   <body>
@@ -60,6 +63,14 @@ class: center, middle
 
 * Interface avec une seule méthode abstraite
 * Méthodes par défaut = non-abstraites
+
+```java
+public interface ExampleInterface {
+
+    void doSomething();
+
+}
+```
 
 ---
 
@@ -106,10 +117,12 @@ class: center, middle
 ```java
 Button btn = new Button();
 btn.setOnAction(new EventHandler&lt;ActionEvent&gt;() {
+
     @Override
     public void handle(ActionEvent event) {
         System.out.println("Hello World!");
     }
+
 });
 ```
 
@@ -133,7 +146,14 @@ public class NameParser {
         return creator.create(firstName, lastName);
     }
 }
+```
 
+
+---
+
+# Exemple
+
+```java
 public interface Creator&lt;T&gt; {
     T create(String firstName, String lastName);
 }
@@ -160,10 +180,12 @@ public class Name {
 NameParser parser = new NameParser();
 
 Name res = parser.parse("Eric Clapton", new Creator&lt;Name&gt;() {
+
     @Override
     public Name create(String firstName, String lastName) {
         return new Name(firstName, lastName);
     }
+    
 });
 ```
 
@@ -254,14 +276,17 @@ Name res = parser.parse("Eric Clapton", factory::createName);
 
 # Expression lambda
 ```java
-Name res = parser.parse("Eric Clapton", (s1, s2) -> new Name(s1, s2));
+Name res = parser.parse("Eric Clapton",
+        (s1, s2) -> new Name(s1, s2));
 ```
 ```java
-Name res = parser.parse("Eric Clapton", (s1, s2) -> Factory.createName(s1, s2));
+Name res = parser.parse("Eric Clapton",
+        (s1, s2) -> Factory.createName(s1, s2));
 ```
 ```java
 Factory factory = new Factory();
-Name res = parser.parse("Eric Clapton", (s1, s2) -> factory.createName(s1, s2));
+Name res = parser.parse("Eric Clapton",
+        (s1, s2) -> factory.createName(s1, s2));
 ```
 
 ---
@@ -271,25 +296,83 @@ class: center, middle
 
 ---
 
-# Package java.util.function
+# Consumer
 
-* Consumer&lt;T&gt;
+* java.util.function.Consumer&lt;T&gt;
+  * Reçoit un paramètre
+  * Ne retourne rien
+
 ```java
 void accept(T);
 ```
-* Function&lt;T, R&gt;
+
+```java
+Iterable<String> strings = Arrays.asList("a", "b", "c");
+
+strings.forEach(System.out::println);
+```
+
+---
+
+# Function
+
+* java.util.function.Function&lt;T, R&gt;
+  * Reçoit un paramètre
+  * Retourne une valeur
+
 ```java
 R apply(T);
 ```
 
-* Supplier&lt;T&gt;
+```java
+List<String> strings = Arrays.asList("b", "a", "c");
+
+Comparator<String> comparator =
+    Comparator.comparing(String::toLowerCase);
+
+strings.sort(comparator);
+```
+
+---
+
+# Supplier
+
+* java.util.function.Supplier&lt;T&gt;
+  * Ne reçoit rien
+  * Retourne une valeur
+
 ```java
 T get();
 ```
 
-* Predicate
+```java
+Random random = new Random(42);
+
+Optional<Integer> opt = Optional.empty();
+
+int value = opt.orElseGet(random::nextInt);
+```
+
+---
+
+# Predicate
+
+* java.util.function.Predicate
+  * Reçoit un paramètre
+  * Retourne un booléen
+
 ```java
 boolean test(T);
+```
+
+```java
+List<String> strings = new ArrayList<String>() {{
+    add("ab");
+    add("bb");
+    add("cb");
+}};
+
+strings.removeIf(s -> s.contains("c"));
 ```
 
 ---
