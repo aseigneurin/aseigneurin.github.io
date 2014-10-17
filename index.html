@@ -1,24 +1,9 @@
 ---
-layout: default
+layout: home
 ---
+<h2>My posts</h2>
 
-<div class="home">
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-
-        <h2>
-          <span class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-          <span class="post-meta"> ({{ post.language }})</span>
-        </h2>
-
-        {{ post.excerpt }}
-      </li>
-    {% endfor %}
-  </ul>
-
-</div>
+{% for post in site.posts %}
+  <p class="post">{{ post.date | date: "%Y-%m-%d" }} - <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a> ({{ post.language }})</p>
+  <div class="post-excerpt">{{ post.excerpt }}</div>
+{% endfor %}
