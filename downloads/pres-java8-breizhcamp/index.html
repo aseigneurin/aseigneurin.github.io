@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Java 8 - Les interfaces fonctionnelles - Alexis Seigneurin</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!-- Live reload -->
+		<script>if(location.hostname==='localhost'){document.write('<script src="http://'+location.hostname+':35729/livereload.js?snipver=1"></' + 'script>')}</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section data-background="images/Slide_first.PNG">
+					<h1>Java 8 - Les interfaces fonctionnelles</h1>
+					<p>Alexis Seigneurin - <a href="https://twitter.com/ASeigneurin">@aseigneurin</a></p>
+					<p>Ippon Technologies - <a href="https://twitter.com/ippontech">@ippontech</a></p>
+					<p>&nbsp;</p>
+					<p style="font-size: 0.6em">(Flèches droite/gauche et haut/bas pour naviguer, ESC pour tout afficher)</p>
+				</section>
+
+				<section data-background="images/Slide_2.PNG">
+          <section>
+            <h1>Interfaces fonctionnelles ?</h1>
+          </section>
+
+					<section>
+						<h2>Interface fonctionnelle</h2>
+						<ul>
+							<li>Interface avec une seule méthode abstraite</li>
+							<li>Méthodes par défaut = non-abstraites</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Annotation</h2>
+						<ul>
+							<li>@java.lang.FunctionalInterface</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+@FunctionalInterface
+public interface ExampleInterface {
+
+    void doSomething();
+
+    default int methodWithDefaultImpl() {
+        return 0;
+    }
+
+}
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Vérification par le compilateur</h2>
+						<pre><code data-trim contenteditable>
+Unexpected @FunctionalInterface annotation
+
+com.seigneurin.ExampleInterface is not a functional interface
+
+multiple non-overriding abstract methods found in interface com.seigneurin.ExampleInterface
+						</code></pre>
+					</section>
+				</section>
+
+				<section data-background="images/Slide_2.PNG">
+					<section>
+						<h1>Retour en arrière</h1>
+					</section>
+
+					<section>
+						<h2>Java &lt; 8</h2>
+						<ul>
+							<li>Callback = classes anonymes</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+Button btn = new Button();
+btn.setOnAction(new EventHandler&lt;ActionEvent&gt;() {
+    @Override
+    public void handle(ActionEvent event) {
+        System.out.println("Hello World!");
+    }
+});
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Exemple</h2>
+						<ul>
+							<li>On veut parser des noms : NameParser</li>
+							<li>Création du nom déléguée : Creator</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+public class NameParser {
+    public &lt;T&gt; T parse(String name, Creator&lt;T&gt; creator) {
+        String[] tokens = name.split(" ");
+        String firstName = tokens[0];
+        String lastName = tokens[1];
+        return creator.create(firstName, lastName);
+    }
+}
+
+public interface Creator&lt;T&gt; {
+    T create(String firstName, String lastName);
+}
+
+public class Name {
+
+   private String firstName;
+   private String lastName;
+
+   public Name(String firstName, String lastName) {
+       this.firstName = firstName;
+       this.lastName = lastName;
+   }
+
+   public String getFirstName() { return firstName; }
+   public String getLastName() { return lastName; }
+
+}
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Classe anonyme</h2>
+						<pre><code data-trim contenteditable class="java">
+NameParser parser = new NameParser();
+
+Name res = parser.parse("Eric Clapton", new Creator&lt;Name&gt;() {
+    @Override
+    public Name create(String firstName, String lastName) {
+        return new Name(firstName, lastName);
+    }
+});
+        		</code></pre>
+					</section>
+				</section>
+
+				<section data-background="images/Slide_2.PNG">
+					<section>
+						<h1>Java 8</h1>
+					</section>
+
+					<section>
+						<h2>@FunctionalInterface</h2>
+						<ul>
+							<li>Annotation optionnelle</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+@FunctionalInterface
+public interface Creator&lt;T&gt; {
+    T create(String firstName, String lastName);
+}
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Appel : une méthode...</h2>
+						<ul>
+							<li>Avec 2 paramètres de type String</li>
+							<li>Retour de type générique</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Code appelé...</h2>
+						<ul>
+							<li>Méthode create() simulée par le compilateur</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Référence vers un constructeur</h2>
+						<ul>
+							<li>Notation : "Classe::new"</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+NameParser parser = new NameParser();
+
+Name res = parser.parse("Eric Clapton", Name::new);
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Référence vers une méthode statique</h2>
+						<ul>
+							<li>Notation : "Classe::méthode"</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+public class Factory {
+    public static Name createName(String firstName, String lastName) {
+        return new Name(firstName, lastName);
+    }
+}
+        		</code></pre>
+						<pre><code data-trim contenteditable class="java">
+NameParser parser = new NameParser();
+
+Name res = parser.parse("Eric Clapton", Factory::createName);
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Référence vers une méthode d’instance</h2>
+						<ul>
+							<li>Notation : "instance::méthode"</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+public class Factory {
+    public Name createName(String firstName, String lastName) {
+        return new Name(firstName, lastName);
+    }
+}
+        		</code></pre>
+						<pre><code data-trim contenteditable class="java">
+Factory factory = new Factory();
+NameParser parser = new NameParser();
+
+Name res = parser.parse("Eric Clapton", factory::createName);
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Expression lambda</h2>
+						<pre><code data-trim contenteditable class="java">
+Name res = parser.parse("Eric Clapton", (s1, s2) -> new Name(s1, s2));
+        		</code></pre>
+						<pre><code data-trim contenteditable class="java">
+Name res = parser.parse("Eric Clapton", (s1, s2) -> Factory.createName(s1, s2));
+        		</code></pre>
+						<pre><code data-trim contenteditable class="java">
+Factory factory = new Factory();
+Name res = parser.parse("Eric Clapton", (s1, s2) -> factory.createName(s1, s2));
+        		</code></pre>
+					</section>
+				</section>
+
+				<section data-background="images/Slide_2.PNG">
+					<section>
+						<h1>Interfaces fonctionnelles du JDK</h1>
+					</section>
+
+					<section>
+						<h2>Package java.util.function</h2>
+						<ul>
+							<li>Consumer&lt;T&gt;</li>
+							<ul>
+								<li>void accept(T);</li>
+							</ul>
+							<br>
+							<li>Function&lt;T, R&gt;</li>
+							<ul>
+								<li>R apply(T);</li>
+							</ul>
+							<br>
+							<li>Supplier&lt;T&gt;</li>
+							<ul>
+								<li>T get();</li>
+							</ul>
+							<br>
+							<li>Predicate</li>
+							<ul>
+								<li>boolean test(T);</li>
+							</ul>
+						</ul>
+					</section>
+				</section>
+
+				<section data-background="images/Slide_2.PNG">
+					<section>
+						<h1>Plusieurs méthodes ?</h1>
+					</section>
+
+					<section>
+						<h2>Java &lt; 8</h2>
+						<pre><code data-trim contenteditable class="java">
+public interface Operation&lt;T&gt;
+{
+    T function();
+    void onSuccess(T res);
+    void onError(Exception ex);
+}
+        		</code></pre>
+						<pre><code data-trim contenteditable class="java">
+public &lt;T&gt; void doSomething(Operation&lt;T&gt; operation) {
+    try {
+        T res = operation.function();
+        operation.onSuccess(res);
+    } catch (Exception ex) {
+        operation.onError(ex);
+    }
+}
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Appel très verbeux</h2>
+						<pre><code data-trim contenteditable class="java">
+doSomething(new Operation&lt;Object&gt;() {
+    @Override
+    public Object function() {
+        return 42;
+    }
+    @Override
+    public void onSuccess(Object res) {
+        System.out.println(res);
+    }
+    @Override
+    public void onError(Exception ex) {
+        System.err.println("Error: " + ex.getMessage());
+    }
+});
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Java 8</h2>
+						<ul>
+							<li>Stratégie = découper l'interface</li>
+						</ul>
+						<pre><code data-trim contenteditable class="java">
+public &lt;T&gt; void doSomething(Supplier&lt;T&gt; function, Consumer&lt;T&gt; onSuccess, Consumer&lt;Exception&gt; onError) {
+   try {
+       T res = function.get();
+       onSuccess.accept(res);
+   } catch (Exception ex) {
+       onError.accept(ex);
+   }
+}
+        		</code></pre>
+					</section>
+
+					<section>
+						<h2>Appel simplifié</h2>
+						<pre><code data-trim contenteditable class="java">
+doSomething(
+    () -> 42,
+    System.out::println,
+    ex -> System.err.println("Error: " + ex.getMessage()));
+        		</code></pre>
+					</section>
+				</section>
+
+				<section data-background="images/Slide_2.PNG">
+					<h1>Questions ?</h1>
+					<p><a href="https://twitter.com/ASeigneurin">@aseigneurin</a></p>
+					<p>Code : <a href="https://github.com/aseigneurin/pres-java8-breizhcamp">github.com/aseigneurin/pres-java8-breizhcamp</a></p>
+					<p>Slides : <a href="http://aseigneurin.github.io/pres-java8-breizhcamp">aseigneurin.github.io/pres-java8-breizhcamp</a></p>
+				</section>
+
+				<section data-background="images/Slide_last.PNG">
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme || 'simple', // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
