@@ -13,7 +13,7 @@ Les moteurs de recherche, dont Google et Bing, permettent néanmoins d’indexer
 
 Lorsque le moteur de recherche parcourt le site Web, il obtient une page HTML vide ainsi que du Javascript. Le Javascript n’étant pas interpreté (ou très peu), le moteur ne peut pas naviguer dans le site et il n’est donc pas en mesure de découvrir les différentes pages qui le composent. Il est donc nécessaire de créer une Sitemap XML listant les pages.
 
-Cf. Référence pour les Sitemaps : https://support.google.com/webmasters/answer/183668?hl=fr&ref_topic=6080646&rd=1
+Cf. Référence pour les Sitemaps : <https://support.google.com/webmasters/answer/183668?hl=fr&ref_topic=6080646&rd=1>
 
 ## 2. URLs référencées
 
@@ -23,12 +23,12 @@ Pour indiquer aux moteurs d’indexation que cette partie d’URL est un fragmen
 
 Avec AngularJS, cela peut être fait très simplement de la manière suivante :
 
-angular.module('myApp').config([  
-    '$locationProvider',
-    function($locationProvider) {
-        $locationProvider.hashPrefix('!');
-    }
-]);
+    angular.module('myApp').config([  
+        '$locationProvider',
+        function($locationProvider) {
+            $locationProvider.hashPrefix('!');
+        }
+    ]);
 
 Ces URLs contenant “#!” (que l’on appelle “hashbang”) pourront être utilisées sur le site sans que cela ait d’incidence sur le comportement d’AngularJS (prise en compte native dans ngRoute).
 
