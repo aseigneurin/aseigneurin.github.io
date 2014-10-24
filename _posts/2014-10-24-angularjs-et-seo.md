@@ -17,7 +17,7 @@ Cf. Référence pour les Sitemaps : <https://support.google.com/webmasters/answe
 
 ## 2. URLs référencées
 
-Les URLs utilisées sur le site comportent une partie utilisée uniquement côté client : tout ce qui se trouve après le caractère “#” (ex : <http://example.com/#/shop/product/42>). Ni le serveur, ni les moteurs d’indexation ne traitent habituellement cette partie de l’URL, qu’il ne faut d’ailleurs pas confondre avec les ancres.
+Les URLs utilisées sur le site comportent une partie utilisée uniquement côté client : tout ce qui se trouve après le caractère “#” (ex : <http://example.com/#/shop/product/42>). Ni le serveur, ni les moteurs d’indexation ne traitent habituellement cette partie de l’URL, qu’il ne faut d’ailleurs pas confondre avec [les ancres](http://www.w3.org/TR/html401/struct/links.html#h-12.1).
 
 Pour indiquer aux moteurs d’indexation que cette partie d’URL est un fragment d’URL, il faut insérer le caractère “!” immédiatement après le “#” dans toutes les URLs (ex : <http://example.com/#!/shop/product/42>).
 
@@ -36,14 +36,14 @@ Côté moteur d’indexation, en revanche, ces URLs seront modifiées avant d’
 
 ## 3. Génération de contenu côté serveur
 
-Le serveur va désormais recevoir des URLs contenant l’ensemble des indications nécessaires à la génération d’une page alternative. Une technologie de rendu côté serveur telle que Thymeleaf ou Freemarker pourra être utilisée pour générer ces pages.
+Le serveur va désormais recevoir des URLs contenant l’ensemble des indications nécessaires à la génération d’une page alternative. Une technologie de rendu côté serveur telle que [Thymeleaf](http://www.thymeleaf.org/) ou [Freemarker](http://freemarker.org/) pourra être utilisée pour générer ces pages.
 
 Il est important de noter que les pages générées n’ont pas besoin d’être mises en forme. En effet, lorsque le moteur de recherche remontera un résultat, l’utilisateur sera renvoyée vers l’URL non-altérée (avec “#!”). L’application AngularJS exploitera donc l’URL complète pour générer la page correctement mise en forme.
 
 # Site mobile & Duplicate content
 
 Deux techniques principales existent pour supporter des navigateurs “desktop” et des mobiles :
-utiliser un site unique exploitant le Responsive Web Design
+utiliser un site unique exploitant le [Responsive Web Design](http://fr.openclassrooms.com/informatique/cours/qu-est-ce-que-le-responsive-web-design)
 utilisant deux site séparés, l’un pour les desktops (ex : <http://www.example.com>), l’autre pour le mobile (ex : <http://m.example.com>)
 
 Dans le cas de deux sites séparés, on peut craindre que le contenu soit détecté comme étant du contenu dupliqué (“Duplicate content”, <https://support.google.com/webmasters/answer/66359?hl=fr>).
