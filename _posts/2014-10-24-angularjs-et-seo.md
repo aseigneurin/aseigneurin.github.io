@@ -5,9 +5,9 @@ date:   2014-10-24 16:00:00
 tags: angularjs seo
 language: FR
 ---
-AngularJS, tout comme de nombreux frameworks Javascript récents, exploitent le navigateur pour effectuer le rendu côté client. Les pages fournies par le serveur sont donc des coquilles vides. Les sites exploitant ces technologies sont donc très mal indexés par les moteurs de recherche.
+AngularJS, tout comme de nombreux frameworks Javascript récents, exploite le navigateur pour effectuer le rendu côté client. Les pages fournies par le serveur sont donc des coquilles vides. Les sites exploitant ces technologies sont donc très mal indexés par les moteurs de recherche.
 
-Les moteurs de recherche, dont Google et Bing, permettent néanmoins d’indexer un contenu généré de manière alternative, et tous proposent le même fonctionnement. Google documente le mécanisme sur cette page et nous le détaillons ci-après.
+Les moteurs de recherche, dont Google et Bing, permettent néanmoins d’indexer un contenu généré de manière alternative, et tous proposent le même fonctionnement. Google documente le mécanisme sur [cette page](https://developers.google.com/webmasters/ajax-crawling/docs/getting-started) et je le détaille ci-après.
 
 ## 1. Sitemaps
 
@@ -43,8 +43,9 @@ Il est important de noter que les pages générées n’ont pas besoin d’être
 # Site mobile & Duplicate content
 
 Deux techniques principales existent pour supporter des navigateurs “desktop” et des mobiles :
-utiliser un site unique exploitant le [Responsive Web Design](http://fr.openclassrooms.com/informatique/cours/qu-est-ce-que-le-responsive-web-design)
-utilisant deux site séparés, l’un pour les desktops (ex : <http://www.example.com>), l’autre pour le mobile (ex : <http://m.example.com>)
+
+- utiliser un site unique exploitant le [Responsive Web Design](http://fr.openclassrooms.com/informatique/cours/qu-est-ce-que-le-responsive-web-design)
+- utiliser deux site séparés, l’un pour les desktops (ex : <http://www.example.com>), l’autre pour le mobile (ex : <http://m.example.com>)
 
 Dans le cas de deux sites séparés, on peut craindre que le contenu soit détecté comme étant du contenu dupliqué (“Duplicate content”, <https://support.google.com/webmasters/answer/66359?hl=fr>).
 
@@ -60,7 +61,10 @@ Cf. <https://support.google.com/webmasters/answer/139066?hl=fr#2>
 
 ## Gestion du Google Bot
 
-Enfin, il faut noter que Google utilise deux robots d’exploration pour parcourir le contenu : “Googlebot” pour simuler un navigateur desktop, et “Googlebot-Mobile” pour simuler un navigateur mobile.
+Enfin, il faut noter que Google utilise deux robots d’exploration pour parcourir le contenu :
+
+- “Googlebot” pour simuler un navigateur desktop
+- “Googlebot-Mobile” pour simuler un navigateur mobile.
 
 Il est possible d’exploiter cela pour privilégier l’indexation du site mobile par le robot mobile, et l’indexation du site principal par le robot standard.
 
