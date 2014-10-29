@@ -4,7 +4,7 @@ email: alexis@seigneurin.com
 description: >
   Developer & Tech manager at Ippon Tech - Based in Paris, France - Long term open source
   supporter - I like RESTful architectures, Java, the Spring ecosystem,
-  Docker, Apple products...
+  Apache Spark, Docker...
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://aseigneurin.github.io" # the base hostname & protocol for your site
 twitter_username: aseigneurin
