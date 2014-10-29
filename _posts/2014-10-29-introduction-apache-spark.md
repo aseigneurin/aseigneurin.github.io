@@ -22,15 +22,17 @@ Spark est né en 2009 dans le laboratoire [AMPLab](https://amplab.cs.berkeley.ed
 
 Le projet a intégré l'incubateur Apache en juin 2013 et est devenu un "Top-Level Project" [en février 2014](https://blogs.apache.org/foundation/entry/the_apache_software_foundation_announces50).
 
-La version 1.0.0 de Spark a été releasée [en mai 2014](http://spark.apache.org/news/spark-1-0-0-released.html) et le projet poursuit une évolution rapide. L'écosystème Spark comporte ainsi aujourd'hui plusieurs outils :
+La version 1.0.0 de Spark a été releasée [en mai 2014](http://spark.apache.org/news/spark-1-0-0-released.html) et le projet, aujourd'hui en version 1.1.0, poursuit une évolution rapide. L'écosystème Spark comporte ainsi aujourd'hui plusieurs outils :
 
 - Spark pour les traitements "en batch"
 - Spark Streaming pour le traitement en continu de flux de données
 - MLlib pour le "machine learning"
-- GraphX pour les calculs de graphes
+- GraphX pour les calculs de graphes (encore en version alpha)
 - Spark SQL, une implémentation SQL-like d'interrogation de données.
 
-Le framework est écrit en Scala et propose un binding Java qui permet de l'utiliser sans problème en Java. Java 8 est toutefois recommandé pour exploiter les expressions lambdas qui permettront d'écrire un code lisible.
+Par ailleurs, Spark s’intègre parfaitement avec l’écosystème Hadoop (notamment HDFS) et des intégrations avec Cassandra et ElasticSearch sont prévues.
+
+Enfin, le framework est écrit en Scala et propose un binding Java qui permet de l'utiliser sans problème en Java. Java 8 est toutefois recommandé pour exploiter les expressions lambdas qui permettront d'écrire un code lisible.
 
 # Notions de base
 
@@ -46,7 +48,7 @@ L'API exposée par le RDD permet d'effectuer des transformations sur les donnée
 - `mapToPair()` permet de transformer un élément en un tuple clé-valeur
 - `filter()` permet de filtrer les éléments en ne conservant que ceux qui correspondent à une expression
 - `flatMap()` permet de découper un élément en plusieurs autres éléments
-- `reduce()` et `reduceByKey()` permet d'aggréger des éléments entre eux
+- `reduce()` et `reduceByKey()` permet d'agréger des éléments entre eux
 - etc.
 
 Ces transformations sont "lazy" : elles ne s'exécuteront que si une opération finale est réalisée en bout de chaîne. Les opérations finales disponibles sont :
@@ -115,7 +117,7 @@ Détaillons ce code :
 
         .filter(line -> !line.startsWith("geom"))
 
-- Les lignes peuvent ensuite être découpées en champs. Nous utilisons une expression lambda qui peut être lue de la façon suivante : pour chaque élément que nous appelerons `line`, retourne le résultat de l'expression `line.split(";")`.
+- Les lignes peuvent ensuite être découpées en champs. Nous utilisons une expression lambda qui peut être lue de la façon suivante : pour chaque élément que nous appellerons `line`, retourne le résultat de l'expression `line.split(";")`.
 
     L'opération `map()` est utilisée  et le type retourné devient `JavaRDD<String[]>`.
 
