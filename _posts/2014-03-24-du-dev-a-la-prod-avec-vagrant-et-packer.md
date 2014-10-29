@@ -4,6 +4,8 @@ title:  "Du dev à la prod avec Vagrant et Packer"
 date:   2014-03-24 11:00:00
 tags: vagrant packer aws
 language: FR
+origUrl: http://blog.ippon.fr/2014/03/24/du-dev-a-la-prod-avec-vagrant-et-packer/
+origSource: le blog d'Ippon Technologies
 ---
 Vous connaissez Vagrant ? [Vagrant](http://www.vagrantup.com/), c’est cet outil qui permet de démarrer des machines virtuelles avec une configuration donnée. Un très bon moyen de mettre au point et de diffuser des environnements de travail, et ce, de manière reproductible. Vagrant permet donc d’éviter le syndrome “works on my machine”.
 

@@ -4,6 +4,8 @@ title:  "Java 8 – Interfaces fonctionnelles"
 date:   2014-03-18 11:00:00
 tags: java8
 language: FR
+origUrl: http://blog.ippon.fr/2014/03/18/java-8-interfaces-fonctionnelles/
+origSource: le blog d'Ippon Technologies
 ---
 Java 8 introduit le concept d’”interface fonctionnelle” qui permet de définir une interface disposant d’une unique méthode abstraite, c’est-à-dire une seule méthode ne possédant pas d’[implémentation par défaut](http://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html).
 

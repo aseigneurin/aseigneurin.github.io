@@ -278,3 +278,9 @@ div.post-excerpt {
 a.post-link {
   font-weight: bold;
 }
+
+div.foot-notes {
+  margin-top: 50px;
+  border-top: 1px solid #e5e5e5;
+  padding-top: 10px;
+}

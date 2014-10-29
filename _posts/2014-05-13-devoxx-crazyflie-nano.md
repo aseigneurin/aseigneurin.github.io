@@ -4,6 +4,8 @@ title:  "[DevoxxFR 2014] Crazyflie Nano"
 date:   2014-05-13 11:00:00
 tags: devoxx crazyflie
 language: FR
+origUrl: http://blog.ippon.fr/2014/05/13/devoxxfr-2014-crazyflie-nano/
+origSource: le blog d'Ippon Technologies
 ---
 Parce que le Devoxx ne parle pas que de Java, je voulais revenir sur le talk d’Arnaud Taffanel et de Marcus Eliasson sur la génèse du Crazyflie Nano, un quadricoptère de seulement 19 grammes.
 

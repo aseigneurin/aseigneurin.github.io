@@ -4,6 +4,8 @@ title:  "Retour sur le Breizh Camp 2014"
 date:   2014-05-23 11:00:00
 tags: java8 vagrant breizhcamp
 language: FR
+origUrl: http://blog.ippon.fr/2014/05/23/retour-sur-le-breizh-camp-2014/
+origSource: le blog d'Ippon Technologies
 ---
 Le Breizh Camp 2014 est déjà terminé pour moi. Sur deux jours et demi, la conférence organisée sur le campus universitaire de Rennes a accueilli 250 personnes. Au programme, 80 talks, tous formats confondus (conférences, hands-on labs, tools in action, quickies) !
 

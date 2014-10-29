@@ -10,4 +10,10 @@ layout: default
     {{ content }}
   </article>
 
+  {% if page.origSource %}
+  <div class="foot-notes">
+    <p>Ce post a été publié pour la première fois sur <a href="{{ page.origUrl }}">{{ page.origSource }}.</a></p>
+  </div>
+  {% endif %}
+
 </div>
