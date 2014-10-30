@@ -66,10 +66,10 @@ Pour un premier exemple de code, nous allons exploiter des données [Open Data d
 
 Le fichier CSV peut-être téléchargé [ici](http://opendata.paris.fr/explore/dataset/arbresalignementparis2010/download/?format=csv). Il comporte 103 589 enregistrements. En voici un extrait :
 
-    geom_x_y;geom;genre_lati;genre_fran;variete;arbre_rema;circonfere;hauteur_m;date_mesur;lib_type_e;lib_etat_c;x;y
-    48.8560632291, 2.34626065083;"{""type"": ""Point"", ""coordinates"": [2.346260650825456, 48.856063229114774]}";Platanus;Platane;;0;90.0;0.0;0001-01-01T00:00:00+00:00;Trottoir;grille fonte/acier ajourée;600715.8125;128400.648438
-    48.8574478618, 2.3458179812;"{""type"": ""Point"", ""coordinates"": [2.345817981197062, 48.85744786180517]}";Platanus;Platane;;0;0.0;0.0;0001-01-01T00:00:00+00:00;Trottoir;Terre sable;600683.3125;128554.617188
-    48.8329651219, 2.31476577319;"{""type"": ""Point"", ""coordinates"": [2.314765773191272, 48.8329651219174]}";Prunus;Cerisier à fleur;hisakura-new-red;0;0.0;0.0;0001-01-01T00:00:00+00:00;Trottoir;Stabilisé;598404.0;125832.320313
+    geom_x_y;circonfere;adresse;hauteurenm;espece;varieteouc;dateplanta
+    48.8648454814, 2.3094155344;140.0;COURS ALBERT 1ER;10.0;Aesculus hippocastanum;;
+    48.8782668139, 2.29806967519;100.0;PLACE DES TERNES;15.0;Tilia platyphyllos;;
+    48.889306184, 2.30400164126;38.0;BOULEVARD MALESHERBES;0.0;Platanus x hispanica;;
 
 Ce fichier présente les caractéristiques suivantes :
 
@@ -97,7 +97,7 @@ Nous pouvons ensuite écrire la suite de traitements et récupérer le résultat
 long count = sc.textFile("arbresalignementparis2010.csv")
         .filter(line -> !line.startsWith("geom"))
         .map(line -> line.split(";"))
-        .map(fields -> Float.parseFloat(fields[7]))
+        .map(fields -> Float.parseFloat(fields[3]))
         .filter(height -> height > 0)
         .count();
 System.out.println(count);
@@ -127,7 +127,7 @@ Détaillons ce code :
 
     L'opération `map()` est à nouveau utilisée  et le type retourné devient `JavaRDD<Float>`.
 
-        .map(fields -> Float.parseFloat(fields[7]))
+        .map(fields -> Float.parseFloat(fields[3]))
 
 - Nous filtrons ensuite les éléments pour ne conserver que les hauteurs supérieures à zéro.
 
@@ -150,16 +150,18 @@ Voici un extrait de ce qui est produit sur la console :
     ...
     14/10/29 17:09:54 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0, localhost, PROCESS_LOCAL, 1242 bytes)
     14/10/29 17:09:54 INFO Executor: Running task 0.0 in stage 0.0 (TID 0)
-    14/10/29 17:09:54 INFO HadoopRDD: Input split: file:/Users/aseigneurin/dev/spark-samples/arbresalignementparis2010.csv:0+25008725
+    14/10/29 17:09:54 INFO HadoopRDD: Input split: file:/Users/aseigneurin/dev/spark-samples/data/arbresalignementparis2010.csv:0+8911344
     ...
     14/10/29 17:09:55 INFO SparkContext: Job finished: count at FirstSteps.java:26, took 0.475835815 s
-    6131
+    32112
 
 Spark a exécuté les traitements en local, au sein de la JVM.
 
-Le fichier a été lu en un seul bloc. En effet, celui-ci fait 25 Mo et, par défaut, Spark découpe les fichiers en blocs de 32 Mo.
+Le fichier a été lu en un seul bloc. En effet, celui-ci fait 9 Mo et, par défaut, Spark découpe les fichiers en blocs de 32 Mo.
 
-Le résultat (6131) est obtenu en moins d'une demi-seconde. Ce temps d'exécution n'est pas, en soi, impressionant, mais nous verrons la puissance du framework lorsque nous manipulerons des fichiers plus volumineux.
+Le résultat (32112) est obtenu en moins d'une demi-seconde. Ce temps d'exécution n'est pas, en soi, impressionant, mais nous verrons la puissance du framework lorsque nous manipulerons des fichiers plus volumineux.
+
+Notez que le code est disponible [sur GitHub](https://github.com/aseigneurin/spark-sandbox) si vous souhaitez retrouver l'exemple complet, notamment le `pom.xml` de Maven.
 
 # Conclusion
 
