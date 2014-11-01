@@ -126,4 +126,8 @@ Spark permet de réaliser des agrégations sur l'ensemble des valeurs via une op
 
 Nous verrons dans le prochain post comment réaliser des opérations d'agrégation par clés.
 
+---
+
 Vous pouvez retrouver l'exemple complet de code [sur GitHub](https://github.com/aseigneurin/spark-sandbox).
+
+**Vous aimez cette série d'articles sur Spark et souhaitez faire découvrir l'outil à vos équipes ? [Invitez-moi pour un Brown Bag Lunch](http://www.brownbaglunch.fr/baggers.html#Alexis_Seigneurin_Paris) !**
