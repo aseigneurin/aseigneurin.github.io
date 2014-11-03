@@ -161,8 +161,12 @@ Le fichier a été lu en un seul bloc. En effet, celui-ci fait 9 Mo et, par déf
 
 Le résultat (32112) est obtenu en moins d'une demi-seconde. Ce temps d'exécution n'est pas, en soi, impressionant, mais nous verrons la puissance du framework lorsque nous manipulerons des fichiers plus volumineux.
 
-Notez que le code est disponible [sur GitHub](https://github.com/aseigneurin/spark-sandbox) si vous souhaitez retrouver l'exemple complet, notamment le `pom.xml` de Maven.
-
 # Conclusion
 
 Le code écrit avec Spark présente l'intérêt d'être à la fois compact et lisible. Nous verrons dans les prochains posts qu'il est possible de manipuler des volumes très importants de données, même pour des opérations manipulant l'ensemble du dataset, et ce, sans devoir modifier le code.
+
+---
+
+Vous pouvez retrouver l'exemple complet de code [sur GitHub](https://github.com/aseigneurin/spark-sandbox).
+
+**Vous aimez cette série d'articles sur Spark et souhaitez faire découvrir l'outil à vos équipes ? [Invitez-moi pour un Brown Bag Lunch](http://www.brownbaglunch.fr/baggers.html#Alexis_Seigneurin_Paris) !**
