@@ -34,7 +34,6 @@ h3, h4, h5, h6 {
 
 a {
   color:#39c;
-  font-weight:400;
   text-decoration:none;
 }
 
@@ -287,13 +286,13 @@ div.foot-notes {
 
 div.link-home {
   float: right;
-  font-size:20px;
+  font-size:18px;
 }
 a.link-home {
-  color:#666;
+  color:#ff6600;
 }
 a.link-home:hover {
-  color:#39c;
+  color:#ff4400;
 }
 @font-face {
     font-family: "Glyphicons Halflings";
