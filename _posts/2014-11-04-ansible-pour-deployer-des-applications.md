@@ -231,14 +231,16 @@ Au premier run, Tomcat est installé, une instance Tomcat est créée, et la web
 
 ![Premier run](/images/ansible-screenshot1.png)
 
-Au second run, aucune modification n'est effectuée :
+Si on relance le playbook sans avoir effectué de modification, aucun changement n'est effectué :
 
 ![Second run](/images/ansible-screenshot2.png)
 
-Enfin, si on met à jour le WAR à déployer, le minimum d'actions est effectuée (copei du WAR et redémarrage de Tomcat) :
+Enfin, si on met à jour le WAR à déployer, le minimum d'actions est effectuée (copie du WAR et redémarrage de Tomcat) :
 
 ![Troisième run](/images/ansible-screenshot3.png)
 
 # Conclusion
+
+Le but premier d'Ansible n'est pas déployer des applications mais de provisionner des machines. Pourtant, pour peu qu'on prenne la peine de respecter les conventions (idempotence) et qu'on utilise pleinement les fonctionnalités de l'outil (modules, handlers), on peut déployer très simplement une application. Objectif atteint.
 
 **Le playbook complet est disponible [sur Github](https://github.com/aseigneurin/ansible-sandbox).**
