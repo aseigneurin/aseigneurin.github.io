@@ -225,6 +225,12 @@ Le handler de (re)-démarrage de Tomcat :
       state=restarted
 {% endhighlight %}
 
+Notez que, pour éviter tout redémarrage de Tomcat lors de la modification du WAR, l'`autodeploy` est désactivé dans le `server.xml` :
+
+{% highlight yaml %}
+      <Host ... autoDeploy="false">
+{% endhighlight %}
+
 ## Exécution du playbook
 
 Au premier run, Tomcat est installé, une instance Tomcat est créée, et la webapp est déployée :
