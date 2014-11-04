@@ -235,15 +235,21 @@ Notez que, pour éviter tout redémarrage de Tomcat lors de la modification du W
 
 Au premier run, Tomcat est installé, une instance Tomcat est créée, et la webapp est déployée :
 
-![Premier run](/images/ansible-screenshot1.png)
+<a class="image-popup" href="/images/ansible-screenshot1.png">
+  <img src="/images/ansible-screenshot1.png" width="50%">
+</a>
 
 Si on relance le playbook sans avoir effectué de modification, aucun changement n'est effectué :
 
-![Second run](/images/ansible-screenshot2.png)
+<a class="image-popup" href="/images/ansible-screenshot2.png">
+  <img src="/images/ansible-screenshot2.png" width="50%">
+</a>
 
 Enfin, si on met à jour le WAR à déployer, le minimum d'actions est effectuée (copie du WAR et redémarrage de Tomcat) :
 
-![Troisième run](/images/ansible-screenshot3.png)
+<a class="image-popup" href="/images/ansible-screenshot3.png">
+  <img src="/images/ansible-screenshot3.png" width="50%">
+</a>
 
 # Conclusion
 
