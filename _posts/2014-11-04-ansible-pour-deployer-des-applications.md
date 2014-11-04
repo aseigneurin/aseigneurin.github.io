@@ -7,6 +7,8 @@ language: FR
 ---
 [Ansible](http://www.ansible.com/) est un excellent outil de provisioning. L'outil n'est a priori pas prévu pour déployer des applications bien que l'on soit fortement tenté de l'utiliser dans ce but. Ce post traite des problèmes que cela pose et d'une manière de les résoudre.
 
+<img src="/images/ansible_logo_black_square.png" style="float:right; padding-left: 20px; padding-bottom: 20px; width: 250px"/>
+
 L'exercice a porté sur le déploiement d'une webapp Java - et donc d'un WAR - dans un Tomcat.
 
 # Version initiale et ses défauts
