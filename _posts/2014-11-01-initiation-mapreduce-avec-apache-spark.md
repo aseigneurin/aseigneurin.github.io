@@ -20,7 +20,7 @@ Avec Spark, il existe deux types d'opérations de réduction :
 - `reduce()` opère sur les éléments, quel que soit leur type, et retourne une unique valeur.
 - `reduceByKey()` opère sur des valeurs associées à une même clé. Ce type d'opération n'est possible que sur des RDD de type `JavaPairRDD` (une liste de tuples clé-valeur), et elle produit un résultat qui est lui aussi un `JavaPairRDD` mais dans lequel chaque clé n'apparait qu'une fois (équivalent à une Map clé-valeur).
 
-Nous allons étudier l'opération `reduce()` dans ce post. L'opération `reduceByKey()` sera traité [dans le prochain post](/2014/11/06/mapreduce-par-cles-avec-apache-spark.html).
+Nous allons étudier l'opération `reduce()` dans ce post. L'opération `reduceByKey()` sera traité [dans le prochain post](/2014/11/06/mapreduce-et-manipulations-par-cles-avec-apache-spark.html).
 
 # Agrégation de valeurs en MapReduce
 

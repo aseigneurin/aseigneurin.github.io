@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "MapReduce par clés avec Apache Spark"
+title:  "MapReduce et manipulation de RDD par clés avec Apache Spark"
 date:   2014-11-06 11:00:00
 tags: spark mapreduce
 language: FR
@@ -220,6 +220,45 @@ On obtient alors le top 10 des projets Wikipedia les plus consultés dans l'heur
     es.mw -> 666607
     ru -> 664970
     ja -> 637371
+
+# Traitement de multiples fichiers
+
+Pour finir, notez qu'il est possible de traiter plusieurs fichiers grâce à l'utilisation de wildcards en paramètre de la méthode `textFile()`. Nous pouvons ainsi agréger des données provenant de plusieurs fichiers.
+
+Nous en profitons pour indiquer à l'exécuteur Spark d'utiliser 16 threads via `setMaster("local[16]")`.
+
+Ainsi, le calcul du top 10 des projets Wikipedia pour la journée du 1er novembre (24 fichiers) devient :
+
+{% highlight java %}
+SparkConf conf = new SparkConf()
+        .setAppName("wikipedia-mapreduce-by-key")
+        .setMaster("local[16]");
+JavaSparkContext sc = new JavaSparkContext(conf);
+
+sc.textFile("data/wikipedia-pagecounts/pagecounts-20141101-*")
+        .map(line -> line.split(" "))
+        .mapToPair(s -> new Tuple2<String, Long>(s[0], Long.parseLong(s[2])))
+        .reduceByKey((x, y) -> x + y)
+        .mapToPair(t -> new Tuple2<Long, String>(t._2, t._1))
+        .sortByKey(false)
+        .take(10)
+        .forEach(t -> System.out.println(t._2 + " -> " + t._1));
+{% endhighlight %}
+
+Le résultat obtenu est le suivant :
+
+    meta.m -> 430508482
+    meta.mw -> 313310187
+    en -> 171157735
+    en.mw -> 103491223
+    ru -> 29955421
+    ja -> 22201812
+    ja.mw -> 22186094
+    es -> 21424067
+    de -> 21098513
+    fr -> 17967662
+
+Sur un MacBook Pro fin 2013 (core i7 à 2 GHz), ce traitement prend environ 40 secondes pour un traitement manipulant près de 9 Go de données. C'est très raisonnable.
 
 # Conclusion
 
