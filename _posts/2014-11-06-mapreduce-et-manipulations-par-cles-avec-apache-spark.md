@@ -260,7 +260,7 @@ Le résultat obtenu est le suivant :
     de -> 21098513
     fr -> 17967662
 
-Sur un MacBook Pro fin 2013 (SSD, core i7 à 2 GHz), ce traitement prend environ 40 secondes pour un traitement manipulant près de 9 Go de données. C'est très raisonnable.
+Sur un MacBook Pro fin 2013 (SSD, Core i7 à 2 GHz), ce traitement prend environ 40 secondes pour près de 9 Go de données en entrée. C'est très raisonnable.
 
 # Conclusion
 
