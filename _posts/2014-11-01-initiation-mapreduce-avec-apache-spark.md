@@ -2,14 +2,14 @@
 layout: post
 title:  "Initiation au MapReduce avec Apache Spark"
 date:   2014-11-01 11:00:00
-tags: spark
+tags: spark mapreduce
 language: FR
 ---
-Dans [le précédent post](/2014/10/29/introduction-apache-spark.html), nous avons utilisé l'opération _Map_ qui permet de transformer des valeurs à l'aide du fonction de transformation. Nous allons maintenant découvrir l'opération _Reduce_ qui permet de faire des aggrégations. Nous allons ainsi pouvoir faire du _MapReduce_ de la même manière qu'avec Hadoop.
+Dans [le précédent post](/2014/10/29/introduction-apache-spark.html), nous avons utilisé l'opération _Map_ qui permet de transformer des valeurs à l'aide d'une fonction de transformation. Nous allons maintenant découvrir l'opération _Reduce_ qui permet de faire des aggrégations. Nous allons ainsi pouvoir faire du _MapReduce_ de la même manière qu'avec Hadoop.
 
 # La théorie
 
-Avec Spark comme avec Hadoop, une opération de _Reduce_ est une opération qui permet d'agréger les valeurs deux à deux, en procédant par autant d'étapes que nécessaire pour traiter l'ensemble des éléments de la collection. C'est ce qui permet au framework de réaliser des agrégations en parallèle, éventuellement sur plusieurs noeuds.
+Avec Spark comme avec Hadoop, une opération de _Reduce_ est une opération qui permet d'agréger les valeurs **deux à deux**, en procédant par autant d'étapes que nécessaire pour traiter l'ensemble des éléments de la collection. C'est ce qui permet au framework de réaliser des agrégations en parallèle, éventuellement sur plusieurs noeuds.
 
 Le framework va choisir deux éléments et les passer à une fonction que nous allons définir. La fonction doit retourner le nouvel élément qui remplacera les deux premiers.
 
@@ -20,7 +20,7 @@ Avec Spark, il existe deux types d'opérations de réduction :
 - `reduce()` opère sur les éléments, quel que soit leur type, et retourne une unique valeur.
 - `reduceByKey()` opère sur des valeurs associées à une même clé. Ce type d'opération n'est possible que sur des RDD de type `JavaPairRDD` (une liste de tuples clé-valeur), et elle produit un résultat qui est lui aussi un `JavaPairRDD` mais dans lequel chaque clé n'apparait qu'une fois (équivalent à une Map clé-valeur).
 
-Nous allons étudier l'opération `reduce()` dans ce post. L'opération `reduceByKey()` sera traité dans le prochain post.
+Nous allons étudier l'opération `reduce()` dans ce post. L'opération `reduceByKey()` sera traité [dans le prochain post](/2014/11/06/mapreduce-par-cles-avec-apache-spark.html).
 
 # Agrégation de valeurs en MapReduce
 
@@ -58,6 +58,8 @@ float totalHeight = sc.textFile("arbresalignementparis2010.csv")
         ...
         .reduce((x, y) -> x + y);
 {% endhighlight %}
+
+Le framework va appeler notre fonction de réduction jusqu'à ce que toutes les valeurs aient été traitées.
 
 # Comptage en _MapReduce_
 
@@ -124,7 +126,7 @@ Le résultat obtenu est le suivant :
 
 Spark permet de réaliser des agrégations sur l'ensemble des valeurs via une opréation de _Reduce_ opérant sur les éléments deux à deux, et ce, afin de réalisée l'opération de manière distribuée.
 
-Nous verrons dans le prochain post comment réaliser des opérations d'agrégation par clés.
+Nous verrons [dans le prochain post](/2014/11/06/mapreduce-par-cles-avec-apache-spark.html) comment réaliser des opérations d'agrégation par clés.
 
 ---
 
