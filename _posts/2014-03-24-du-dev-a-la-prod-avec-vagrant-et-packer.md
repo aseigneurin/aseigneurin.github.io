@@ -96,7 +96,7 @@ Nous obtenons un fichier de définition Packer (“template.json”). Les autres
     ./scripts/vbox.sh
     ./template.json
 
-La configuration doit être légèrement (bugs mineurs du convertisseur) : `virtualbox` doit être remplacé par `virtualbox-iso`, et la plupart des commands `<wait>` doivent être supprimées. La configuration du builder obtenue est alors :
+La configuration doit être légèrement modifiée (bugs mineurs du convertisseur) : `virtualbox` doit être remplacé par `virtualbox-iso`, et la plupart des commands `<wait>` doivent être supprimées. La configuration du builder obtenue est alors :
 
     {
         "boot_command": [
