@@ -48,9 +48,9 @@ Notons tout de suite que la méthode d’identification sera différente suivant
 
 # Préparation de la box VirtualBox
 
-La box VirtualBox sera constituée à partir d’une ISO Ubuntu que nous spécifierons par son URL sur le site de l’éditeur. Nous donnerons un fichier de “preseed” qui permettra de configurer l’installation (plus d’infos sur le preseeding : [https://help.ubuntu.com/13.04/installation-guide/amd64/apb.html](https://help.ubuntu.com/13.04/installation-guide/amd64/apb.html)).
+La box VirtualBox sera constituée à partir d’une ISO Ubuntu que nous spécifierons par son URL sur le site de l’éditeur. Nous donnerons un fichier de “preseed” qui permettra de configurer l’installation (plus d’infos sur le preseeding : <https://help.ubuntu.com/14.04/installation-guide/amd64/apb.html>).
 
-Le plus rapide est de partir d’une configuration Veewee existante. Téléchargeons un template Veewee pour Ubuntu depuis [https://github.com/jedi4ever/veewee/tree/master/templates/ubuntu-13.04-server-amd64](https://github.com/jedi4ever/veewee/tree/master/templates/ubuntu-13.04-server-amd64). Ce template est constitué d’une définition (“definition.rb”), d’un fichier de preseed (“preseed.cfg”) et de scripts shell :
+Le plus rapide est de partir d’une configuration Veewee existante. Téléchargeons un template Veewee pour Ubuntu depuis <https://github.com/jedi4ever/veewee/tree/master/templates/ubuntu-13.04-server-amd64>). Ce template est constitué d’une définition (“definition.rb”), d’un fichier de preseed (“preseed.cfg”) et de scripts shell :
 
     $ cd ubuntu-13.04-server-amd64
     $ find .
