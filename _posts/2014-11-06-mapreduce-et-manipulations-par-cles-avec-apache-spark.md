@@ -5,15 +5,15 @@ date:   2014-11-06 11:00:00
 tags: spark mapreduce
 language: FR
 ---
-Nous avons vu dans [le précédent post](2014/11/01/initiation-mapreduce-avec-apache-spark.html) qu'Apache Spark permettait de réaliser des opérations d'agrégation sur l'ensemble des valeurs d'un RDD. Nous allons maintenant réaliser des agrégations *par clés*.
+Nous avons vu dans [le post précédent](/2014/11/01/initiation-mapreduce-avec-apache-spark.html) qu'Apache Spark permettait de réaliser des opérations d'agrégation sur l'ensemble des valeurs d'un RDD. Nous allons maintenant réaliser des agrégations ainsi que d'autres manipulations *par clés*.
 
 # La théorie
 
-Une opération de réduction par clé effectue une agrégation des valeurs pour chaque clé du RDD. Ce type d'opération ne peut être effectué que sur un RDD de type `JavaPairRDD`, c'est-à-dire un RDD dans lequel les éléments sont des tuples clé-valeur. Attention, contrairement à une Map en Java, il n'existe aucune contrainte d'unicité sur les clés. Plusieurs tuples portant la même clé peuvent donc exister.
+Une opération de réduction par clés effectue une agrégation des valeurs pour chaque clé du RDD. Ce type d'opération ne peut être effectué que sur un RDD de type `JavaPairRDD`, c'est-à-dire un RDD dans lequel les éléments sont des tuples clé-valeur. Attention, contrairement à une Map en Java, il n'existe aucune contrainte d'unicité sur les clés. Plusieurs tuples portant la même clé peuvent donc exister dans le RDD.
 
 L'opération de réduction va être effectuée sur des valeurs de la même clé jusqu'à ce qu'il n'existe plus qu'une seule valeur par clé. Le RDD résultant sera donc une vraie Map clé-valeur, avec unicité des clés.
 
-Supposons que l'on ait le RDD suivant (tuples clé-valeur) :
+Supposons qu'on ait le RDD suivant (tuples clé-valeur) :
 
 - (A, 3)
 - (A, 5)
@@ -26,7 +26,9 @@ Si on applique une réduction par clés calculant la somme des valeurs, on obtie
 - (A, 12)
 - (B, 9)
 
-# En pratique - Les données d'exemple
+Le RDD contient autant de tuples qu'il existait de clés différentes dans le RDD d'origine.
+
+# Les données d'exemple
 
 Nous allons utiliser des fichiers de statistiques de consultation de Wikipedia. Ces fichiers sont en [libre téléchargement](https://dumps.wikimedia.org/other/pagecounts-raw/), un fichier étant produit chaque heure. Chaque fichier pèse environ 300 Mo une fois décompressé.
 
@@ -45,14 +47,14 @@ Chaque ligne représente un enregistrement selon 4 champs séparés par des espa
 1. Le nombre de requêtes reçues.
 1. La taille de la page en octets.
 
-# En pratique - Le code
+# En pratique
 
 A partir des statistiques Wikipedia, nous pouvons calculer le nombre de visites par projet. Contrairement à une agrégation globale, nous cherchons donc à obtenir une liste clé-valeur : code projet - nombre de visites.
 
 Commençons par lire un fichier par lignes et en découpant chaque ligne selon les espaces :
 
 {% highlight java %}
-sc.textFile("data/wikipedia-pagecounts/*")
+sc.textFile("data/wikipedia-pagecounts/pagecounts-20141101-000000")
         .map(line -> line.split(" "))
 {% endhighlight %}
 
@@ -66,7 +68,7 @@ Nous pouvons transformer ce `JavaRDD` en `JavaPairRDD` via l'opération `mapToPa
 
 La classe `JavaPairRDD` offre des transformations permettant de travailler nativement sur cette collection clé-valeur : `reduceByKey()`, `sortByKey()`, ainsi que des fonctions de croisement entre deux `JavaPairRDD` (`join()`, `intersect()`, etc.).
 
-En l'occurence, nous allons utiliser la fonction `reduceByKey()` en lui donnant une opération de somme. Les valeurs reçues par la fonction appartiendront à la même clé, sans que l'on puisse connaître celle-ci :
+En l'occurence, nous allons utiliser la fonction `reduceByKey()` en lui donnant une opération de somme. Les valeurs reçues par la fonction appartiendront à la même clé sans que l'on puisse connaître celle-ci :
 
 {% highlight java %}
         .reduceByKey((x, y) -> x + y)
@@ -109,7 +111,7 @@ La valeur 3269849 pour Wikipedia France est donc la somme des nombre de visites 
 
 # Tri des résultats par clés
 
-Nous pouvons remarquer que les résultats ne sont pas triés. En effet, pour des raisons de performance, Spark ne garantit pas l'ordre au sein du RDD : les tuples sont indépendants les uns des autres.
+Nous pouvons remarquer que les résultats ne sont pas triés. En effet, pour des raisons de performance, Spark ne garantit pas l'ordre au sein du RDD : les tuples sont traités de manière indépendante les uns des autres.
 
 Nous pouvons trier les tuples par leur clé grâce à la méthode `sortByKey()` qui prend éventuellement un booléen en paramètre pour inverser le tri :
 
@@ -147,7 +149,7 @@ Malheureusement, nous ne pouvons pas utiliser un comparateur issu de `Comparator
 Il faut donc avoir recours à un comparateur implémentant l'interface `Serializable` :
 
 {% highlight java %}
-private static class LowerCaseStringComparator implements Comparator<String>, Serializable {
+class LowerCaseStringComparator implements Comparator<String>, Serializable {
     @Override
     public int compare(String s1, String s2) {
         return s1.toLowerCase().compareTo(s2.toLowerCase());
@@ -176,11 +178,11 @@ On obtient alors le résultat souhaité :
 
 # Tri des résultats par valeurs
 
-La classe `JavaPairRDD` possède une méthode `sortByKey()` mais il n'existe pas de méthod `sortByValue()`.  Si l'on souhaite trier par valeur, il faut inverser nos tuples pour que les valeurs soient les clés.
+La classe `JavaPairRDD` possède une méthode `sortByKey()` mais il n'existe pas de méthode `sortByValue()`.  Si l'on souhaite trier par valeurs, il faut inverser nos tuples pour que les valeurs soient les clés.
 
-Pour rappel, un `JavaPairRDD` n'impose pas que les clés des tuples soient uniques au sein du RDD. On peut donc avoir des doublons de valeur sans que cela pose problème.
+Pour rappel, un `JavaPairRDD` n'impose pas que les clés des tuples soient uniques au sein du RDD. On peut donc avoir des doublons de valeurs sans que cela pose problème.
 
-Nous retournons donc les tuples, toujours avec la fonction `mapToPair()` pour récupérer un `JavaPairRDD` en sortie :
+Nous inversons donc les tuples, toujours avec la fonction `mapToPair()` de sorte à récupérer un `JavaPairRDD` en sortie :
 
 {% highlight java %}
 .mapToPair(t -> new Tuple2<Long, String>(t._2, t._1))
@@ -258,9 +260,13 @@ Le résultat obtenu est le suivant :
     de -> 21098513
     fr -> 17967662
 
-Sur un MacBook Pro fin 2013 (core i7 à 2 GHz), ce traitement prend environ 40 secondes pour un traitement manipulant près de 9 Go de données. C'est très raisonnable.
+Sur un MacBook Pro fin 2013 (SSD, core i7 à 2 GHz), ce traitement prend environ 40 secondes pour un traitement manipulant près de 9 Go de données. C'est très raisonnable.
 
 # Conclusion
+
+Nous commençons à avoir un bon aperçu de l'API de Spark et des possibilités offertes par celle-ci. La manipulation de tuples clé-valeur sera notamment un des usages principaux du framework.
+
+Dans les prochains posts, nous déploierons un cluster Spark et étudierons l'API de streaming.
 
 ---
 
