@@ -160,10 +160,7 @@ class LowerCaseStringComparator implements Comparator<String>, Serializable {
 Ce comparateur est alors utilisé de manière plus classique :
 
 {% highlight java %}
-Comparator<String> c = new LowerCaseStringComparator();
-
-...
-        .sortByKey(c)
+.sortByKey(new LowerCaseStringComparator())
 {% endhighlight %}
 
 On obtient alors le résultat souhaité :
