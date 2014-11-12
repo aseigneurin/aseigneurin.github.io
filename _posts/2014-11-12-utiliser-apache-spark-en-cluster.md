@@ -216,3 +216,77 @@ Dans notre cas, le résultat ayant été écrit sur la console, celui-ci est fra
 <a class="image-popup" href="/images/spark_cluster_app-logs.png">
   <img src="/images/spark_cluster_app-logs.png" width="50%">
 </a>
+
+## Analyse
+
+### Données en entrée
+
+Notre programme utilise des données provenant du *file system* local. Ce n'est évidemment pas adapté pour un cluster distribué sur plusieurs machines.
+
+Idéalement, les données devraient être distribuées sur le cluster. Lorsque chaque noeud stocke localement une partie des données, Spark peut exploiter le principe de **colocalisation des données et des traitements** : la donnée est traitée à l'endroit où elle se trouve, sans transfert réseau.
+
+Un exemple de file system permettant cela est HDFS. HDFS répartit les données sur les noeuds du cluster, éventuellement en répliquant celles-ci. Ainsi, si les workers Spark sont également des *data nodes* HDFS, la donnée peut être traitée localement.
+
+### Données en sortie
+
+Nous avons écrit le résultat de notre calcul sur la console. Ce résultat est fragmenté et difficilement accessible.
+
+Une solution adaptée pourrait être d'écrire dans HDFS ou d'utiliser un driver adapté tel ceux fournits pour Cassandra ou Elasticsearch.
+
+### Allocation mémoire
+
+Une application utilise par défaut 512 Mo de mémoire **par noeud**. Dans notre cas, l'application a effectivement utilisé 512 Mo sur chacun des 3 workers.
+
+Il est possible de régler cette valeur lors de la création de la configuration fournie au contexte Spark :
+
+{% highlight java %}
+new SparkConf()
+        .set("spark.executor.memory", "2G")
+        ...
+{% endhighlight %}
+
+L'application ne sera déployée que sur les workers disposant de suffisant de mémoire libre. Sur notre cluster de 3 workers disposant chacun de 2 Go, un noeud exécutera le driver (512 Mo). Seuls deux noeuds seront alors utilisables.
+
+Attention à ne pas utiliser une valeur trop élevée : si aucun noeud ne répond à la contrainte, l'application ne pourra pas s'exécuter.
+
+{% highlight bash %}
+14/11/12 18:38:07 WARN TaskSchedulerImpl: Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient memory
+{% endhighlight %}
+
+### Résilience
+
+En cluster, le risque de défaillance est sensiblement augmenté. Un noeud peut être "perdu" en raison d'une défaillance d'un disque, d'une panne de réseau...
+
+Spark répond à ce problème en relançant sur d'autres noeuds les traitements déjà effectué sur le noeud perdu.
+
+En pratique, lorsqu'on tue volontairement un oeud, on peut voir dans le log du driver que le noeud en question est déconnecté et que les tâches sont soumises à d'autres noeuds :
+
+{% highlight bash %}
+14/11/12 18:45:19 INFO TaskSetManager: Starting task 81.0 in stage 1.0 (TID 81, 10.10.200.112, PROCESS_LOCAL, 1313 bytes)
+14/11/12 18:45:19 INFO TaskSetManager: Finished task 75.0 in stage 1.0 (TID 75) in 1061 ms on 10.10.200.112 (76/281)
+14/11/12 18:45:19 INFO ConnectionManager: Removing ReceivingConnection to ConnectionManagerId(10.10.200.112,52569)
+14/11/12 18:45:19 INFO ConnectionManager: Key not valid ? sun.nio.ch.SelectionKeyImpl@16575981
+14/11/12 18:45:19 INFO ConnectionManager: Removing SendingConnection to ConnectionManagerId(10.10.200.112,52569)
+14/11/12 18:45:19 INFO ConnectionManager: Removing SendingConnection to ConnectionManagerId(10.10.200.112,52569)
+14/11/12 18:45:19 INFO SparkDeploySchedulerBackend: Executor 1 disconnected, so removing it
+14/11/12 18:45:19 INFO ConnectionManager: key already cancelled ? sun.nio.ch.SelectionKeyImpl@16575981
+java.nio.channels.CancelledKeyException
+    at org.apache.spark.network.ConnectionManager.run(ConnectionManager.scala:310)
+    at org.apache.spark.network.ConnectionManager$$anon$4.run(ConnectionManager.scala:139)
+14/11/12 18:45:19 ERROR TaskSchedulerImpl: Lost executor 1 on 10.10.200.112: remote Akka client disassociated
+14/11/12 18:45:19 INFO TaskSetManager: Re-queueing tasks for 1 from TaskSet 1.0
+14/11/12 18:45:19 INFO DAGScheduler: Resubmitted ShuffleMapTask(1, 32), so marking it as still running
+14/11/12 18:45:19 INFO DAGScheduler: Resubmitted ShuffleMapTask(1, 53), so marking it as still running
+14/11/12 18:45:19 INFO DAGScheduler: Resubmitted ShuffleMapTask(1, 26), so marking it as still running
+...
+{% endhighlight %}
+
+Dans l'interface Web, des items sont marqués comme "failed" :
+
+<a class="image-popup" href="/images/spark_cluster_app-resilience.png">
+  <img src="/images/spark_cluster_app-resilience.png" width="50%">
+</a>
+
+Le traitement se poursuit et se termine sans nécessiter d'intervention. La défaillance d'un worker est donc, au final, sans incidence sur le résultat outre un temps d'exécution allongé du fait du retraitement.
+
+# Conclusion
