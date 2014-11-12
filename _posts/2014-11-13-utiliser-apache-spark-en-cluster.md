@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Utiliser Apache Spark en cluster"
-date:   2014-11-12 11:00:00
+date:   2014-11-13 11:00:00
 tags: spark cluster
 language: FR
 ---
