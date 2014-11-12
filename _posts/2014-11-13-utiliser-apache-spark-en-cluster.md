@@ -13,7 +13,7 @@ Un cluster Spark se compose d'un **master** et d'un ou plusieurs **workers**. Le
 
 Le master a pour seul responsabilité la gestion du cluster et il n'exécute donc pas de code MapReduce. Les workers, en revanche, sont les exécuteurs. Ce sont eux qui apportent des *ressources* au cluster, à savoir de la mémoire et des cœurs de traitement.
 
-Pour exécuter un traitement sur un cluster Spark, il faut soumettre une **application** dont le traitement sera piloté par un **driver**. Deux modes d'éxécution sont possibles :
+Pour exécuter un traitement sur un cluster Spark, il faut soumettre une **application** dont le traitement sera piloté par un **driver**. Deux modes d'exécution sont possibles :
 
 * mode *client* : le driver est créé sur la machine qui soumet l'application
 * mode *cluster* : le driver est créé à l'intérieur du cluster.
@@ -259,7 +259,7 @@ Attention à ne pas utiliser une valeur trop élevée : si aucun nœud ne répon
 
 En cluster, le risque de défaillance est sensiblement augmenté. Un nœud peut être "perdu" en raison d'une défaillance d'un disque, d'une panne de réseau...
 
-Spark répond à ce problème en relançant sur d'autres nœuds les traitements déjà effectué sur le nœud perdu.
+Spark répond à ce problème en relançant sur d'autres nœuds les traitements déjà effectués sur le nœud perdu.
 
 En pratique, lorsqu'on tue volontairement un worker, on peut voir dans le log du driver que le nœud en question est déconnecté et que les tâches sont soumises à d'autres workers :
 
