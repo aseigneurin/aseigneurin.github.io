@@ -31,6 +31,8 @@ Les nœuds du cluster (master comme workers) exposent par ailleurs une interface
 
 # Création du cluster
 
+Pour commencer, téléchargez une distribution binaire de Spark depuis la [page de download](http://spark.apache.org/downloads.html). Préférez la version "Pre-built for Hadoop 2.4" de la dernière release (1.1.0 à ce jour). Décompressez l'archive dans le répertoire de votre choix, au même endroit si vous déployez sur plusieurs machines.
+
 ## Démarrage du master
 
 Le master peut être démarré via le script `sbin/start-master.sh`. 
@@ -299,7 +301,7 @@ La création d'un cluster Spark permet d'exploiter la puissance de traitement de
 
 Par ailleurs, l'exécution d'une application ne requiert pas de modification du code de traitement. La contrainte principale est de s'assurer que les données sont lues et écrites depuis/vers des systèmes eux aussi distribués.
 
-Nous verrons dans un prochains post les interconnexions possibles avec Cassandra ou Elasticsearch.
+Nous verrons dans un prochain post les interconnexions possibles avec HDFS, Cassandra et Elasticsearch.
 
 ---
 
