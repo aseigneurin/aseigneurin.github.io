@@ -58,8 +58,9 @@ Alexis Seigneurin<br>[@aseigneurin](https://twitter.com/ASeigneurin)
 
 # Spark
 
-- Traitement distribué de large volumes de données
-- Commodity hardware
+- Traitement large volumes de données
+- Traitement distribué (commodity hardware)
+- Ecrit en Scala, binding Java
 
 ---
 
@@ -176,7 +177,6 @@ exclude: true
 - Tuples indépendants les uns des autres
 
 ---
-class: dense
 
 # RDD
 
@@ -188,7 +188,6 @@ class: dense
   - Tuples indépendants les uns des autres
 
 ---
-class: dense
 
 # Sources :
 
@@ -394,20 +393,6 @@ class: center, middle
 <img src="images/sparkstreaming1.png" width="100%">
 
 ---
-class: dense
-
-# Sources
-
-- Socket
-- Kafka
-- Flume
-- HDFS
-- MQ (ZeroMQ...)
-- Twitter
-- ...
-- Ou une implémentation custom de `Receiver`
-
----
 
 # DStream
 
@@ -426,6 +411,20 @@ class: dense
 - Initialisé avec _window length_ et _slide interval_
 
 <img src="images/streaming-dstream-window.png" width="100%">
+
+---
+class: dense
+
+# Sources
+
+- Socket
+- Kafka
+- Flume
+- HDFS
+- MQ (ZeroMQ...)
+- Twitter
+- ...
+- Ou une implémentation custom de `Receiver`
 
 ---
 class: center, middle
