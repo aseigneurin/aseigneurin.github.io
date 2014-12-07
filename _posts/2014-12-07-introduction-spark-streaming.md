@@ -95,7 +95,7 @@ Détaillons ce code :
 
         .map(h -> h.getText().toLowerCase())
 
-- Le hashtag #Android ne nous intéresse pas puisqu'il est inclus dans tous les tweets. Nous l'éliminons donc grâce à un `filter`.
+- Le hashtag _#Android_ ne nous intéresse pas puisqu'il est inclus dans tous les tweets. Nous l'éliminons donc grâce à un `filter`.
 
         .filter(h -> !h.equals("android"))
 
@@ -125,7 +125,7 @@ sc.start();
 sc.awaitTermination();
 {% endhighlight %}
 
-En lançant notre application, on obtient, toutes les 5 secondes, l'affichage des nombres de hashtags mentionnés dans les tweets portant la mention #Android :
+En lançant notre application, on obtient, toutes les 5 secondes, l'affichage des nombres de hashtags mentionnés dans les tweets portant la mention _#Android_ :
 
     2014-12-07 13:23:10,064 [pool-8-thread-1] INFO  org.apache.spark.SparkContext - Job finished: getCallSite at DStream.scala:294, took 0.005259701 s
     -------------------------------------------
