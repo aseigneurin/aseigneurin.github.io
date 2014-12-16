@@ -13,7 +13,7 @@ J'ai présenté Apache Spark à divers occasions récemment :
 
 Mes slides sont [en ligne](/downloads/pres-spark/index.html) et également visibles ci-dessous :
 
-<iframe src="//www.slideshare.net/slideshow/embed_code/42633658" width="800" height="600" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//fr.slideshare.net/aseigneurin/spark-ou-comment-traiter-des-donnes-la-vitesse-de-lclair" title="Spark, ou comment traiter des données à la vitesse de l&#x27;éclair" target="_blank">Spark, ou comment traiter des données à la vitesse de l&#x27;éclair</a> </strong> from <strong><a href="//www.slideshare.net/aseigneurin" target="_blank">Alexis Seigneurin</a></strong> </div>
+<script async class="speakerdeck-embed" data-id="6f3f34a067580132a4d846de54028c29" data-ratio="1.33159947984395" src="//speakerdeck.com/assets/embed.js"></script>
 
 <br>
 
