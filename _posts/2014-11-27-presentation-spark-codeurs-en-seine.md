@@ -16,13 +16,21 @@ Cette présentation s'est conclue avec une démonstration de Spark Streaming. Av
 
 <img src="/images/pres-spark-kibana.png">
 
-Mes slides sont [en ligne](/downloads/pres-spark-codeurs2014/index.html). Vous pouvez également retrouver les vidéos des démos :
+Mes slides sont [en ligne](/downloads/pres-spark-codeurs2014/index.html) et vous pouvez retrouver le film complet de la présentation :
+
+<iframe width="560" height="315" src="//www.youtube.com/embed/5i3KxxZCphQ" frameborder="0" allowfullscreen></iframe>
+
+<br>
+
+Les vidéos des démos seules sont aussi disponibles :
 
 <iframe width="420" height="315" src="//www.youtube.com/embed/gBeeJNO_VMk" frameborder="0" allowfullscreen></iframe>
 
 <iframe width="420" height="315" src="//www.youtube.com/embed/ml46B3_c6t8" frameborder="0" allowfullscreen></iframe>
 
 <iframe width="420" height="315" src="//www.youtube.com/embed/5IiAZJSsz7I" frameborder="0" allowfullscreen></iframe>
+
+<br>
 
 Enfin, le code utilisé pendant la présentation est [disponible sur GitHub](https://github.com/aseigneurin/pres-spark-demo).
 
