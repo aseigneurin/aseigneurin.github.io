@@ -124,7 +124,7 @@ Le résultat obtenu est le suivant :
 
 # Conclusion
 
-Spark permet de réaliser des agrégations sur l'ensemble des valeurs via une opréation de _Reduce_ opérant sur les éléments deux à deux, et ce, afin de réalisée l'opération de manière distribuée.
+Spark permet de réaliser des agrégations sur l'ensemble des valeurs via une opération de _Reduce_ opérant sur les éléments deux à deux, et ce, afin de réaliser l'opération de manière distribuée.
 
 Nous verrons [dans le prochain post](/2014/11/06/mapreduce-par-cles-avec-apache-spark.html) comment réaliser des opérations d'agrégation par clés.
 
