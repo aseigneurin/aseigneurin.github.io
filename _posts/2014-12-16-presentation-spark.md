@@ -5,7 +5,7 @@ date:   2014-12-16 11:00:00
 tags: spark slides
 language: FR
 ---
-J'ai présenté Apache Spark à divers occasions récemment :
+J'ai présenté Apache Spark à diverses occasions récemment :
 
 - en Ippevent chez Ippon
 - en Brown Bag Lunch chez Leboncoin
