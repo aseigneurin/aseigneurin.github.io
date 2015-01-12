@@ -2,7 +2,7 @@
 layout: post
 title:  "Introduction à Spark Streaming"
 date:   2014-12-07 11:00:00
-tags: spark cluster
+tags: spark streaming
 language: FR
 ---
 Spark permet de traiter des données qui sont figées à un instant _T_. Grâce au module Spark Streaming, il est possible de traiter des flux de données qui arrivent en continu, et donc de traiter ces données au fur et à mesure de leur arrivée.
