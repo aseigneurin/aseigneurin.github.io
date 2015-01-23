@@ -17,7 +17,7 @@ Adam a reproduit un traitement équivalent avec des outils du shell (find, awk, 
 
 # L'expérimentation que j'ai conduite
 
-J'ai commencé par exécuter le traitement shell d'Adam. Attention, le jeu de données qu'il référence a évolué et fait désormais 4,6 Go.
+J'ai commencé par exécuter le traitement shell d'Adam. Attention, [le jeu de données](https://github.com/rozim/ChessData) qu'il référence a évolué et fait désormais 4,6 Go.
 
 Sur ma machine (MacBook Pro fin 2013, i7 à 2 GHz, 16 Go de Ram, disque SSD), le traitement prend 10 secondes soit un débit de 460 Mo/seconde :
 
