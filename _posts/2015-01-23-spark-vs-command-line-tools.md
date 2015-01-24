@@ -62,6 +62,8 @@ public class Chess {
 }
 {% endhighlight %}
 
+(Code complet disponible sur [mon GitHub](https://github.com/aseigneurin/spark-chess).)
+
 Le traitement est lancé en local, via un *main*, et donc sans utiliser de cluster (la volumétrie ne s'y prête pas). Par ailleurs, Spark est configuré pour utiliser 16 threads.
 
 Le traitement se découpe comme suit :
