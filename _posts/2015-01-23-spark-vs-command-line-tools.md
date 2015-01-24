@@ -27,7 +27,7 @@ $ time find . -type f -name '*.pgn' -print0 | xargs -0 -n4 -P4 mawk '/Result/ { 
 
 real    0m10.218s
 user    0m17.589s
-sys 0m4.215s
+sys     0m4.215s
 {% endhighlight %}
 
 J'ai reproduit le traitement avec Spark 1.2.0 **sans chercher à optimiser l'exécution** :
