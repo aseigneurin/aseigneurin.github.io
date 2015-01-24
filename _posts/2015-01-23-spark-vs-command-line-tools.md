@@ -30,7 +30,7 @@ user    0m17.589s
 sys 0m4.215s
 {% endhighlight %}
 
-J'ai reproduit le traitement avec Spark 1.2.0 sans chercher à optimiser l'exécution :
+J'ai reproduit le traitement avec Spark 1.2.0 **sans chercher à optimiser l'exécution** :
 
 {% highlight java %}
 package com.seigneurin.spark;
@@ -97,8 +97,27 @@ Ces changements n'ont presque pas fait varier le temps de traitement. Rien qui n
 
 Il me semble - et c'est à vérifier - que la lecture des fichiers est effectuée sur un thread unique. Les partitions créées à partir de ces fichiers sont ensuite dispatchées. Difficile, donc, d'optimiser ce traitement...
 
+## Update du 24/01/2015 : améliorer le pattern de fichiers
+
+Plutôt que de lire l'ensemble des fichiers du répertoire, on peut utiliser un pattern ne récupérant que les fichiers `.pgn` (suggestion fournie par mon collègue [Stéphane Trou](https://www.linkedin.com/pub/st%C3%A9phane-trou/1b/527/335)). On écrit donc :
+
+{% highlight java %}
+        sc.textFile("ChessData-master/*/*.pgn")
+{% endhighlight %}
+
+Le temps de traitement est alors presque divisé par deux : 16,5 secondes soit un débit de 279 Mo/seconde.
+
+{% highlight bash %}
+0 -> 1974505
+1 -> 2602614
+1/2 -> 2251945
+Duration: 16504 ms
+{% endhighlight %}
+
+Pourquoi une telle différence ? Pour l'instant, je ne l'explique pas. Les fichiers qui ne sont pas de type `.pgn` ne représentent que 8 ko ce qui ne peut pas en soit justifier la différence.
+
 # Que faut-il en déduire ?
 
-Spark n'est pas aussi rapide que les outils du shell quand il s'agit de traiter des données présentes sur une machine, c'est un fait, mais l'utilité de Spark ne réside pas là. Il s'agit avant tout d'**utiliser l'outil adapté au besoin**. En l'occurence, Spark est adapté au traitement distribué et le framework serait donc approprié pour de larges volumes de données. Ici, le volume de données étant très limité, l'utilisation d'outils shell fait sens.
+Spark n'est pas aussi rapide que les outils du shell quand il s'agit de traiter des données présentes sur une machine, bien que le résultat soit tout de même proche. Quoi qu'il en soit, l'utilité de Spark ne réside pas là : il s'agit avant tout d'**utiliser l'outil adapté au besoin**. En l'occurence, Spark est adapté au traitement distribué et le framework serait donc approprié pour de larges volumes de données répartis sur plusieurs machines. Ici, le volume de données étant très limité et le traitement étant simple, l'utilisation d'outils du shell fait sens.
 
 Alors, certes, les mesures ne permettent pas de comparer directement Spark et Hadoop. Néanmoins, il est évident que Spark est plus rapide dans un rapport d'un ou deux [ordres de magnitude](https://en.wikipedia.org/wiki/Order_of_magnitude). Spark confirme ainsi qu'il est un challenger plus que sérieux pour Hadoop.
