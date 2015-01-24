@@ -107,13 +107,13 @@ Plutôt que de lire l'ensemble des fichiers du répertoire, on peut utiliser un 
         sc.textFile("ChessData-master/*/*.pgn")
 {% endhighlight %}
 
-Le temps de traitement est alors presque divisé par deux : 16,5 secondes soit un débit de 279 Mo/seconde.
+Le temps de traitement est alors presque divisé par deux : 16 secondes soit un débit de 287 Mo/seconde.
 
 {% highlight bash %}
 0 -> 1974505
 1 -> 2602614
 1/2 -> 2251945
-Duration: 16504 ms
+Duration: 15869 ms
 {% endhighlight %}
 
 Pourquoi une telle différence ? Pour l'instant, je ne l'explique pas. Les fichiers qui ne sont pas de type `.pgn` ne représentent que 8 ko ce qui ne peut pas en soit justifier la différence.
