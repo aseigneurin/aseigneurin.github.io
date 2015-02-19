@@ -6,7 +6,7 @@ tags: spark gce
 language: FR
 ---
 
-Dans mon post [Spark vs Command line tools](/2015/01/23/spark-vs-command-line-tools.html), je comparais les performances de Spark et d'outils du shell pour traiter des résultats de parties d'échec. Le volume de données était très réduit (4,6 Go) et un seul nœud était utilisé. Spark étant un outil dédié au traitement distribué, l'exercice atteignait ses limites. Restait donc à étudier les performances sur des volumes plus importants et avec un cluster.
+Dans mon post [Spark vs Command line tools](/2015/01/23/spark-vs-command-line-tools.html), je comparais les performances de Spark et d'outils du shell pour traiter des résultats de parties d'échec. Le volume de données était très réduit (4,6 Go) et un seul nœud était utilisé. Spark étant un outil dédié au traitement distribué, l'exercice atteignait ses limites. Restait donc à étudier les performances sur des volumes plus importants et en cluster.
 
 # Détails de l'expérimentation
 
@@ -79,13 +79,13 @@ Voici un graphe présentant les durées de traitement (*less is better*) :
 
 <img src="/images/spark_sur_gce-duree.png">
 
-Analysons tout d'abord les tests sur disque local (sans HDFS). Sur 4,6 Go de données, les outils du Shell sont plus efficaces que Spark d'environ 30%. C'est ce que l'on avait constaté dans le précédent post. Toutefois, on note que Spark s'en sort un peu mieux avec un fichier aggrégé qu'avec de petits fichiers.
+Analysons tout d'abord les tests sur disque local (sans HDFS). Sur 4,6 Go de données, les outils du Shell sont plus efficaces que Spark d'environ 30%. C'est ce que l'on avait constaté dans le [post précédent](/2015/01/23/spark-vs-command-line-tools.html). Toutefois, on note que Spark s'en sort un peu mieux avec un fichier aggrégé qu'avec de petits fichiers.
 
 Lorsqu'on passe à 46 Go de données en local, Spark prend le dessus : le temps de traitement de Spark est multiplié par 9 (de 52 à 468 secondes) alors que celui du shell est multiplié par 15 (de 39 à 593 secondes). Spark montre qu'il *scale* linéairement quand le volume de données augmente, l'overhead potentiel du framework étant absorbé en augmentant le volume de données.
 
 Au passage sur HDFS, les performances de Spark ne sont que légèrement impactées (de 468 à 480 secondes) ce qui est positif.
 
-La constation la plus intéressante est effectuée lorsqu'on multiplie le volume de traitements et la puissance de calcul tous deux par 5 (passage de 1 à 5 workers et passage de 46 à 230 Go de données) : le temps de traitement reste quasi identique (de 480 à 499 secondes). La capacité à scaler horizontalement de Spark prend ici tout son sens : pour traiter plus de données, il "suffit" de rajouter des nœuds dans le cluster. Notons que, dans ce cas, il a été important de respecter la *data locality* pour éviter les transferts réseau.
+La constation la plus intéressante est effectuée lorsqu'on multiplie le volume de traitements et la puissance de calcul tous deux par 5 (passage de 1 à 5 workers et passage de 46 à 230 Go de données) : le temps de traitement reste quasi identique (de 480 à 499 secondes). La capacité à **scaler horizontalement** de Spark prend ici tout son sens : pour traiter plus de données, il "suffit" de rajouter des nœuds dans le cluster. Notons que, dans ce cas, il a été important de respecter la *data locality* pour éviter les I/O réseau.
 
 # Analyse du débit
 
@@ -93,8 +93,14 @@ Voici maintenant un graphe présentant les débits de traitement en Mo/s (*more 
 
 <img src="/images/spark_sur_gce-debit.png">
 
-Observons d'abord les résultats sur un nœud. Lorsque le volume de données augmente, les outils du Shell perdent un peu en performance là où Spark se maintient. On remarque par ailleurs que le débit de traitement de Spark est presque identique que l'on traite que l'on traite 1 ou 10 fichiers, en local ou sur HDFS, dès lors que ces fichiers sont volumineux.
+Observons d'abord les résultats sur un nœud. Lorsque le volume de données augmente, les outils du Shell perdent un peu en performance là où Spark se maintient. On remarque par ailleurs que le débit de traitement de Spark est presque identique que l'on traite 1 ou 10 fichiers, en local ou sur HDFS, dès lors que ces fichiers sont volumineux.
 
 L'observation la plus intéressante est bien sûr le résultat avec 5 nœuds : le débit de traitement est presque multiplié par 5 (de 96 à 461 Mo/s) lors du passage de 1 à 5 workers. Augmenter le nombre de workers Spark permet bien d'augmenter le débit de traitement.
 
 # Conclusion
+
+Si nous avions dû traiter 230 Go, voire 1,5 To, avec les outils du shell, le temps de traitement aurait explosé. Pour scaler horizontalement, nous aurions été obligé de répartir manuellement les données sur plusieurs machines et d'orchestrer, toujours manuellement, les traitements.
+
+Avec Spark et HDFS, les choses sont beaucoup plus simples : une fois le cluster préparé, les données sont réparties automatiquement lorsqu'on les monte sur HDFS, et les traitements sont distribués par Spark sans modification de code.
+
+Spark montre ici qu'il est très performant même lorsque le volume de données (230 Go) ne peut pas vraiment être qualifié de Big Data. Le framework adresse ainsi le problème de l'augmentation de la quantité de données à traiter par un scaling horizontal très facile à mettre en place.
