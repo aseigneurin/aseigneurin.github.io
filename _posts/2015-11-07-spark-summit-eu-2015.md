@@ -35,7 +35,9 @@ Plus généralement, c'est la stack <em>SMACK</em> (Spark, Mesos, Akka, Cassandr
 
 Dans l'idée d'utiliser le streaming, plusieurs voix se sont élevées pour abandonner la définition actuelle des ETL. La notion d'"Extract" est dépréciée, car on reçoit désormais des flux (qui plus est contenant des données typées). Il en va de même pour la notion de "Load", puisque les données transformées sont désormais consommées par plusieurs systèmes. Une définition alternative [est proposée](http://noetl.org/) : CTP (Consume, Transform, Produce).
 
-<img src="/images/SparkSummit/IMG_7354.jpg" width="300" height="188" /> <img src="/images/SparkSummit/IMG_7272-225x300.jpg" width="225" height="300" />
+<img src="/images/SparkSummit/IMG_7354.jpg" width="300" height="188" /> <img src="/images/SparkSummit/IMG_7366.jpg" width="300" height="194" />
+
+<img src="/images/SparkSummit/IMG_7272.jpg" width="225" height="300" /> <img src="/images/SparkSummit/IMG_7313.jpg" width="300" height="186" />
 
 Je recommande les talks d'Helena Edelson, [Lambda Architecture, Analytics and Data Pathways with Spark Streaming, Kafka, Akka and Cassandra](https://www.youtube.com/watch?v=buszgwRc8hQ&amp;index=5&amp;list=PL-x35fyliRwif48cPXQ1nFM85_7e200Jp), et de Natalino Busa, [Real-Time Anomaly Detection with Spark ML and Akka](https://www.youtube.com/watch?v=Aeg5yEBuqgM&amp;list=PL-x35fyliRwip21Nks3Pw3d0GnsUf-b4B&amp;index=9).
 
