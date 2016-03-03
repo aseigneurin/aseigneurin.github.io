@@ -304,3 +304,11 @@ a.link-home:hover {
 .glyphicon-home:before {
   content: "\e021";
 }
+
+/* Override pygment_trac.css */
+.highlight {
+  background:#f8f8f8 !important;
+}
+.highlight .err {
+  background-color:#f8f8f8 !important;
+}

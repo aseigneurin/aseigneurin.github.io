@@ -31,7 +31,7 @@ The structure of a Spark Streaming application always looks the same:
 - Describe your processing pipeline.
 - Start the StreamingContext and keep the application alive.
 
-```
+```java
 package com.ipponusa;
 
 import org.apache.spark.SparkConf;
@@ -65,7 +65,7 @@ We have configured the period to 2 seconds (2000 ms). Notice that Spark Streamin
 
 Spark Streaming has a connector for Kafka. First thing you need to do is add the dependency:
 
-```
+```xml
 <dependency>
     <groupId>org.apache.spark</groupId>
     <artifactId>spark-streaming-kafka_2.10</artifactId>
@@ -77,7 +77,7 @@ Spark Streaming has a connector for Kafka. First thing you need to do is add the
 
 Here is the code we need to write to setup the Kafka connector:
 
-```
+```java
 Map<String, String> kafkaParams = new HashMap<>();
 kafkaParams.put("metadata.broker.list", "localhost:9092");
 Set<String> topics = Collections.singleton("mytopic");
@@ -90,7 +90,7 @@ You have to define the connection to Kafka, the topic, the types and deserialize
 
 Here is our processing code:
 
-```
+```java
 directKafkaStream.foreachRDD(rdd -> {
     System.out.println("--- New RDD with " + rdd.partitions().size()
             + " partitions and " + rdd.count() + " records");
@@ -108,7 +108,7 @@ If you launch this application, you should see a message every 2 seconds:
 
 Now, go back to the `SimpleStringProducer` (see the previous post) and modify the main loop so that it posts a message every 100 ms:
 
-```
+```java
 for (int i = 0; i < 1000; i++) {
     ProducerRecord<String, String> record = new ProducerRecord<>("mytopic", "value-" + i);
     producer.send(record);
