@@ -100,7 +100,7 @@ directKafkaStream.foreachRDD(rdd -> {
 
 If you launch this application, you should see a message every 2 seconds:
 
-```
+```text
 --- New RDD with 2 partitions and 0 records
 --- New RDD with 2 partitions and 0 records
 ...
@@ -118,7 +118,7 @@ for (int i = 0; i < 1000; i++) {
 
 If you launch the producer, the consumer should now display the incoming messages:
 
-```
+```text
 --- New RDD with 2 partitions and 3 records
 value-1
 value-0
