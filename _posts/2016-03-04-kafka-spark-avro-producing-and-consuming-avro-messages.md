@@ -8,9 +8,9 @@ language: EN
 
 This post is the third and last post in a series in which we learn how to send messages in the Avro format into Kafka so that they can be consumed by Spark Streaming. As a reminder there are 3 posts:
 
-- Kafka 101: producing and consuming plain-text messages with standard Java code
-- Kafka + Spark: consuming plain-text messages from Kafka with Spark Streaming
-- Kafka + Spark + Avro: same as 2. with Avro-encoded messages
+1. [Kafka 101: producing and consuming plain-text messages with standard Java code](/2016/03/02/kafka-spark-avro-kafka-101.html)
+2. [Kafka + Spark: consuming plain-text messages from Kafka with Spark Streaming](/2016/03/03/kafka-spark-avro-consume-messages-with-spark.html))
+3. [Kafka + Spark + Avro: same as 2. with Avro-encoded messages](/2016/03/04/kafka-spark-avro-producing-and-consuming-avro-messages.html)
 
 In this post, we will reuse the Java producer and the Spark consumer we created in the previous posts. Instead of dealing with plain-text messages, though, we will serialize our messages with Avro. That will allow us to send much more complex data structures over the wire.
 
