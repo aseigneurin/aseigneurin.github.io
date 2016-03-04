@@ -298,3 +298,5 @@ This code is now more efficient as well as being more readable.
 In these 3 posts, we have seen how to produce messages encoded with Avro, how to send them into Kafka, how to consume them with Spark, and finally how to decode them. This allows us to build a powerful streaming platform, one that can scale by adding nodes either to the Kafka or the Spark cluster.
 
 One thing we have not covered is how to share Avro schemas and how to handle changes of schemas. That’s where the [Confluent Platform](http://www.confluent.io/) comes into play with its [Schema Registry](https://github.com/confluentinc/schema-registry).
+
+The complete code can be found [on GitHub](https://github.com/aseigneurin/kafka-sandbox).
