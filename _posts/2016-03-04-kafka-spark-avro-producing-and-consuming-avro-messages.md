@@ -62,7 +62,7 @@ Here, `USER_SCHEMA` is the JSON listed above as a Java String.
 
 # Bijection, by Twitter
 
-Now, we could use Avro’s API to serialize and deserialize objects but this is not the most friendly API. Instead, we will use [Bijection](https://github.com/twitter/bijection) that makes it easy to convert objects back and forth.
+Now, we could use Avro’s API to serialize and deserialize objects but this is not the most friendly API. Instead, we will use [Bijection](https://github.com/twitter/bijection) which makes it easy to convert objects back and forth.
 
 ```java
 <dependency>
@@ -230,7 +230,7 @@ public class SparkAvroConsumer {
 }
 ```
 
-You have probably spot the issue in this implementation: the parsing of the schema and the creation of the injection object are done for each and every record. This is obviously adding unnecessary computations on your Spark jobs, thus limiting the ability to handle large volumes of messages.
+You have probably spotted the issue in this implementation: the parsing of the schema and the creation of the injection object are done for each and every record. This is obviously adding unnecessary computations on your Spark jobs, thus limiting the ability to handle large volumes of messages.
 
 We could be tempted to define the injection within the main method of our job:
 
