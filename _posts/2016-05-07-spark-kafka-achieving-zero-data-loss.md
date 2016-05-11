@@ -244,7 +244,6 @@ In the previous batch before that happened, the offsets had been saved to ZooKee
 Because of the exception above, the application died. It was automatically restarted by the Spark Master since we're using the *supervised mode*. When the application restarted, it was able to read the offsets from ZooKeeper:
 
 ```
-The job was automatically restarted by the Spark Master and offsets were read back from ZooKeeper:
 2016-05-10 00:59:24,908 INFO  ... - Reading offsets from Zookeeper
 2016-05-10 00:59:25,101 DEBUG ... - Read offset ranges: 3:183975213,0:183779841,...
 2016-05-10 00:59:25,107 INFO  ... - Done reading offsets from Zookeeper. Took 198 ms
