@@ -142,15 +142,13 @@ The first question is how to get the offsets from the DStream. You have to get t
 
 The thing to know is that this has to be done immediately after creating the stream. Otherwise, the RDD might change types and it would no longer carry the offsets.
 
-The issue is, since you are retrieving the offsets before actually processing the messages, this is too early to store the offsets. If you stored them immediately and the application crashed, you would lose the messages that were about to be processed.
+One thing to be careful about is not storing the offsets too soon. Since you are retrieving the offsets before actually processing the messages, this is too early to store the consumed offsets. If you stored them immediately and the application crashed, you would lose the messages that were about to be processed.
 
-A workaround is to retrieve the offsets, keep them in memory and only store them when the next batch comes in. The only risk is to have successfully processed a batch but not updated the offsets, in which case you would reprocess the messages while it’s not needed. But again, you should deal with duplicates down the stream.
+The good way to do it is to store the beginning offsets (`fromOffset` property) at the beginning of the batch, *not* the end offsets (`untilOffset` property). The only risk is to have successfully processed a batch but not updated the offsets, in which case you would reprocess the messages while it’s not needed. But again, you should deal with duplicates down the stream.
 
 Here is how I write it in Scala:
 
 ```scala
-var nextOffsetsToSave: Option[String] = None
-
 def kafkaStream(...): InputDStream[(String, String)] = {
     ...
     kafkaStream.foreachRDD(rdd => saveOffsets(..., rdd))
@@ -160,16 +158,10 @@ def kafkaStream(...): InputDStream[(String, String)] = {
 private def saveOffsets(..., rdd: RDD[_]): Unit = {
   ...
   val offsetsRanges = rdd.asInstanceOf[HasOffsetRanges].offsetRanges
-  nextOffsetsToSave match {
-    case Some(offsets) =>
-      // write the previous offsets to ZooKeeper
-      ...
-    case None =>
-      // nothing to write for now
-  }
-
-  val offsetsRangesStr = offsetsRanges....
-  nextOffsetsToSave = Some(offsetsRangesStr)
+  val offsetsRangesStr = offsetsRanges.map(offsetRange => s"${offsetRange.partition}:${offsetRange.fromOffset}")
+    .mkString(",")
+  ZkUtils.updatePersistentPath(zkClient, zkPath, offsetsRangesStr)
+  ...
 }
 ```
 
