@@ -58,7 +58,7 @@ Checkpoints are a way for Spark to store its current state and recover from this
 
 The way checkpoints are implemented, you have to specify a directory on a file system where to write checkpoints. The file system should be shared between the nodes so that, if your node fails, another node can read the checkpoint. HDFS and S3 are valid options.
 
-The first issue you will hit is that all your processing operations need to be Serializable. This is because Spark will not only store the state (Kafka offsets) but also serialize your DStream operations. This constraint can be particularly painful, especially when you depend on external libraries that were not implemented to be Serializable.
+The first issue you will hit is that all your processing operations need to be `Serializable`. This is because Spark will not only store the state (Kafka offsets) but also serialize your DStream operations. This constraint can be particularly painful, especially when you depend on external libraries that were not implemented to be Serializable.
 
 Assuming you have made your classes Serializable, the second issue you will hit is upgrading your application. Since Spark serializes your operations, if you start a new version of your application to read a checkpoint of the previous version, the following will happen:
 
