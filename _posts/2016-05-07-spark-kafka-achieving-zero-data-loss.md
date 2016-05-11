@@ -222,3 +222,32 @@ Then, if you restart the application, you should see the following logs:
 ```
 
 So far, this code has proved to be reliable and I'm happy to share it with you [on GitHub](https://github.com/ippontech/spark-kafka-source)!
+
+# EDIT - Our application recovered gracefully from a network outage!
+
+Earlier this week, we had a network outage that broke the connection between Spark and Kafka:
+
+```
+2016-05-10 00:58:01,384 ERROR [org.apache.spark.streaming.kafka.DirectKafkaInputDStream] ... java.io.IOException: Connection reset by peer...
+```
+
+In the previous batch before that happened, the offsets had been saved to ZooKeeper:
+
+```
+2016-05-10 00:56:59,155 INFO  ... - Saving offsets to Zookeeper
+2016-05-10 00:56:59,156 DEBUG ... - Using OffsetRange(topic: 'AUTH_STREAM.JSON', partition: 3, range: [183975213 -> 183975252])
+2016-05-10 00:56:59,156 DEBUG ... - Using OffsetRange(topic: 'AUTH_STREAM.JSON', partition: 0, range: [183779841 -> 183779894])
+...
+2016-05-10 00:56:59,157 INFO  ... - Done updating offsets in Zookeeper. Took 1 ms
+```
+
+Because of the exception above, the application died. It was automatically restarted by the Spark Master since we're using the *supervised mode*. When the application restarted, it was able to read the offsets from ZooKeeper:
+
+```
+The job was automatically restarted by the Spark Master and offsets were read back from ZooKeeper:
+2016-05-10 00:59:24,908 INFO  ... - Reading offsets from Zookeeper
+2016-05-10 00:59:25,101 DEBUG ... - Read offset ranges: 3:183975213,0:183779841,...
+2016-05-10 00:59:25,107 INFO  ... - Done reading offsets from Zookeeper. Took 198 ms
+```
+
+The application then smoothly processed the events that had been accumulating in Kafka while the network was down, and this happened without requiring any manual intervention. A good proof of the resilience of the system!
