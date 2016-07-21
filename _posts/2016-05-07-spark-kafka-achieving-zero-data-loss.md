@@ -131,7 +131,7 @@ Given that you cannot decorrelate the batch interval of your Spark Streaming app
 
 [I raised the problem on StackOverflow](http://stackoverflow.com/questions/36987875/writing-spark-checkpoints-to-s3-is-too-slow) but couldn’t find anyone using S3 to write checkpoints. Since we didn’t have a HDFS file system on hand, and since checkpoints were overall quite painful, we decided to consider another approach: manually dealing with checkpoints.
 
-# Manually dealing with checkpoints
+# Manually dealing with offsets
 
 Here is the idea:
 
