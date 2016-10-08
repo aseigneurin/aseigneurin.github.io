@@ -72,7 +72,7 @@ public static void main(String[] args) throws SchedulerException {
 }
 ```
 
-As an addition, I have a Quartz job that prints every second the number of records that have been processed since the launch of the application.
+As an addition, I have a Quartz job that prints every second the number of records that have been processed in the past second.
 
 Running separately, a producer sends 2000 records every second (more precisely 20 records every 10 milliseconds) to the `AUTH_JSON` Kafka topic. Since the topic has 4 partitions, that's 500 records per partition every second (5 records per partition every 10 milliseconds).
 
@@ -99,9 +99,9 @@ Now, if we start the producer, the consumer starts consuming 2000 records per se
 
 ```
 11:00:52,703 com.seigneurin.Main - Records processed: 2292
-11:00:53,704 com.seigneurin.Main - Records processed: 4900
-11:00:54,706 com.seigneurin.Main - Records processed: 6900
-11:00:55,704 com.seigneurin.Main - Records processed: 8900
+11:00:53,704 com.seigneurin.Main - Records processed: 2608
+11:00:54,706 com.seigneurin.Main - Records processed: 2000
+11:00:55,704 com.seigneurin.Main - Records processed: 2000
 ```
 
 # Scaling up
@@ -121,8 +121,8 @@ Now, let's start a second instance of the application (just run the same jar one
 11:01:31,404 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-3] for group avro-auth-stream
 ...
 11:01:32,085 com.seigneurin.Main - Records processed: 435
-11:01:33,086 com.seigneurin.Main - Records processed: 1698
-11:01:34,086 com.seigneurin.Main - Records processed: 2698
+11:01:33,086 com.seigneurin.Main - Records processed: 1263
+11:01:34,086 com.seigneurin.Main - Records processed: 1000
 ```
 
 If we look at the first instance, we can see:
@@ -132,25 +132,23 @@ If we look at the first instance, we can see:
 - it then only processes 1000 records per second.
 
 ```
-11:01:29,704 com.seigneurin.Main - Records processed: 76900
-11:01:30,707 com.seigneurin.Main - Records processed: 78900
+11:01:29,704 com.seigneurin.Main - Records processed: 2000
+11:01:30,707 com.seigneurin.Main - Records processed: 2000
 11:01:31,390 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group avro-auth-stream
 ...
 11:01:31,401 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-1, AUTH_JSON-0] for group avro-auth-stream
 ...
-11:01:31,705 com.seigneurin.Main - Records processed: 80582
-11:01:32,705 com.seigneurin.Main - Records processed: 81582
-11:01:33,702 com.seigneurin.Main - Records processed: 82582
+11:01:31,705 com.seigneurin.Main - Records processed: 1682
+11:01:32,705 com.seigneurin.Main - Records processed: 1000
+11:01:33,702 com.seigneurin.Main - Records processed: 1000
 ```
-
-**Scaling up is trivial: start a new instance and it will take its share of the load.**
 
 # Scaling down
 
 Now, let's kill one of the instances:
 
 ```
-11:01:43,087 com.seigneurin.Main - Records processed: 11698
+11:01:43,087 com.seigneurin.Main - Records processed: 1000
 
 Process finished with exit code 130
 ```
@@ -160,21 +158,43 @@ Here is what happens on the remaining instance:
 - before stopping the other instance, it is processing 1000 records per second
 - **for 30 seconds, nothing changes**: it keeps processing 1000 records per second
 - once the 30 seconds period is over, this instance takes back the responsibility of the 4 partitions (`AUTH_JSON-2`, `AUTH_JSON-1`, `AUTH_JSON-3` and `AUTH_JSON-0`)
-- once done, it catches up with the processing of the 30000 records (30 seconds * 1000 records per second) that have not been processed (from 121582 to 158108 below)
+- once done, it catches up with the processing of the records that have not been processed by the now-dead instance
 - it finally runs smoothly again, processing 2000 records per second.
 
 ```
-11:01:42,705 com.seigneurin.Main - Records processed: 91582
-11:01:43,702 com.seigneurin.Main - Records processed: 92582
-11:01:44,704 com.seigneurin.Main - Records processed: 93582
+11:01:42,705 com.seigneurin.Main - Records processed: 1000
+11:01:43,702 com.seigneurin.Main - Records processed: 1000
+11:01:44,704 com.seigneurin.Main - Records processed: 1000
 ...
-11:02:12,705 com.seigneurin.Main - Records processed: 121582
+11:02:12,705 com.seigneurin.Main - Records processed: 1000
 11:02:13,410 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [AUTH_JSON-1, AUTH_JSON-0] for group avro-auth-stream
 ...
 11:02:13,415 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group avro-auth-stream
 ...
-11:02:13,705 com.seigneurin.Main - Records processed: 128171
-11:02:14,705 com.seigneurin.Main - Records processed: 158108
-11:02:15,704 com.seigneurin.Main - Records processed: 168900
-11:02:16,703 com.seigneurin.Main - Records processed: 170900
+11:02:13,705 com.seigneurin.Main - Records processed: 6589
+11:02:14,705 com.seigneurin.Main - Records processed: 29937
+11:02:15,704 com.seigneurin.Main - Records processed: 10792
+11:02:16,703 com.seigneurin.Main - Records processed: 2000
+11:02:17,705 com.seigneurin.Main - Records processed: 2000
 ```
+
+The interesting behavior here is obviously that the handover was not immediate but, instead, a 30 seconds timeout was applied for detecting that an instance was dead. This is actually necessary so that, if an instance temporarily lags behind (brief network connectivity issue, garbage collection...), other instances will not aggressively take over their work.
+
+The timeout can be configured through the `ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG` (`"session.timeout.ms"`) setting which is documented as follows;
+
+> The timeout used to detect failures when using Kafka's group management facilities. When a consumer's heartbeat is not received within the session timeout, the broker will mark the consumer as failed and rebalance the group. Since heartbeats are sent only when poll() is invoked, a higher session timeout allows more time for message processing in the consumer's poll loop at the cost of a longer time to detect hard failures. See also MAX_POLL_RECORDS_CONFIG for another option to control the processing time in the poll loop. Note that the value must be in the allowable range as configured in the broker configuration by group.min.session.timeout.ms and group.max.session.timeout.ms.
+
+And the value of this setting was actually printed ahen the application started:
+
+```
+11:00:21,985 org.apache.kafka.clients.consumer.ConsumerConfig - ConsumerConfig values:
+    ...
+    session.timeout.ms = 30000
+    ...
+```
+
+# Wrapping up
+
+It is striking how easy it is to scale a Kafka Streams application up or down. I particularly like the fact that this operation is dynamic, as opposed to Spark Streaming that statically allocates resources when the job starts.
+
+**Keep in mind to create the Kafka topic with enough partitions so that you can scale your application.**
