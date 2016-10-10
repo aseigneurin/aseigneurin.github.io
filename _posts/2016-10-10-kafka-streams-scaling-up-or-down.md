@@ -80,7 +80,7 @@ Running separately, a producer sends 2000 records every second (more precisely 2
 
 When we start a first instance of the consumer:
 
-- the application joins the *consumer group* `avro-auth-stream`
+- the application joins the *consumer group* `auth-converter`
 - it then takes responsibility for processing the 4 partitions of the topic (`AUTH_JSON-2`, `AUTH_JSON-1`, `AUTH_JSON-3` and `AUTH_JSON-0`).
 
 ```
@@ -88,8 +88,8 @@ When we start a first instance of the consumer:
 11:00:22,152 org.apache.kafka.common.utils.AppInfoParser - Kafka commitId : b8642491e78c5a13
 11:00:22,156 org.apache.kafka.streams.KafkaStreams - Started Kafka Stream process
 ...
-11:00:22,331 org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Successfully joined group avro-auth-stream with generation 1
-11:00:22,332 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group avro-auth-stream
+11:00:22,331 org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Successfully joined group auth-converter with generation 1
+11:00:22,332 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group auth-converter
 ...
 11:00:22,702 com.seigneurin.Main - Records processed: 0
 11:00:23,705 com.seigneurin.Main - Records processed: 0
@@ -108,7 +108,7 @@ Now, if we start the producer, the consumer starts consuming 2000 records per se
 
 Now, let's start a second instance of the application (just run the same jar one more time in parallel):
 
-- the new instance joins the same *consumer group* `avro-auth-stream`
+- the new instance joins the same *consumer group* `auth-converter`
 - it takes responsibility for processing 2 partitions of the topic (`AUTH_JSON-2` and `AUTH_JSON-3`)
 - it immediately starts processing 1000 records per second.
 
@@ -117,8 +117,8 @@ Now, let's start a second instance of the application (just run the same jar one
 11:01:29,546 org.apache.kafka.common.utils.AppInfoParser - Kafka commitId : b8642491e78c5a13
 11:01:29,551 org.apache.kafka.streams.KafkaStreams - Started Kafka Stream process
 ...
-11:01:31,402 org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Successfully joined group avro-auth-stream with generation 2
-11:01:31,404 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-3] for group avro-auth-stream
+11:01:31,402 org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Successfully joined group auth-converter with generation 2
+11:01:31,404 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-3] for group auth-converter
 ...
 11:01:32,085 com.seigneurin.Main - Records processed: 435
 11:01:33,086 com.seigneurin.Main - Records processed: 1263
@@ -134,9 +134,9 @@ If we look at the first instance, we can see:
 ```
 11:01:29,704 com.seigneurin.Main - Records processed: 2000
 11:01:30,707 com.seigneurin.Main - Records processed: 2000
-11:01:31,390 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group avro-auth-stream
+11:01:31,390 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group auth-converter
 ...
-11:01:31,401 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-1, AUTH_JSON-0] for group avro-auth-stream
+11:01:31,401 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-1, AUTH_JSON-0] for group auth-converter
 ...
 11:01:31,705 com.seigneurin.Main - Records processed: 1682
 11:01:32,705 com.seigneurin.Main - Records processed: 1000
@@ -167,9 +167,9 @@ Here is what happens on the remaining instance:
 11:01:44,704 com.seigneurin.Main - Records processed: 1000
 ...
 11:02:12,705 com.seigneurin.Main - Records processed: 1000
-11:02:13,410 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [AUTH_JSON-1, AUTH_JSON-0] for group avro-auth-stream
+11:02:13,410 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [AUTH_JSON-1, AUTH_JSON-0] for group auth-converter
 ...
-11:02:13,415 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group avro-auth-stream
+11:02:13,415 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Setting newly assigned partitions [AUTH_JSON-2, AUTH_JSON-1, AUTH_JSON-3, AUTH_JSON-0] for group auth-converter
 ...
 11:02:13,705 com.seigneurin.Main - Records processed: 6589
 11:02:14,705 com.seigneurin.Main - Records processed: 29937
