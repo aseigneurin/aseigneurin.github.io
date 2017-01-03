@@ -150,4 +150,4 @@ The answer to the second question is related to the partitioning. When publishin
 
 We’ve seen in this post that we can use Spark to process a stream of messages coming from Kafka. The 2 technologies fit well together as you can increase or decrease the size of either your Kafka cluster or Spark cluster to adapt to the load on your system.
 
-In the next post, we will see how to send and receive messages in a more robust format than plain strings of texts, namely by using Avro.
+In [the next post](/2016/03/04/kafka-spark-avro-producing-and-consuming-avro-messages.html), we will see how to send and receive messages in a more robust format than plain strings of texts, namely by using Avro.

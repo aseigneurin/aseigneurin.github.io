@@ -213,4 +213,4 @@ On the side of the consumer, all the consumers that have subscribed to the topic
 
 We’ve seen the basics of Kafka, how we can publish and consume messages with a simple Java API, and how messages can be distributed into partitions. This partitioning is one of the features that allows Kafka to scale horizontally.
 
-In the next post, we will see how to use Spark Streaming to consume messages from Kafka.
+In [the next post](/2016/03/03/kafka-spark-avro-consume-messages-with-spark.html), we will see how to use Spark Streaming to consume messages from Kafka.
