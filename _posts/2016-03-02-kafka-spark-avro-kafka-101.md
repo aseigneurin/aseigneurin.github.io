@@ -116,7 +116,7 @@ Let’s describe this code:
 
 - We begin by preparing some properties:
   - `bootstrap.servers` is the host and port to our Kafka server
-  - `key.serializer` is the name of the class to serialize the key of the messages (messages have a key and value, but even though the key is optional, a serializer needs to be provided)
+  - `key.serializer` is the name of the class to serialize the key of the messages (messages have a key and a value, but even though the key is optional, a serializer needs to be provided)
   - `value.serializer` is the name of the class to serialize the value of the message. We’re going to send strings, hence the `StringSerializer`.
 - We build an instance of `KafkaProducer`, providing the type of the key and of the value as generic parameters, and the properties object we’ve just prepared.
 - Then comes the time to send messages. Messages are of type `ProducerRecord` with generic parameters (type of the key and type of the value). We specify the name of the topic and the value, thus omitting the key. The message is then sent using the `send` method of the `KafkaProducer`.
