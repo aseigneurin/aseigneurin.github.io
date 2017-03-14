@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Incrementally loaded Parquet file"
+title:  "Incrementally loaded Parquet files"
 date:   2017-03-14 11:00:00
 tags: parquet spark
 language: EN
