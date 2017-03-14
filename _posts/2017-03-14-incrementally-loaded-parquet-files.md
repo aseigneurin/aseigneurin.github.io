@@ -48,9 +48,9 @@ permits_2016-01-03.parquet/
 ...
 ```
 
-As a reminder, Parquet files are partitionned. When we say "Parquet file", we are actually referring to multiple physical files, each of them being a partition.
+As a reminder, Parquet files are partitioned. When we say "Parquet file", we are actually referring to multiple physical files, each of them being a partition.
 
-This directory structure makes it easy to add new data every day but it only works well when you make time-based analysis. If you want to analyse the data accross the whole period of time, this structure does not suit. Using Spark, for instance, you would have to open each Parquet file and *union* them all together. Not only is this impractical, but this would also result in bad performance.
+This directory structure makes it easy to add new data every day, but it only works well when you make time-based analysis. If you want to analyze the data across the whole period of time, this structure is not suitable. Using Spark, for instance, you would have to open each Parquet file and *union* them all together. Not only is this impractical, but this would also result in bad performance.
 
 # Incrementally loaded Parquet file
 
