@@ -6,7 +6,7 @@ tags: kafka streams
 language: EN
 ---
 
-This is a post in XXX parts in which I explain how we started a project on Kafka Streams, and why we had to stop using this library because it had a scalability issue. I took a lot of inspiration from Streams, though, and I will explain how we re-implemented our application on top of plain Kafka Consumers.
+This is a post in 3 parts in which I explain how we started a project on Kafka Streams, and why we had to stop using this library because it had a scalability issue. I took a lot of inspiration from Streams, though, and I will explain how we re-implemented our application on top of plain Kafka Consumers.
 
 My goal here is not to say that Kafka Streams is not a good library (I still encourage you to use it, if it is appropriate for your use case), but to describe the engineering that is required to implement a fault-tolerant application that performs a simple aggregation.
 
