@@ -185,7 +185,7 @@ This callback plays a key role in making sure our application is fault tolerant.
 In our case, we take the following actions:
 
 - When `onPartitionsRevoked()` is called, we purge the _state store_.
-- When `onPartitionsAssigned()` is called, we use the `ChangelogReader` to reinitialize the _state store_, and we reset the read state of the main consumer by calling the `seek()` method. This makes sure that we pickup from where we left off.
+- When `onPartitionsAssigned()` is called, we use the `ChangelogReader` to reinitialize the _state store_, and we reset the read state of the main consumer by calling the `seek()` method. This makes sure that we pick up from where we left off.
 
 # Conclusions
 
@@ -197,7 +197,7 @@ Finally, our application now only requires a single topic for the _changelog_ an
 
 To sum up, my advice to Confluent to improve Kafka Streams would be:
 
-1. Make aggreations in 2 steps: first by partition, then across partitions.
+1. Make aggregations in 2 steps: first by partition, then across partitions.
 2. Don't force a repartitioning when this can be avoided.
 
 When this is done, I can reconsider using Kafka Streams for this application.

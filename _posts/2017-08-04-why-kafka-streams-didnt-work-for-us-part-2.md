@@ -35,11 +35,11 @@ messages
   .to(metricsTopic)
 ```
 
-Note: our application is written in Scala but, to this day, Kafka Streams doesn't come with a real Scala API. I wrote a thin wrapper aroung the Java API and I open-sourced [on Github](https://github.com/aseigneurin/kafka-streams-scala).
+Note: our application is written in Scala but, to this day, Kafka Streams doesn't come with a real Scala API. I wrote a thin wrapper around the Java API and I open-sourced [on Github](https://github.com/aseigneurin/kafka-streams-scala).
 
 ## Aggregations
 
-What is important to know is that Kafka Streams can only make aggregations **by key** (a count is an aggregation). Therefore, if we want to count messages depending on whether they are `valid` or `invalid`, we have to tranform our messages to make this information appear in the key of the messages (value `1L` is just a placeholder here):
+What is important to know is that Kafka Streams can only make aggregations **by key** (a count is an aggregation). Therefore, if we want to count messages depending on whether they are `valid` or `invalid`, we have to transform our messages to make this information appear in the key of the messages (value `1L` is just a placeholder here):
 
 ```scala
   .map((_, message) => message match {
@@ -48,7 +48,7 @@ What is important to know is that Kafka Streams can only make aggregations **by 
   })
 ```
 
-Under the hood, Kafka Streams will create a `repartition` topic that will hold our tranformed messages. This is how the data _looks like_ in this topic:
+Under the hood, Kafka Streams will create a `repartition` topic that will hold our transformed messages. This is how the data _looks like_ in this topic:
 
 ```
 valid    1
@@ -65,7 +65,7 @@ Once this repartition is done, we can make the aggregation:
   .count(TimeWindows.of(1000), "metrics-agg-store")
 ```
 
-Kafka Streams creates a _state store_ to perform the aggregation (here called `metrics-agg-store`), and this state store is backed by a _changelog_ (effictively another internal topic) to make it fault-tolerant. The _changelog_ topic basically keeps track of the updates made to the state store, and it is read from if the application has to recover from an interruption. In this topic, the key is a compound key made of the aggregation key (`valid` / `invalid`) and of the time window, and the value is the running count as well as an offset of the message in the input topic.
+Kafka Streams creates a _state store_ to perform the aggregation (here called `metrics-agg-store`), and this state store is backed by a _changelog_ (effectively another internal topic) to make it fault-tolerant. The _changelog_ topic basically keeps track of the updates made to the state store, and it is read from if the application has to recover from an interruption. In this topic, the key is a compound key made of the aggregation key (`valid` / `invalid`) and of the time window, and the value is the running count as well as an offset of the message in the input topic.
 
 ## Writing the result
 
