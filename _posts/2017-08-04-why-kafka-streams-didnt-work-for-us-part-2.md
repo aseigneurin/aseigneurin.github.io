@@ -149,7 +149,7 @@ repartition-3
               -----------------------------------
 ```
 
-This puts a lot of pressure on the topic holding the valid messages, as well as on the thread that is going to read them, and this effectively limits the ability for the application to handle large volumes of messages.
+This puts a lot of pressure on the partition holding the valid messages, as well as on the thread that is going to read them, and this effectively limits the ability for the application to handle large volumes of messages.
 
 ## Threads
 

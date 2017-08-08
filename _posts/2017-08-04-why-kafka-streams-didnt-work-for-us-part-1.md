@@ -16,7 +16,7 @@ Our goal is fairly simple: we want to monitor the quality of the messages in all
 
 The metrics are published to another Kafka topic (one topic for all the metrics of the cluster). We then have another application that reads from this topic, and pushes the metrics to [InfluxDB](https://www.influxdata.com/). Finally, we are using [Grafana](https://grafana.com/) to visualize the metrics:
 
-<img src="/images/why-kafka-streams-didnt-work-for-us-part-1/grafana.png">
+<img src="/images/why-kafka-streams-didnt-work-for-us/grafana.png">
 
 This sounds simple but there is a lot of complexity to handle:
 
