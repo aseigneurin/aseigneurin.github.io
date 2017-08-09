@@ -10,6 +10,10 @@ This is the second post in this series of posts in which I explain why, for our 
 
 Make sure you read [the first post](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-1.html) before reading this.
 
+- [Why Kafka Streams didn't work for us? - Part 1](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-1.html)
+- [Why Kafka Streams didn't work for us? - Part 2](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-2.html)
+- [Why Kafka Streams didn't work for us? - Part 3](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-3.html)
+
 # About Kafka Streams
 
 [Kafka Streams](https://kafka.apache.org/documentation/streams/) is a library that allows you to process data from Kafka. It is built on top of the Java Kafka client, and offers the ability to process messages independently from each other, or by making aggregations. Kafka Streams offers a DSL as well as a lower-level API, and it allows to make fault-tolerant calculations.

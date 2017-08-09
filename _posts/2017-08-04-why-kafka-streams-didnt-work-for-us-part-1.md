@@ -10,6 +10,10 @@ This is a post in 3 parts in which I explain how we started a project on Kafka S
 
 My goal here is not to say that Kafka Streams is not a good library (I still encourage you to use it, if it is appropriate for your use case), but to describe the engineering that is required to implement a fault-tolerant application that performs a simple aggregation.
 
+- [Why Kafka Streams didn't work for us? - Part 1](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-1.html)
+- [Why Kafka Streams didn't work for us? - Part 2](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-2.html)
+- [Why Kafka Streams didn't work for us? - Part 3](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-3.html)
+
 # The project
 
 Our goal is fairly simple: we want to monitor the quality of the messages in all the topics of a Kafka cluster. To simplify a little, for each message, we want to say if it is `valid` or `invalid`, and we want to publish metrics: the number of `valid` or `invalid` messages per second.

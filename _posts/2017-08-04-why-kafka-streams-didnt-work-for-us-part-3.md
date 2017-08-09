@@ -10,6 +10,10 @@ This is the third and final post in this series of posts in which I explain why,
 
 Make sure you read the [first](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-1.html) and [second](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-2.html) posts before reading this.
 
+- [Why Kafka Streams didn't work for us? - Part 1](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-1.html)
+- [Why Kafka Streams didn't work for us? - Part 2](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-2.html)
+- [Why Kafka Streams didn't work for us? - Part 3](/2017/08/04/why-kafka-streams-didnt-work-for-us-part-3.html)
+
 # Design
 
 In the second post, we saw that the primary concern with the Kafka Streams implementation was that, because we had to count the messages by their `valid` or `invalid` property, we were losing the partitioning of the messages, thus negatively affecting the performance. To solve this problem, we are going to get rid of the repartitioning operation and, instead, we are going to directly count the messages **per partition**. That is, if we re-use our initial example:
