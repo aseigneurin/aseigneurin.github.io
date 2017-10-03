@@ -44,9 +44,9 @@ tx-1 |v|i|v|v|   |v|v|v|     |i|i|v|v|
 
 We would expect the following results:
 
-- At `t0`, 7 valid messages (4 in partition `tx-0` + 3 in partition `tx-1`) and 2 valid messages (1 in each partition)
-- At `t1`, 4 valid messages and 1 valid message
-- At `t2`, 4 valid messages and 3 valid messages
+- At `t0`, 7 valid messages (4 in partition `tx-0` + 3 in partition `tx-1`) and 2 invalid messages (1 in each partition)
+- At `t1`, 4 valid messages and 1 invalid message
+- At `t2`, 4 valid messages and 3 invalid messages
 
 This would materialize as follows in the `metrics` topic, assuming that `t0=1501273548000`: 
 
