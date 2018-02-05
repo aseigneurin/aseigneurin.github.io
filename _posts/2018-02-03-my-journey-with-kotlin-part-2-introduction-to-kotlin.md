@@ -17,7 +17,7 @@ Kotlin is a JVM language initiated and developed by JetBrains, the company behin
 * to make the code more concise and more readable than Java code
 * to make the code safer than pure Java code (i.e. avoid nulls).
 
-Kotlin is a statically typed language and it feels modern. It is also mature: great support is provided in build tools (Maven, Gradle), Spring 5 will provide extended support for Kotlin (to write more idiomatic code), and, last but not least, [Android made of Kotlin one of its official programming languages](https://blog.jetbrains.com/kotlin/2017/05/kotlin-on-android-now-official/).
+Kotlin is a statically typed language and it feels modern. It is also mature: great support is provided in build tools (Maven, Gradle), Spring 5 will provide extended support for Kotlin (to write more idiomatic code), and, last but not least, [Android made Kotlin one of its official programming languages](https://blog.jetbrains.com/kotlin/2017/05/kotlin-on-android-now-official/).
 
 Kotlin was made for 100% interoperability with Java. You can call Kotlin code from Java code, or call Java code from Kotlin code, without any awkward syntax (unllike sometimes Scala). This also means you can migrate one class at a time. If you use IntelliJ IDEA (and you should), the IDE can convert a file, a package, or a whole codebase automatically. The converted code usually works fine, and you can then adjust it to make it more Kotlin-idiomatic.
 
