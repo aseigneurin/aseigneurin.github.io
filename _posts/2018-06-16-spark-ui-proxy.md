@@ -28,7 +28,7 @@ If you are running a **Spark Standalone cluster behind a firewall** (let's say i
                              |
 ```
 
-I created [Spark UI Proxy](https://github.com/aseigneurin/spark-ui-proxy) to work around this issue. The Python script creates a lightweight HTTP server that proxies all the requests to your Spark Master and Spark Workers. All you have to do is create a single SSH tunnel to this proxy, and the proxy will forward all the requests for you. All the links between the nodes will be functional.
+I created **[Spark UI Proxy](https://github.com/aseigneurin/spark-ui-proxy)** to work around this issue. The Python script creates a lightweight HTTP server that proxies all the requests to your Spark Master and Spark Workers. All you have to do is create a single SSH tunnel to this proxy, and the proxy will forward all the requests for you. All the links between the nodes will be functional.
 
 ```
                           Firewall
