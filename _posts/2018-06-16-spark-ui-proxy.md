@@ -6,9 +6,7 @@ tags:   spark
 language: EN
 ---
 
-# Spark UI Proxy
-
-If you are running a **Spark Standalone cluster behind a firewall** (let's say it is running on Amazon AWS), you might have issues accessing the UI of your cluster, especially because each worker has its own UI, making it difficult if not impossible to reroute all the ports using only SSH tunnels.
+If you are running a **Spark Standalone cluster behind a firewall** (let's say it is running on Amazon AWS and your EC2 instances don't have public IP addresses), you might have issues accessing the UI of your cluster, especially because each worker has its own UI, making it difficult if not impossible to reroute all the ports using only SSH tunnels.
 
 ```
                           Firewall
@@ -52,7 +50,7 @@ I created [Spark UI Proxy](https://github.com/aseigneurin/spark-ui-proxy) to wor
                              |
 ```
 
-## How to use it
+# How to use it
 
 Let's say the Spark Master has its UI running on `localhost:8080` (`localhost` refers to the Spark Master node), and we want to access that UI on `localhost:9999` (`localhost` here refers to your computer).
 
