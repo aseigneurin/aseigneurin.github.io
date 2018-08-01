@@ -6,7 +6,7 @@ tags:   kafka
 language: EN
 ---
 
-Kafka 2.0 [just got released](http://kafka.apache.org/downloads#2.0.0), so it is a good time to review the basics of _using_ Kafka. I am going to focus on producing, consuming and processing messages or events. I don't plan on covering the basic properties of Kafka (partitioning, replication, offset management, etc.) - these are well covered [in the documentation of Kafka](https://kafka.apache.org/documentation/) - although feel free to let me know what you would like to see in further posts by adding comments in the section below this post.
+Kafka 2.0 [just got released](http://kafka.apache.org/downloads#2.0.0), so it is a good time to review the basics of _using_ Kafka. I am going to focus on producing, consuming and processing messages or events. I don't plan on covering the basic properties of Kafka (partitioning, replication, offset management, etc.) - these are well covered [in the documentation of Kafka](https://kafka.apache.org/documentation/).
 
 Most of the code shown in these tutorials will be written in Kotlin. Kotlin is a better Java, and if you haven't started using it, now is the time to read [my introduction to this language](https://blog.ippon.tech/my-journey-with-kotlin-part-1-how-i-came-to-dislike-java/). These posts will be a good opportunity to see some nice features of Kotlin.
 
@@ -180,5 +180,3 @@ We have seen how to use Kafka's Java client to send messages to Kafka. We did th
 One thing to keep in mind, when producing data, is what **write guarantee** you want to achieve. Are you ready to lose data in the case of a network or broker failure? There is usually a trade-off to be made between your availability to produce, the latency when producing, and the guarantee that your messages will be safely written. In the example above, we only have one broker, the producer has a default value of `acks=1`, and we are waiting for the broker's acknowledgment (call to `future.get()`). This means that we have a guarantee that a message will be persisted (although not flushed to disk) before we can produce another message: we will not loose messages but our latency is higher than in a "fire and forget" case.
 
 The code of these tutorials can be found [here](https://github.com/aseigneurin/kafka-tutorials).
-
-Feel free to ask questions in the comments section below!
