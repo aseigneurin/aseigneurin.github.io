@@ -6,7 +6,7 @@ tags:   kafka
 language: EN
 ---
 
-This is the fourth post in this series where we go through the basics of using Kafka. We saw in the [previous posts](https://blog.ippon.tech/tag/apache-kafka/) how to produce and consume data in JSON format. We will now see how to serialize our data with Avro.
+This is the fourth post in this series where we go through the basics of using Kafka. We saw in the previous posts how to produce and consume data in JSON format. We will now see how to serialize our data with Avro.
 
 # Avro and the Schema Registry
 

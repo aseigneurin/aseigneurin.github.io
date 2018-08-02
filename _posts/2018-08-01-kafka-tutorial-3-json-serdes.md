@@ -6,7 +6,7 @@ tags:   kafka
 language: EN
 ---
 
-This is the third post in this series where we go through the basics of using Kafka. We saw in the [previous posts](https://blog.ippon.tech/tag/apache-kafka/) how to produce and consume JSON messages using the plain Java client and Jackson. We will see here how to create our own serializers and deserializers.
+This is the third post in this series where we go through the basics of using Kafka. We saw in the previous posts how to produce and consume JSON messages using the plain Java client and Jackson. We will see here how to create our own serializers and deserializers.
 
 # What we are going to build in this tutorial
 
