@@ -8,7 +8,7 @@ language: EN
 
 Kafka 2.0 [just got released](http://kafka.apache.org/downloads#2.0.0), so it is a good time to review the basics of _using_ Kafka. I am going to focus on producing, consuming and processing messages or events. I don't plan on covering the basic properties of Kafka (partitioning, replication, offset management, etc.) - these are well covered [in the documentation of Kafka](https://kafka.apache.org/documentation/).
 
-Most of the code shown in these tutorials will be written in Kotlin. Kotlin is a better Java, and if you haven't started using it, now is the time to read [my introduction to this language](https://blog.ippon.tech/my-journey-with-kotlin-part-1-how-i-came-to-dislike-java/). These posts will be a good opportunity to see some nice features of Kotlin.
+Most of the code shown in these tutorials will be written in Kotlin. Kotlin is a better Java, and if you haven't started using it, now is the time to read [my introduction to this language](/2018/02/03/my-journey-with-kotlin-part-1-how-i-came-to-dislike-java.html). These posts will be a good opportunity to see some nice features of Kotlin.
 
 # What we are going to build in this first tutorial
 
