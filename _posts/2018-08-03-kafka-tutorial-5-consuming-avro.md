@@ -23,7 +23,7 @@ We are now going to take the code from [part 2](/2018/08/01/kafka-tutorial-2-sim
 
 # The consumer
 
-Let's stat by changing the code that creates the consumer:
+Let's start by changing the code that creates the consumer:
 
 ```kotlin
 private fun createConsumer(brokers: String, schemaRegistryUrl: String): Consumer<String, GenericRecord> {
