@@ -309,7 +309,7 @@ kafkaOutput.awaitTermination()
 consoleOutput.awaitTermination()
 ```
 
-_Update:_ my friend [Paul Leclercq](https://twitter.com/polomarcus) made me notice we can replace the calls to `awaitTermination()` with a single call to `spark.streams.awaitAnyTermination()`
+_Update:_ my friend [Paul Leclercq](https://twitter.com/polomarcus) made me notice we can replace the calls to `awaitTermination()` with a single call to `spark.streams.awaitAnyTermination()`!
 
 # Conclusion
 
