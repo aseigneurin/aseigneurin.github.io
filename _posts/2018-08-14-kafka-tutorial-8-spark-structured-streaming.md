@@ -309,6 +309,8 @@ kafkaOutput.awaitTermination()
 consoleOutput.awaitTermination()
 ```
 
+_Update:_ my friend [Paul Leclercq](https://twitter.com/polomarcus) made me notice we can replace the calls to `awaitTermination()` with a single call to `spark.streams.awaitAnyTermination()`
+
 # Conclusion
 
 If you already use Spark to process data in batch with Spark SQL, Spark Structured Streaming is appealing. It offers the same Dataframes API as its batch counterpart.
