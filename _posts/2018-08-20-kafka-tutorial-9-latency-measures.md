@@ -6,7 +6,7 @@ tags:   kafka
 language: EN
 ---
 
-In [the previous posts](https://blog.ippon.tech/tag/apache-kafka/), we went through how to consume data from Kafka with the low-level Java client, with Kafka Streams, and with Spark Structured Streaming. In this post, we will run a quick experiment to see what latency each library/framework can achieve.
+In the previous posts, we went through how to consume data from Kafka with the low-level Java client, with Kafka Streams, and with Spark Structured Streaming. In this post, we will run a quick experiment to see what latency each library/framework can achieve.
 
 **Please note this is a simple test, not very scientific, and I am doing my best to make an unbiased comparison!**
 
@@ -15,9 +15,9 @@ In [the previous posts](https://blog.ippon.tech/tag/apache-kafka/), we went thro
 Since Kafka 0.10, Kafka messages contain a timestamp. This timestamp can be assigned by the producer, or is assigned by the broker if none is provided. By comparing timestamps in the output topic with timestamps in the input topic, we can measure processing latency.
 
 So far, we built 3 consumers that consume records from a Kafka topic and produce output records in another topic:
-- we started by using the Java Kafka client [in part 2](https://blog.ippon.tech/kafka-tutorial-2-simple-consumer-in-kotlin/)
-- we then used Kafka Streams [in part 6](https://blog.ippon.tech/kafka-tutorial-6-kafka-streams-in-kotlin/)
-- we finally used Spark Structured Streaming [in part 8](https://blog.ippon.tech/kafka-tutorial-8-spark-structured-streaming/).
+- we started by using the Java Kafka client [in part 2](/2018/08/01/kafka-tutorial-2-simple-consumer-in-kotlin.html)
+- we then used Kafka Streams [in part 6](/2018/08/03/kafka-tutorial-6-kafka-streams-in-kotlin.html)
+- we finally used Spark Structured Streaming [in part 8](/2018/08/14/kafka-tutorial-8-spark-structured-streaming.html).
 
 In these 3 examples, we were consuming person objects from the input topic `persons`:
 
@@ -95,7 +95,7 @@ Finally, in the results below, we are launching a producer that sends records at
 
 # Results with the Java client
 
-Let's start by measuring the latency of the processor we built with the Java Kafka client [in part 2](https://blog.ippon.tech/kafka-tutorial-2-simple-consumer-in-kotlin/).
+Let's start by measuring the latency of the processor we built with the Java Kafka client [in part 2](/2018/08/01/kafka-tutorial-2-simple-consumer-in-kotlin.html).
 
 ```
 Latency: 1
@@ -114,7 +114,7 @@ Latency is quite low: about 1 millisecond. This is quite good, especially since 
 
 # Results with Kafka Streams
 
-Let's now measure the performance of the Kafka Streams application we built [in part 6](https://blog.ippon.tech/kafka-tutorial-6-kafka-streams-in-kotlin/):
+Let's now measure the performance of the Kafka Streams application we built [in part 6](/2018/08/03/kafka-tutorial-6-kafka-streams-in-kotlin.html):
 
 ```
 Latency: 0
@@ -135,7 +135,7 @@ Kafka Streams is faster than a simple application built with the Java client. Th
 
 # Results with Spark Structured Streaming
 
-Now, let's look at how the Spark Structured Streaming application we created [in part 8](https://blog.ippon.tech/kafka-tutorial-8-spark-structured-streaming/) performs:
+Now, let's look at how the Spark Structured Streaming application we created [in part 8](/2018/08/14/kafka-tutorial-8-spark-structured-streaming.html) performs:
 
 ```
 Latency: 223
@@ -150,7 +150,7 @@ Latency: 448
 Latency: 375
 ```
 
-Latency is much higher here, and it oscillates heavily: it sometimes goes down to 60-70 milliseconds, but also goes up to 0.5 second. This is multiple orders of magnitude higher than what the Java client and Kafka Streams provide. I was saying [in the previous post](https://blog.ippon.tech/kafka-tutorial-8-spark-structured-streaming/) that Spark is throughput-oriented, not latency-oriented, and this is a confirmation.
+Latency is much higher here, and it oscillates heavily: it sometimes goes down to 60-70 milliseconds, but also goes up to 0.5 second. This is multiple orders of magnitude higher than what the Java client and Kafka Streams provide. I was saying [in the previous post](/2018/08/14/kafka-tutorial-8-spark-structured-streaming.html) that Spark is throughput-oriented, not latency-oriented, and this is a confirmation.
 
 Such latency can be a problem on some projects, in particular when the data pipeline is made of multiple microservices that are chained together, ending up in the total latency of the pipeline being higher than one second.
 
