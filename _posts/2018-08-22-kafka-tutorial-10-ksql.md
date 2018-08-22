@@ -236,5 +236,3 @@ Now, if you exit the KSQL CLI, the queries keep running in KSQL Server and you c
 KSQL is still quite young, but the product has already gained a lot of maturity. It will most likely keep being extended to support more data formats, more functions, etc.
 
 In this post, we have seen for sure that we can do a lot with just simple SQL queries, without writing any Java code. This makes KSQL a very powerful tool for non-programmers, and definitely a serious contender for data exploration use cases.
-
-Feel free to ask questions in the comments section below!
