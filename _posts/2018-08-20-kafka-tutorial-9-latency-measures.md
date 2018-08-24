@@ -21,7 +21,7 @@ So far, we built 3 consumers that consume records from a Kafka topic and produce
 
 In these 3 examples, we were consuming person objects from the input topic `persons`:
 
-```json
+```javascript
 {"firstName":"Quentin","lastName":"Corkery","birthDate":"1984-10-26T03:52:14.449+0000"}
 {"firstName":"Neil","lastName":"Macejkovic","birthDate":"1971-08-06T18:03:11.533+0000"}
 ...

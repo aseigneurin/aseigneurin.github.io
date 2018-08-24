@@ -29,7 +29,7 @@ tx-1 |v|i|v|v|   |v|v|v|     |i|i|v|v|
 
 We will now include the partition number as the key of our output:
 
-```json
+```javascript
 $ kafka-console-consumer --topic metrics --property print.key=true ...
 {"topic":"tx","partition":0,"window":1501273548000,"status":"valid"}      4
 {"topic":"tx","partition":0,"window":1501273548000,"status":"invalid"}    1
@@ -71,7 +71,7 @@ time                valid invalid
 
 Now, we got rid of the `repartition` topic(s) but we still need a `changelog` if we want our application to be fault tolerant. Well, the change log is nothing else than the _metrics_ topic with an additional field to store the offset that correspond to the last message we counted. Let's merge these topics and change the format of the value:
 
-```json
+```javascript
 $ kafka-console-consumer --topic changelog --property print.key=true ...
 {"topic":"tx","partition":0,"window":1501273548000,"status":"valid"}      {"value":4,"offset":5}
 {"topic":"tx","partition":0,"window":1501273548000,"status":"invalid"}    {"value":1,"offset":4}

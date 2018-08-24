@@ -22,7 +22,7 @@ data class Person(
 
 We were then using a Jackson `ObjectMapper` to convert data between `Person` objects and JSON strings:
 
-```json
+```javascript
 {"firstName":"Quentin","lastName":"Corkery","birthDate":"1984-10-26T03:52:14.449+0000"}
 ...
 ```

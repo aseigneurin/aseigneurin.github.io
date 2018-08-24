@@ -14,7 +14,7 @@ Although we used Kotlin in the previous posts, we are going to code in Scala thi
 
 We are going to reuse the example from [part 1](/2018/08/01/kafka-tutorial-1-simple-producer-in-kotlin.html) and [part 2](/2018/08/01/kafka-tutorial-2-simple-consumer-in-kotlin.html) of this tutorial. In part 1, we created a producer than sends data in JSON format to a topic:
 
-```json
+```javascript
 {"firstName":"Quentin","lastName":"Corkery","birthDate":"1984-10-26T03:52:14.449+0000"}
 {"firstName":"Neil","lastName":"Macejkovic","birthDate":"1971-08-06T18:03:11.533+0000"}
 ...
@@ -279,7 +279,7 @@ Notice that we have to specify a location for checkpoints. This is required for 
 
 To test this code, let's first start the producer we created in [part 1](/2018/08/01/kafka-tutorial-1-simple-producer-in-kotlin.html) and run a console consumer to visualize the data:
 
-```json
+```javascript
 {"firstName":"Corene","lastName":"Glover","birthDate":"1999-12-26T17:07:18.279+0000"}
 {"firstName":"Forest","lastName":"Spencer","birthDate":"1979-04-29T08:07:12.123+0000"}
 ...

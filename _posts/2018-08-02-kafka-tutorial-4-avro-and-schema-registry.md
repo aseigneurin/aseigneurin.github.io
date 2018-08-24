@@ -38,7 +38,7 @@ data class Person(
 
 The corresponding Avro schema would be ([documentation is available on the project's site](http://avro.apache.org/docs/current/spec.html)):
 
-```json
+```javascript
 {
   "type": "record",
   "name": "Person",

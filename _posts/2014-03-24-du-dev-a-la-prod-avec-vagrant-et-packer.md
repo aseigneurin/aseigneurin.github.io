@@ -104,7 +104,7 @@ $ find .
 
 La configuration doit être légèrement modifiée (bugs mineurs du convertisseur) : `virtualbox` doit être remplacé par `virtualbox-iso`, et la plupart des commands `<wait>` doivent être supprimées. La configuration du builder obtenue est alors :
 
-```json
+```javascript
 {
     "boot_command": [
         "<esc><esc><enter><wait>",
@@ -139,7 +139,7 @@ Préparons maintenant le builder pour Amazon AWS. Dans ce cas, nous ne pourrons 
 
 Notre builder sera configurée comme suit :
 
-```json
+```javascript
 {
     "type": "amazon-ebs",
     "access_key": "{{user `aws_access_key`}}",
@@ -163,7 +163,7 @@ Il nous reste à modifier les provisioners :
 
 La configuration des provisioners devient :
 
-```json
+```javascript
 "provisioners": [
     {
         "execute_command": "echo 'vagrant'|sudo -S sh '{{.Path}}'",
@@ -207,7 +207,7 @@ apt-get -y install nodejs
 
 Enfin, nous rajoutons un post-processeur qui créera les box Vagrant à partir de l’AMI AWS et de la VM VirtualBox :
 
-```json
+```javascript
 "post-processors": [
     {
         "keep_input_artifact": true,

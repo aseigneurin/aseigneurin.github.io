@@ -81,7 +81,7 @@ The CLI offers a prompt that is very similar to the one offered by SQL databases
 
 So far, KSQL doesn't _know_ our data. We have to declare either a stream or a table. As a reminder, we had created a producer in [part 1 of this series](/2018/08/01/kafka-tutorial-1-simple-producer-in-kotlin.html), and we were generating JSON data in a topic called `persons`. The data looked like:
 
-```json
+```javascript
 {"firstName":"Quentin","lastName":"Corkery","birthDate":"1984-10-26T03:52:14.449+0000"}
 {"firstName":"Lysanne","lastName":"Beer","birthDate":"1997-10-22T04:09:35.696+0000"}
 {"firstName":"Neil","lastName":"Macejkovic","birthDate":"1971-08-06T18:03:11.533+0000"}

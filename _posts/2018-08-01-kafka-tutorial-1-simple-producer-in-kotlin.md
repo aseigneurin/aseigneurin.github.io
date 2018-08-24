@@ -16,7 +16,7 @@ We are going to start by using the Java client library, in particular its [Produ
 
 We need a source of data, so to make it simple, we will produce mock data. Each message will be a _person_ with a first name, last name, and birth date. We will use a _producer_ to send these messages in JSON format to a topic:
 
-```json
+```javascript
 {"firstName":"Quentin","lastName":"Corkery","birthDate":"1984-10-26T03:52:14.449+0000"}
 {"firstName":"Neil","lastName":"Macejkovic","birthDate":"1971-08-06T18:03:11.533+0000"}
 ...

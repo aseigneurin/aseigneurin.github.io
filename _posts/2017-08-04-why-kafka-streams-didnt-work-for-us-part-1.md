@@ -50,7 +50,7 @@ We would expect the following results:
 
 This would materialize as follows in the `metrics` topic, assuming that `t0=1501273548000`: 
 
-```json
+```javascript
 $ kafka-console-consumer --topic metrics --property print.key=true ...
 {"topic":"tx","window":1501273548000,"status":"valid"}      7
 {"topic":"tx","window":1501273548000,"status":"invalid"}    2
@@ -76,7 +76,7 @@ time                valid invalid
 
 Now, in the case of late-arrival / late-processed data, we would simply send an update to the `metrics` topic. For instance, if we received one more valid message for `t1`, we would output the following _update_:
 
-```json
+```javascript
 {"topic":"tx","window":1501273549000,"status":"valid"}      5
 ```
 

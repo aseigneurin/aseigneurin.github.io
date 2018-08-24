@@ -90,7 +90,7 @@ We then do a final transformation of our key and value and output this to a topi
 
 This would look like:
 
-```json
+```javascript
 $ kafka-console-consumer --topic metrics --property print.key=true ...
 {"topic":"tx","window":1501273548000,"status":"valid"}      7
 {"topic":"tx","window":1501273548000,"status":"invalid"}    2
