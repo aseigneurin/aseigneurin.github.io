@@ -107,7 +107,7 @@ Notice that, unlike how we used the Java client, we don't need to specify serial
 
 We can reuse the code of [part 1](/2018/08/01/kafka-tutorial-1-simple-producer-in-kotlin.html) to produce data, so let's go ahead and run this producer, and run the console consumer to visualize the data:
 
-```shell
+```bash
 $ kafka-console-consumer --bootstrap-server localhost:9092 --topic persons
 {"firstName":"Patrick","lastName":"Rempel","birthDate":"1988-03-15T17:58:16.310+0000"}
 {"firstName":"Charlotte","lastName":"Windler","birthDate":"1978-11-28T03:16:24.950+0000"}
@@ -116,7 +116,7 @@ $ kafka-console-consumer --bootstrap-server localhost:9092 --topic persons
 
 Now, we can either run the Kafka Streams application straight from the IDE, or build it and run it from the command line:
 
-```shell
+```bash
 $ gradle build
 ...
 $ java -cp build/libs/kafka-streams.jar com.ippontech.kafkastreams.StreamsProcessorKt
@@ -138,7 +138,7 @@ Success!
 
 We said that Kafka Streams can easily scale out by running multiple instances of the same application. Let's verify this by running a second instance in another window (I am shortening the logs for better readability):
 
-```shell
+```bash
 $ java -cp build/libs/kafka-streams.jar com.ippontech.kafkastreams.StreamsProcessorKt
 ...
 18/08/03 18:43:56.039 INFO ... Setting newly assigned partitions [persons-2, persons-3]
@@ -148,7 +148,7 @@ This new instance was just assigned 2 partitions of our topic (2 and 3), out of 
 
 Let's look at the log of the first instance:
 
-```shell
+```bash
 ...
 18/08/03 18:43:56.014 INFO ... Revoking previously assigned partitions [persons-0, persons-1, persons-2, persons-3]
 18/08/03 18:43:56.014 INFO ... State transition from RUNNING to PARTITIONS_REVOKED

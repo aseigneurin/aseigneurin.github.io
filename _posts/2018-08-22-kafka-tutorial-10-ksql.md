@@ -26,7 +26,7 @@ The Confluent Platform ships with KSQL. I will be using the Confluent Platform v
 
 You can start the KSQL Server with the `ksql-server-start` command:
 
-```shell
+```bash
 $ ksql-server-start etc/ksql/ksql-server.properties
 ...
                   ===========================================
@@ -54,7 +54,7 @@ The server is now ready for us to submit commands.
 
 Let's start the CLI with the `ksql` command:
 
-```shell
+```bash
 $ ksql
 
                   ===========================================
@@ -199,7 +199,7 @@ ksql> CREATE STREAM ages WITH (kafka_topic='ages', value_format='delimited') AS 
 
 The query is running in the background, in the KSQL Server. Let's run the console consumer to see the results:
 
-```shell
+```bash
 $ kafka-console-consumer --bootstrap-server localhost:9092 --topic ages --property print.key=true
 null	20
 null	36
@@ -222,7 +222,7 @@ ksql> CREATE STREAM ages WITH (kafka_topic='ages', value_format='delimited') AS 
 
 The console consumer now shows the expected results:
 
-```shell
+```bash
 $ kafka-console-consumer --bootstrap-server localhost:9092 --topic ages --property print.key=true
 Karli Heathcote	46
 Zack Cartwright	40

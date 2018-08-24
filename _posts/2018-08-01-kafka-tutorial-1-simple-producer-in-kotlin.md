@@ -141,7 +141,7 @@ Notice that we send a record without a key (we only specified the value), so the
 
 I will assume you have downloaded [Kafka 2.0](https://kafka.apache.org/downloads#2.0.0) or [Confluent Platform 5.0](https://www.confluent.io/download/) and you want to run a single broker on your laptop. Let's start ZooKeeper:
 
-```shell
+```bash
 $ bin/zookeeper-server-start etc/kafka/zookeeper.properties
 ...
 [2018-08-01 09:57:11,823] INFO binding to port 0.0.0.0/0.0.0.0:2181 (org.apache.zookeeper.server.NIOServerCnxnFactory)
@@ -149,7 +149,7 @@ $ bin/zookeeper-server-start etc/kafka/zookeeper.properties
 
 ZooKeeper is now running on port 2181. Now, start Kafka:
 
-```shell
+```bash
 $ bin/kafka-server-start etc/kafka/server.properties
 ...
 [2018-08-01 09:57:32,511] INFO Kafka version : 2.0.0-cp1 (org.apache.kafka.common.utils.AppInfoParser)
@@ -157,13 +157,13 @@ $ bin/kafka-server-start etc/kafka/server.properties
 
 Our broker is running on port 9092. Let's create a topic for our data:
 
-```shell
+```bash
 $ kafka-topics --zookeeper localhost:2181 --create --topic persons --replication-factor 1 --partitions 4
 ```
 
 Now we can start the application in our IDE, and see data coming in:
 
-```shell
+```bash
 $ kafka-console-consumer --bootstrap-server localhost:9092 --topic persons
 {"firstName":"Meredith","lastName":"Willms","birthDate":"1980-08-21T10:13:27.533+0000"}
 {"firstName":"Anastacio","lastName":"Beier","birthDate":"1966-03-29T05:00:48.993+0000"}

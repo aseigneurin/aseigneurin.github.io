@@ -120,13 +120,13 @@ I am using a separate Kafka producer for this, but we could reuse the producer c
 
 I am going to assume the producer (first part of the tutorial) is running and producing data to the `persons` topic. Let's create a new topic for our output:
 
-```shell
+```bash
 $ kafka-topics --zookeeper localhost:2181 --create --topic ages --replication-factor 1 --partitions 4
 ```
 
 We can start a consumer:
 
-```shell
+```bash
 $ kafka-console-consumer --bootstrap-server localhost:9092 --topic ages --property print.key=true
 ```
 

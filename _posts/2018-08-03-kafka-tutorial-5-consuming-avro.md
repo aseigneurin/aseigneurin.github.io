@@ -12,7 +12,7 @@ This is the fifth post in this series where we go through the basics of using Ka
 
 We have produced messages in Avro format and we have been able to display them in JSON format using the Kafka Avro console consumer:
 
-```shell
+```bash
 $ kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic persons-avro
 {"firstName":"Stephania","lastName":"Okuneva","birthDate":582023554621}
 {"firstName":"Aleen","lastName":"Terry","birthDate":159202477258}

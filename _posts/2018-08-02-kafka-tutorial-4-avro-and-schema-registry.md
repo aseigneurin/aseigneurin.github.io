@@ -70,7 +70,7 @@ We have our schema. Now we need to register it in the Schema Registry.
 
 Make sure you have downloaded the Confluent Platform, then start the Schema Registry:
 
-```shell
+```bash
 $ bin/schema-registry-start etc/schema-registry/schema-registry.properties
 ...
 [2018-08-02 11:24:15,570] INFO Started NetworkTrafficServerConnector@2dd80673{HTTP/1.1,[http/1.1]}{0.0.0.0:8081} (org.eclipse.jetty.server.AbstractConnector:289)
@@ -78,7 +78,7 @@ $ bin/schema-registry-start etc/schema-registry/schema-registry.properties
 
 The Schema Registry is running on port 8081. It offers a REST API with which you can interact with Curl, for instance. Registering a schema is not very easy, though, because you have to embed the JSON schema into another JSON object, meaning you have to do some escaping... Instead, I have a [small Python scripts](https://gist.github.com/aseigneurin/5730c07b4136a84acb5aeec42310312c) to register a schema:
 
-```shell
+```bash
 $ python src/main/resources/register_schema.py http://localhost:8081 persons-avro src/main/resources/person.avsc
 Schema Registry URL: http://localhost:8081
 Topic: persons-avro
@@ -91,7 +91,7 @@ You have to provide the URL of the Schema Registry (starting with `http://`, not
 
 The equivalent Curl command would have been:
 
-```shell
+```bash
 $ curl -X POST -H "Content-Type: application/vnd.schemaregistry.v1+json" \
   --data '{ "schema": "{ \"type\": \"record\", \"name\": \"Person\", \"namespace\": \"com.ippontech.kafkatutorials\", \"fields\": [ { \"name\": \"firstName\", \"type\": \"string\" }, { \"name\": \"lastName\", \"type\": \"string\" }, { \"name\": \"birthDate\", \"type\": \"long\" } ]}" }' \
   http://localhost:8081/subjects/persons-avro-value/versions
@@ -103,7 +103,7 @@ Notice that we are registering the schema under a "subject" named `persons-avro-
 
 We can check that our schema has been registered:
 
-```shell
+```bash
 $ curl http://localhost:8081/subjects/persons-avro-value/versions/
 [1]
 
@@ -176,7 +176,7 @@ val futureResult = producer.send(ProducerRecord(personsAvroTopic, avroPerson))
 
 So far, we still haven't created a new topic for our messages. Let's go ahead and create one:
 
-```shell
+```bash
 $ kafka-topics --zookeeper localhost:2181 --create --topic persons-avro --replication-factor 1 --partitions 4
 ```
 
@@ -184,7 +184,7 @@ Notice that we're just creating a normal topic. Nothing here indicates the forma
 
 Now, start the code in your IDE and launch a console consumer:
 
-```shell
+```bash
 $ kafka-console-consumer --bootstrap-server localhost:9092 --topic persons-avro
 TrystanCummerata��
 
@@ -196,7 +196,7 @@ This is not really pretty. Data is in binary format - we can read the strings bu
 
 A better option is to use `kafka-avro-console-consumer` instead, which deserializes Avro records and prints them as JSON objects:
 
-```shell
+```bash
 $ kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic persons-avro
 {"firstName":"Stephania","lastName":"Okuneva","birthDate":582023554621}
 {"firstName":"Aleen","lastName":"Terry","birthDate":159202477258}
