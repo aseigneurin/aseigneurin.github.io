@@ -195,7 +195,7 @@ root
  |    |-- firstName: string (nullable = true)
  |    |-- lastName: string (nullable = true)
  |    |-- birthDate: string (nullable = true)
- ```
+```
 
 Let's _flatten_ this Dataframe:
 
