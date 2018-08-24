@@ -305,10 +305,7 @@ a.link-home:hover {
   content: "\e021";
 }
 
-/* Override pygment_trac.css */
-.highlight {
+/* Override syntax highlighting CSS */
+pre[class*="language-"] {
   background:#f8f8f8 !important;
-}
-.highlight .err {
-  background-color:#f8f8f8 !important;
 }
