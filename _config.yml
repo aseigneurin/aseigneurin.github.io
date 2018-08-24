@@ -13,3 +13,6 @@ stackoverflow_url: http://stackoverflow.com/story/alexis.seigneurin
 
 # Build settings
 markdown: kramdown
+kramdown:
+   syntax_highlighter_opts:
+      disable : true
