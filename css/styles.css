@@ -3,17 +3,17 @@
 body {
   padding:50px;
   font:16px/1.5 Lato, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color:#666;
+  color:#555;
   font-weight:300;
 }
 
 h1, h2, h3, h4, h5, h6 {
   color:#222;
-  margin:0 0 20px;
+  margin:20px 0 20px;
 }
 
 p, article > ul, article > ol, table, pre, dl {
-  margin:0 0 20px;
+  margin:20px 0 20px;
 }
 
 h1, h2, h3 {
@@ -308,4 +308,5 @@ a.link-home:hover {
 /* Override syntax highlighting CSS */
 pre[class*="language-"] {
   background:#f8f8f8 !important;
+  margin: 20px 0 20px 0;
 }
