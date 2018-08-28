@@ -6,7 +6,7 @@ tags:   kafka
 language: EN
 ---
 
-I wrote quite a few tutorials about Kafka, so now is the time to look at more advanced problems. In this post, we will see how to perform _windowed aggregations_ and we are going to deal with _late events_.
+I wrote quite a few tutorials about Kafka, so now is the time to look at more advanced problems. In this post, we will see how to perform _windowed aggregations_ and how to deal with _late events_.
 
 In the tutorials, we were processing _messages_, but we will now start dealing with **events**. Events are things that happened at a particular **time**.
 
