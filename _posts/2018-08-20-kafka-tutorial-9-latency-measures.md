@@ -97,7 +97,7 @@ Finally, in the results below, we are launching a producer that sends records at
 
 Let's start by measuring the latency of the processor we built with the Java Kafka client [in part 2](/2018/08/01/kafka-tutorial-2-simple-consumer-in-kotlin.html).
 
-```
+```text
 Latency: 1
 Latency: 1
 Latency: 1
@@ -116,7 +116,7 @@ Latency is quite low: about 1 millisecond. This is quite good, especially since 
 
 Let's now measure the performance of the Kafka Streams application we built [in part 6](/2018/08/03/kafka-tutorial-6-kafka-streams-in-kotlin.html):
 
-```
+```text
 Latency: 0
 Latency: 0
 Latency: 0
@@ -137,7 +137,7 @@ Kafka Streams is faster than a simple application built with the Java client. Th
 
 Now, let's look at how the Spark Structured Streaming application we created [in part 8](/2018/08/14/kafka-tutorial-8-spark-structured-streaming.html) performs:
 
-```
+```text
 Latency: 223
 Latency: 219
 Latency: 215
@@ -174,7 +174,7 @@ Here, we are requiring the query to be processed _continuously_ with a checkpoin
 
 Let's see the results:
 
-```
+```text
 Latency: 2
 Latency: 1
 Latency: 1
