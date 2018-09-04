@@ -6,7 +6,7 @@ tags: spark scala python pyspark
 language: EN
 ---
 
-In [a previous post](http://aseigneurin.github.io/2016/05/07/spark-kafka-achieving-zero-data-loss.html), I demonstrated how to consume a Kafka topic using Spark in a resilient manner. The resiliency code was written in Scala. Now, I want to leverage that Scala code to connect Spark to Kafka in a PySpark application. We will see how we can call Scala code from Python code and what are the restrictions.
+In [a previous post](/2016/05/07/spark-kafka-achieving-zero-data-loss.html), I demonstrated how to consume a Kafka topic using Spark in a resilient manner. The resiliency code was written in Scala. Now, I want to leverage that Scala code to connect Spark to Kafka in a PySpark application. We will see how we can call Scala code from Python code and what are the restrictions.
 
 # Basic method call through Py4J
 

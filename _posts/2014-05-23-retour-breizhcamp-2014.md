@@ -71,6 +71,6 @@ Sans que le terme ait été prononcé une seule fois, la problématique DevOps e
 
 # Auto-promo…
 
-J’étais moi-même speaker pour cette édition. J’ai présenté un quickie sur les interfaces fonctionnelles de Java 8. Petit moment de panique au moment de démarrer avec le crash de mon Mac, mais l’assistance était bienveillante. Bref, les slides sont dispos ici : [pres-java8-breizhcamp](http://aseigneurin.github.io/downloads/pres-java8-breizhcamp/)
+J’étais moi-même speaker pour cette édition. J’ai présenté un quickie sur les interfaces fonctionnelles de Java 8. Petit moment de panique au moment de démarrer avec le crash de mon Mac, mais l’assistance était bienveillante. Bref, les slides sont dispos ici : [pres-java8-breizhcamp](/downloads/pres-java8-breizhcamp/)
 
-J’ai également présenté un tools in action intitulé « Vagrant pour les développeurs ». Les slides sont également en ligne : [pres-vagrant-breizhcamp](http://aseigneurin.github.io/downloads/pres-vagrant-breizhcamp/). Je vais proposer cette présentation en Brown Bag Lunch. Rendez-vous très bientôt sur [Brown Bag Lunch France](http://www.brownbaglunch.fr/) ou sur [Twitter](https://twitter.com/aseigneurin).
+J’ai également présenté un tools in action intitulé « Vagrant pour les développeurs ». Les slides sont également en ligne : [pres-vagrant-breizhcamp](/downloads/pres-vagrant-breizhcamp/). Je vais proposer cette présentation en Brown Bag Lunch. Rendez-vous très bientôt sur [Brown Bag Lunch France](http://www.brownbaglunch.fr/) ou sur [Twitter](https://twitter.com/aseigneurin).
