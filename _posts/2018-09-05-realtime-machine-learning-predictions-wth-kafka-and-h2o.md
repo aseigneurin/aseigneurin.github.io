@@ -12,7 +12,7 @@ When you start doing some Machine Learning, you go through a batch-oriented proc
 
 To illustrate this article, let's take one of the most common use cases of Machine Learning: estimating prices of real estate ([just like Zillow does](https://www.zdnet.com/article/zillow-machine-learning-and-data-in-real-estate/)). You have a dataset of **past observations**, with the characteristics and the selling price of some houses:
 
-![](../images/kafka-h2o-data.png)
+![](/images/kafka-h2o-data.png)
 
 You can build a regression model so that, when there is a new house to sell, you can estimate what the selling price will be. E.g. a house of 2000 sqft with a lot of 0.5 acres might sell around $250,000.
 
@@ -48,11 +48,11 @@ These are all great options to build a ML model, but let's say you want to use t
 
 I am not going to explain how to use the H2O platform, and show how to build a model. Instead, follow this [Quick Start Tutorial For Just About Anyone](https://bitbook.io/h2o-ai-quick-start-tutorial-for-just-about-anyone/). In this tutorial, the author uses the data I showed above, and builds a model with the _gradient boosting machine_ algorithm. You should get something like this:
 
-![](../images/kafka-h2o-model.png)
+![](/images/kafka-h2o-model.png)
 
 Go ahead and click on "Download POJO" to get a Java file that looks like this:
 
-![](../images/kafka-h2o-pojo.png)
+![](/images/kafka-h2o-pojo.png)
 
 # Using the model in a Java application
 
@@ -60,7 +60,7 @@ Now, let's use our model in a Java application (we're actually going to use Kotl
 
 Start by creating a project, then put the POJO you downloaded earlier under the `src/main/java/` directory. By default, the model belongs to the root package, which is not great, so let's move it to another package. I moved the class to the `com.ippontech.kafkah2o` package:
 
-![](../images/kafka-h2o-project-structure.png)
+![](/images/kafka-h2o-project-structure.png)
 
 We are not going to use H2O's Gen Model library to interact with the model, so let's add a dependency in our Gradle build:
 
