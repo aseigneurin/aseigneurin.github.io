@@ -6,7 +6,7 @@ tags:   kafka
 language: EN
 ---
 
-When you start doing some Machine Learning, you go through a batch-oriented process: you take a dataset, you build a Machine Learning model from this data, and you use this model to make some predictions on another dataset. Then, you want to apply this process to streaming data, and this is where it can get confusing! Let's see what you can do in streaming and what you cannot do.
+When you start doing some Machine Learning, you go through a batch-oriented process: you take a dataset, build a Machine Learning model from this data, and use the model to make some predictions on another dataset. Then, you want to apply this process to streaming data, and this is where it can get confusing! Let's see what you can do in streaming and what you cannot do.
 
 # Looking at a use case
 
@@ -122,7 +122,7 @@ $ kafka-console-consumer --bootstrap-server localhost:9092 --topic housing
 
 We are going to build a [Kafka Streams](https://kafka.apache.org/documentation/streams/) application to process this stream and make predictions as new records arrive.
 
-First step is to create a model for our data. We are using a [Kotlin data class](https://kotlinlang.org/docs/reference/data-classes.html):
+The first step is to create a model for our data. We are using a [Kotlin data class](https://kotlinlang.org/docs/reference/data-classes.html):
 
 ```kotlin
 @JsonInclude(Include.NON_NULL)
@@ -138,10 +138,10 @@ data class House(
         val main_flooring_type: String,
         val has_granite_counters: Boolean,
         val house_age_years: Int,
-        val sale_price: Int? = null)
+        val selling_price: Int? = null)
 ```
 
-The `sale_price` property is the value we will predict. We will use it when we output predictions to another Kafka topic.
+The `selling_price` property is the value we will predict. We will use it when we output predictions to another Kafka topic.
 
 We can now read the data from the input topic into a `KStream<String, House>`:
 
@@ -170,11 +170,11 @@ val predictionsStream: KStream<String, House> = housesStream.mapValues { _, h ->
         put("house_age_years", h.house_age_years.toDouble())
     }
     val prediction = model.predictRegression(row).value.toInt()
-    h.copy(sale_price = prediction)
+    h.copy(selling_price = prediction)
 }
 ```
 
-Notice that, to convert booleans, I used a [Kotlin extension function](https://kotlinlang.org/docs/reference/extensions.html):
+Notice that I used a [Kotlin extension function](https://kotlinlang.org/docs/reference/extensions.html) to convert booleans:
 
 ```kotlin
 fun Boolean.toYesNo(): String = if (this == true) "yes" else "no"
@@ -200,17 +200,17 @@ Now, if we look at the output topic, we can see the input data enhanced with pre
 ```bash
 $ kafka-console-consumer --bootstrap-server localhost:9092 --topic predictions
 
-{"sqft":2572,"lot_size_acres":0.2318716,...,"sale_price":297625}
+{"sqft":2572,"lot_size_acres":0.2318716,...,"selling_price":297625}
 
-{"sqft":1256,"lot_size_acres":0.774486,...,"sale_price":254118}
+{"sqft":1256,"lot_size_acres":0.774486,...,"selling_price":254118}
 
-{"sqft":2375,"lot_size_acres":0.7467226,...,"sale_price":303408}
+{"sqft":2375,"lot_size_acres":0.7467226,...,"selling_price":303408}
 ...
 ```
 
 # Conclusion
 
-We saw in this post how we can embed a Machine Learning model in a Kafka Streams application. The model was built outside of the streaming pipeline, and the generated POJO was completely independant from the platform were the model was trained.
+We saw in this post how we can embed a Machine Learning model in a Kafka Streams application. The model was built outside of the streaming pipeline, and the generated POJO was completely independant from the platform where the model was trained.
 
 There are pros and cons to embedding a model in your application, as opposed to serving a model through an API:
 - pros:
