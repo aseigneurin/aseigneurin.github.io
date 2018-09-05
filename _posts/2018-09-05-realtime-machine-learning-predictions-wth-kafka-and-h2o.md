@@ -37,7 +37,7 @@ Let's look at some popular Machine Learning toolkits:
 - [H2O.ai](https://www.h2o.ai/): a mostly-Java based platform.
 
 These are all great options to build a ML model, but let's say you want to use the model to make some predictions in realtime, as events arrive in Kafka, and your application is Java-based:
-- scikit-learn and Tensorflow: since these are Python libraries, your best bet is to expose the model on a REST API, and call the API from your Java application. Serving the model - and potentially scaling it - requires some work, though.
+- scikit-learn and Tensorflow: since these are Python libraries, your best bet is to [expose the model on a REST API](https://towardsdatascience.com/deploying-a-machine-learning-model-as-a-rest-api-4a03b865c166), and call the API from your Java application. Serving the model - and potentially scaling it - requires some work, though.
 - Spark ML: you will most likely have to use Spark Streaming, which comes with its set of challenges (high latency, complexity when updating an application, etc.).
 - Cloud-hosted services: these are API-based, and therefore very easy to integrate, but latency might be too high if you need to make your predictions with a very low-latency.
 - H2O.ai: this platform allows you to download the model as a POJO (a Java class) that you can integrate in your application. **This is what we are going to use in this post.**
