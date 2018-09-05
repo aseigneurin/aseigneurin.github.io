@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Realtime Machine Learning predictions with Kafka and H2O AI"
+title:  "Realtime Machine Learning predictions with Kafka and H2O.ai"
 date:   2018-09-05 12:00:00
 tags:   kafka
 language: EN
