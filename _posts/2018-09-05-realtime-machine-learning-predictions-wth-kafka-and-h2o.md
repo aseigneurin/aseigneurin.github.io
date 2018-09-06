@@ -31,9 +31,9 @@ To recap the point above:
 - A streaming application can use the model (without updating it), and we may need to update the application when a new model is produced.
 
 Let's look at some popular Machine Learning toolkits:
-- [scikit-learn](http://scikit-learn.org/) and [Tensorflow](https://www.tensorflow.org/): two popular Python libraries.
+- Python libraries, such as [scikit-learn](http://scikit-learn.org/), [Tensorflow](https://www.tensorflow.org/) and [Keras](https://keras.io/).
 - [Spark ML](https://spark.apache.org/docs/latest/ml-guide.html): a library built on top of Apache Spark.
-- cloud-hosted Machine Learning services, such as [Google Cloud Machine Learning Engine](https://cloud.google.com/ml-engine/) or [AWS SageMaker](https://aws.amazon.com/sagemaker/).
+- cloud-hosted Machine Learning services, such as [Google Cloud Machine Learning Engine](https://cloud.google.com/ml-engine/) and [AWS SageMaker](https://aws.amazon.com/sagemaker/).
 - [H2O.ai](https://www.h2o.ai/): a mostly-Java based platform.
 
 These are all great options to build a ML model, but let's say you want to use the model to make some predictions in realtime, as events arrive in Kafka, and your application is Java-based:
