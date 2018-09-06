@@ -197,6 +197,4 @@ Spark is a different animal. Many developers who use Spark for batch processing 
 
 Make sure you keep all of this in mind when you choose a technology to process messages from Kafka!
 
-The code of these tutorials can be found [here](https://github.com/aseigneurin/kafka-tutorials).
-
-Feel free to ask questions in the comments section below!
+The code of this tutorial can be found [here](https://github.com/aseigneurin/kafka-tutorial-simple-client).

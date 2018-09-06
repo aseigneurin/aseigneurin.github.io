@@ -105,6 +105,4 @@ We have seen how to create our own SerDe to abstract away the serialization code
 
 As Avro is a common serialization type for Kafka, we will see how to use Avro in the next post.
 
-The code of these tutorials can be found [here](https://github.com/aseigneurin/kafka-tutorials).
-
-Feel free to ask questions in the comments section below!
+The code of this tutorial can be found [here](https://github.com/aseigneurin/kafka-tutorial-simple-client).
