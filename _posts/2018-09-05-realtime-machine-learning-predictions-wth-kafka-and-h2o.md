@@ -225,4 +225,4 @@ There are pros and cons to embedding a model in your application, as opposed to 
 
 Hopefully this article lifts some interrogations about how to use Machine Learning in streaming. Let me know if it helped!
 
-The code used in this post can be found [here](https://github.com/aseigneurin/kafka-tutorials/tree/master/kafka-h2o).
+The code used in this post can be found [here](https://github.com/aseigneurin/kafka-tutorial-kafka-h2o).
