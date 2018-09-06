@@ -177,7 +177,10 @@ val predictionsStream: KStream<String, House> = housesStream.mapValues { _, h ->
 Notice that I used a [Kotlin extension function](https://kotlinlang.org/docs/reference/extensions.html) to convert booleans:
 
 ```kotlin
-fun Boolean.toYesNo(): String = if (this == true) "yes" else "no"
+fun Boolean.toYesNo(): String = when (this) {
+    true -> "yes"
+    else -> "no"
+}
 ```
 
 I also kept the model as a member variable to avoid instantiating it multiple times:
