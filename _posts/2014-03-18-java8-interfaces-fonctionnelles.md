@@ -18,21 +18,21 @@ Le but d’une interface fonctionnelle est de définir la signature d’une mét
 
 Même si ce n’est pas obligatoire, le JDK permet de vérifier le contrat “une seule méthode abstraite” en appliquant l’annotation [@FunctionalInterface](http://download.java.net/jdk8/docs/api/java/lang/FunctionalInterface.html) :
 
-{% highlight java %}
+```java
 @FunctionalInterface
 public interface ExampleInterface {
     void doSomething();
     default int methodWithDefaultImpl() { return 0; }
 }
-{% endhighlight %}
+```
 
 Si vous définissez plusieurs méthodes abstraites, le compilateur génèrera une erreur du type :
 
-{% highlight text %}
+```text
 Unexpected @FunctionalInterface annotation
 ExampleInterface is not a functional interface
 multiple non-overriding abstract methods found in interface ExampleInterface
-{% endhighlight %}
+```
 
 # Retour en arrière
 
@@ -42,7 +42,7 @@ Prenons un exemple. Nous devons parser des chaînes de caractères de type “&l
 
 Nous allons créer des objets de type Name :
 
-{% highlight java %}
+```java
 public class Name {
 
    private String firstName;
@@ -57,11 +57,11 @@ public class Name {
    public String getLastName() { return lastName; }
 
 }
-{% endhighlight %}
+```
 
 Pour le parsing, nous créons une classe NameParser dont la responsabilité sera limitée au seul rôle de parsing. La classe NameParser ne doit donc pas construire l’objet résultant. Nous délèguons cette responsabilité à une interface Creator qui déclare une méthode “create” prenant deux arguments (le prénom et le nom extraits lors du parsing) :
 
-{% highlight java %}
+```java
 public class NameParser {
     public  T parse(String name, Creator creator) {
         String[] tokens = name.split(" ");
@@ -74,11 +74,11 @@ public class NameParser {
 public interface Creator {
     T create(String firstName, String lastName);
 }
-{% endhighlight %}
+```
 
 Pour utiliser notre NameParser, nous devons l’appeler en lui passant une instance d’une classe implémentant l’interface Creator. Nous avons donc recours à une [classe anonyme](http://docs.oracle.com/javase/tutorial/java/javaOO/anonymousclasses.html) :
 
-{% highlight java %}
+```java
 NameParser parser = new NameParser();
 
 Name res = parser.parse("Eric Clapton", new Creator<name>() {
@@ -87,7 +87,7 @@ Name res = parser.parse("Eric Clapton", new Creator<name>() {
         return new Name(firstName, lastName);
     }
 });
-{% endhighlight %}
+```
 
 Les responsabilités sont clairement dissociées mais la syntaxe résultante est très verbeuse et la lisibilité du code est rendue difficile…
 
@@ -97,12 +97,12 @@ Java 8 apporte une réponse à ce problème grâce aux “interfaces fonctionnel
 
 Bien que l’annotation @FunctionalInterface ne soit pas obligatoire, nous l’ajoutons sur notre interface Creator :
 
-{% highlight java %}
+```java
 @FunctionalInterface
 public interface Creator<T> {
     T create(String firstName, String lastName);
 }
-{% endhighlight %}
+```
 
 Sans aucune modification sur la classe NameParser, nous allons maintenant pouvoir passer toute méthode dont la signature répondra aux contraintes suivantes :
 
@@ -115,9 +115,9 @@ Java se chargera en interne de convertir l’appel de sorte que l’on aura touj
 
 Le constructeur de la classe Name répond aux contraintes définies ci-dessus. Nous pouvons donc écrire :
 
-{% highlight java %}
+```java
 Name res = parser.parse("Eric Clapton", Name::new);
-{% endhighlight %}
+```
 
 Ici, la syntaxe “&lt;cible&gt;::&lt;méthode&gt;” permet de définir une référence sur méthode, le mot-clé “new” faisant référence au constructeur de la classe Name.
 
@@ -125,54 +125,54 @@ Ici, la syntaxe “&lt;cible&gt;::&lt;méthode&gt;” permet de définir une ré
 
 De la même manière, nous pouvons donner une référence vers une méthode statique. Prenons une factory :
 
-{% highlight java %}
+```java
 public class Factory {
     public static Name createName(String firstName, String lastName) {
         return new Name(firstName, lastName);
     }
 }
-{% endhighlight %}
+```
 
 Nous pouvons écrire :
 
-{% highlight java %}
+```java
 Name res = parser.parse("Eric Clapton", Factory::createName);
-{% endhighlight %}
+```
 
 
 ## Référence vers une méthode d’instance
 
 Toujours avec la même syntaxe, nous pouvons donner une référence vers une méthode d’instance, donc une référence vers un objet existant. Prenons une factory légèrement modifiée (plus de mot-clé “static”) :
 
-{% highlight java %}
+```java
 public class Factory {
     public Name createName(String firstName, String lastName) {
         return new Name(firstName, lastName);
     }
 }
-{% endhighlight %}
+```
 
 Nous pouvons alors écrire :
 
-{% highlight java %}
+```java
 Factory factory = new Factory();
 Name res = parser.parse("Eric Clapton", factory::createName);
-{% endhighlight %}
+```
 
 
 ## Expression lambda
 
 Enfin, nous pouvons passer une expression lambda :
 
-{% highlight java %}
+```java
 Name res = parser.parse("Eric Clapton", (s1, s2) -> new Name(s1, s2));
-{% endhighlight %}
+```
 
 Ou alors, avec notre factory :
 
-{% highlight java %}
+```java
 Name res = parser.parse("Eric Clapton", (s1, s2) -> Factory.createName(s1, s2));
-{% endhighlight %}
+```
 
 # Package java.util.function
 
@@ -182,27 +182,27 @@ Les interfaces définies avec des types génériques sont :
 
 - Consumer<T> : opération qui accepte un unique argument (type T) et ne retourne pas de résultat.
 
-{% highlight java %}
+```java
 void accept(T);
-{% endhighlight %}
+```
 
 - Function<T,R> : opération qui accepte un argument (type T) et retourne un résultat (type R).
 
-{% highlight java %}
+```java
 R apply(T);
-{% endhighlight %}
+```
 
 - Supplier<T> : opération qui ne prend pas d’argument et qui retourne un résultat (type T).
 
-{% highlight java %}
+```java
 T get();
-{% endhighlight %}
+```
 
 Notons l’interface Predicate qui est une spécialisation de Function visant à tester une valeur et retourner un booléen.
 
-{% highlight java %}
+```java
 boolean test(T);
-{% endhighlight %}
+```
 
 Enfin, de nombreuses autres interfaces fonctionnelles sont définies avec des types de base : IntConsumer, LongToIntFunction, DoubleSupplier, etc.
 
@@ -210,18 +210,18 @@ Enfin, de nombreuses autres interfaces fonctionnelles sont définies avec des ty
 
 Nous avons vu qu’une interface fonctionnelle ne peut contenir qu’une seule méthode abstraite. Impossible, donc, d’annoter l’interface suivante avec @FunctionalInterface sous peine d’obtenir une erreur de compilation :
 
-{% highlight java %}
+```java
 private interface Operation<T>
 {
     public T function();
     public void onSuccess(T res);
     public void onError(Exception ex);
 }
-{% endhighlight %}
+```
 
 En Java &lt; 8, nous aurions écrit :
 
-{% highlight java %}
+```java
 public <T> void doSomething(Operation<T> operation) {
     try {
         T res = operation.function();
@@ -230,11 +230,11 @@ public <T> void doSomething(Operation<T> operation) {
         operation.onError(ex);
     }
 }
-{% endhighlight %}
+```
 
 Avec un appel très verbeux :
 
-{% highlight java %}
+```java
 doSomething(new Operation<Object>() {
     @Override
     public Object function() {
@@ -249,11 +249,11 @@ doSomething(new Operation<Object>() {
         System.err.println("Error: " + ex.getMessage());
     }
 });
-{% endhighlight %}
+```
 
 En Java 8, nous pouvons nous passer complètement de l’interface Operation et utiliser une interface fonctionnelle par méthode. Et, puisque c’est possible, nous allons exploiter le package java.util.function. Notre méthode devient :
 
-{% highlight java %}
+```java
 public <T> void doSomething(Supplier<T> function, Consumer<T> onSuccess, Consumer<Exception> onError) {
    try {
        T res = function.get();
@@ -262,16 +262,16 @@ public <T> void doSomething(Supplier<T> function, Consumer<T> onSuccess, Consume
        onError.accept(ex);
    }
 }
-{% endhighlight %}
+```
 
 Et l’appel est grandement simplifié :
 
-{% highlight java %}
+```java
 doSomething(
     () -> 42,
     System.out::println,
     ex -> System.err.println("Error: " + ex.getMessage()));
-{% endhighlight %}
+```
 
 # Conclusion
 
