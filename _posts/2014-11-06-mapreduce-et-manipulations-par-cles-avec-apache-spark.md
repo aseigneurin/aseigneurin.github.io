@@ -53,36 +53,36 @@ A partir des statistiques Wikipedia, nous pouvons calculer le nombre de visites 
 
 Commençons par lire un fichier par lignes et en découpant chaque ligne selon les espaces :
 
-{% highlight java %}
+```java
 sc.textFile("data/wikipedia-pagecounts/pagecounts-20141101-000000")
         .map(line -> line.split(" "))
-{% endhighlight %}
+```
 
 Le type obtenu est `JavaRDD<String[]>`.
 
 Nous pouvons transformer ce `JavaRDD` en `JavaPairRDD` via l'opération `mapToPair()`. Il faut alors renvoyer des objets de type `Tuple2` :
 
-{% highlight java %}
+```java
         .mapToPair(s -> new Tuple2<String, Long>(s[0], Long.parseLong(s[2])))
-{% endhighlight %}
+```
 
 La classe `JavaPairRDD` offre des transformations permettant de travailler nativement sur cette collection clé-valeur : `reduceByKey()`, `sortByKey()`, ainsi que des fonctions de croisement entre deux `JavaPairRDD` (`join()`, `intersect()`, etc.).
 
 En l'occurence, nous allons utiliser la fonction `reduceByKey()` en lui donnant une opération de somme. Les valeurs reçues par la fonction appartiendront à la même clé sans que l'on puisse connaître celle-ci :
 
-{% highlight java %}
+```java
         .reduceByKey((x, y) -> x + y)
-{% endhighlight %}
+```
 
 Enfin, nous pouvons écrire l'ensemble des tuples sur la console. La clé du tuple est représentée par le champ `_1` tandis que la valeur est représentée par le champ `_2`.
 
-{% highlight java %}
+```java
         .foreach(t -> System.out.println(t._1 + " -> " + t._2))
-{% endhighlight %}
+```
 
 Voici le code complet :
 
-{% highlight java %}
+```java
 SparkConf conf = new SparkConf()
         .setAppName("wikipedia-mapreduce-by-key")
         .setMaster("local");
@@ -93,7 +93,7 @@ sc.textFile("data/wikipedia-pagecounts/pagecounts-20141101-000000")
         .mapToPair(s -> new Tuple2<String, Long>(s[0], Long.parseLong(s[2])))
         .reduceByKey((x, y) -> x + y)
         .foreach(t -> System.out.println(t._1 + " -> " + t._2));
-{% endhighlight %}
+```
 
 A l'exécution, nous obtenons un résultat similaire à ce qui suit :
 
@@ -115,9 +115,9 @@ Nous pouvons remarquer que les résultats ne sont pas triés. En effet, pour des
 
 Nous pouvons trier les tuples par leur clé grâce à la méthode `sortByKey()` qui prend éventuellement un booléen en paramètre pour inverser le tri :
 
-{% highlight java %}
+```java
         .sortByKey()
-{% endhighlight %}
+```
 
 Le résultat devient :
 
@@ -140,28 +140,28 @@ Le tri est *case-sensitive*. Si nous voulons trier de manière *case-insensitive
 
 Malheureusement, nous ne pouvons pas utiliser un comparateur issu de `Comparator.comparing()` (nouveauté Java 8) car le comparateur retourné n'est pas sérialisable.
 
-{% highlight java %}
+```java
 // génère une exception :
 //    Task not serializable: java.io.NotSerializableException
 .sortByKey(Comparator.comparing(String::toLowerCase))
-{% endhighlight %}
+```
 
 Il faut donc avoir recours à un comparateur implémentant l'interface `Serializable` :
 
-{% highlight java %}
+```java
 class LowerCaseStringComparator implements Comparator<String>, Serializable {
     @Override
     public int compare(String s1, String s2) {
         return s1.toLowerCase().compareTo(s2.toLowerCase());
     }
 }
-{% endhighlight %}
+```
 
 Ce comparateur est alors utilisé de manière plus classique :
 
-{% highlight java %}
+```java
 .sortByKey(new LowerCaseStringComparator())
-{% endhighlight %}
+```
 
 On obtient alors le résultat souhaité :
 
@@ -181,31 +181,31 @@ Pour rappel, un `JavaPairRDD` n'impose pas que les clés des tuples soient uniqu
 
 Nous inversons donc les tuples, toujours avec la fonction `mapToPair()` de sorte à récupérer un `JavaPairRDD` en sortie :
 
-{% highlight java %}
+```java
 .mapToPair(t -> new Tuple2<Long, String>(t._2, t._1))
-{% endhighlight %}
+```
 
 Nous pouvons alors trier le RDD par ordre descendant (les plus grandes valeurs en premier) et conserver les 10 premiers éléments grâce à la méthode `take()` :
 
-{% highlight java %}
+```java
 .sortByKey(false)
 .take(10)
-{% endhighlight %}
+```
 
 Notez que `take()` retourne une collection Java (`java.util.List`) et non un RDD. La méthode `forEach()` que nous utilisons est donc celle de l'API de collections, et non `foreach()` sur un RDD :
 
-{% highlight java %}
+```java
 .forEach(t -> System.out.println(t._2 + " -> " + t._1));
-{% endhighlight %}
+```
 
 Le code de tri :
 
-{% highlight java %}
+```java
 .mapToPair(t -> new Tuple2<Long, String>(t._2, t._1))
 .sortByKey(false)
 .take(10)
 .forEach(t -> System.out.println(t._2 + " -> " + t._1));
-{% endhighlight %}
+```
 
 On obtient alors le top 10 des projets Wikipedia les plus consultés dans l'heure :
 
@@ -228,7 +228,7 @@ Nous en profitons pour indiquer à l'exécuteur Spark d'utiliser 16 threads via 
 
 Ainsi, le calcul du top 10 des projets Wikipedia pour la journée du 1er novembre (24 fichiers) devient :
 
-{% highlight java %}
+```java
 SparkConf conf = new SparkConf()
         .setAppName("wikipedia-mapreduce-by-key")
         .setMaster("local[16]");
@@ -242,7 +242,7 @@ sc.textFile("data/wikipedia-pagecounts/pagecounts-20141101-*")
         .sortByKey(false)
         .take(10)
         .forEach(t -> System.out.println(t._2 + " -> " + t._1));
-{% endhighlight %}
+```
 
 Le résultat obtenu est le suivant :
 

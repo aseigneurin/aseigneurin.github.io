@@ -38,12 +38,12 @@ Il est également possible d'implémenter une source de données sur mesure en �
 
 Un contexte Spark Streaming est créé en instanciant la classe `JavaStreamingContext` (et plus `JavaSparkContext`). Il est alors nécessaire d'indiquer une durée de _discrétisation_ en millisecondes. Cette durée indiquera la cadence à laquelle les micro-batches seront produits.
 
-{% highlight java %}
+```java
 SparkConf sparkConf = new SparkConf()
         .setAppName("my streaming app")
         .setMaster("local[2]");
 JavaStreamingContext sc = new JavaStreamingContext(sparkConf, new Duration(5000));
-{% endhighlight %}
+```
 
 Notez qu'il est important d'initialiser l'exécuteur avec **au minimum 2 threads** (`local[2]`). En effet, un thread sera dédié à l'écoute des données entrantes et il faut au moins un thread de traitement. Sans cela, l'application bloquera après l'émission du premier batch.
 
@@ -53,24 +53,24 @@ Dans cet exemple, nous allons _consommer_ des tweets. Twitter est en effet une s
 
 Au préalable, il faut [déclarer une application liée à un compte Twitter](https://apps.twitter.com/), récupérer des clés d'API et les placer dans [un fichier twitter4j.properties](http://twitter4j.org/en/configuration.html). La librairie Twitter4J est alors initialisé de la manière suivante :
 
-{% highlight java %}
+```java
 Configuration twitterConf = ConfigurationContext.getInstance();
 Authorization twitterAuth = AuthorizationFactory.getInstance(twitterConf);
-{% endhighlight %}
+```
 
 L'objet de base de l'API Spark Streaming est un `DStream`, c'est-à-dire un _Discretized Stream_ (flux discrétisé). Pour Twitter4J, un `DStream` est créé via la méthode `TwitterUtils.createStream()` :
 
-{% highlight java %}
+```java
 String[] filters = ...;
 TwitterUtils.createStream(sc, twitterAuth, filters)
         ...
-{% endhighlight %}
+```
 
 On obtient un objet de type `JavaDStream<Status>` (`Status` étant une classe de la librairie Twitter4J) qui offre les opérations classiques : `map`, `filter`, etc.
 
 Nous pouvons récupérer les tweets contenant le hashtag _#Android_ et compter les autres hashtags :
 
-{% highlight java %}
+```java
 String[] filters = { "#Android" };
 TwitterUtils.createStream(sc, twitterAuth, filters)
         .flatMap(s -> Arrays.asList(s.getHashtagEntities()))
@@ -78,7 +78,7 @@ TwitterUtils.createStream(sc, twitterAuth, filters)
         .filter(h -> !h.equals("android"))
         .countByValue()
         .print();
-{% endhighlight %}
+```
 
 Détaillons ce code :
 
@@ -120,10 +120,10 @@ Le traitement démarre dans des threads séparés. Il faut donc empêcher le thr
 
 Nous écrivons donc :
 
-{% highlight java %}
+```java
 sc.start();
 sc.awaitTermination();
-{% endhighlight %}
+```
 
 En lançant notre application, on obtient, toutes les 5 secondes, l'affichage des nombres de hashtags mentionnés dans les tweets portant la mention _#Android_ :
 

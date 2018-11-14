@@ -84,16 +84,16 @@ Il faut d'abord créer un "contexte Spark". Puisque nous écrivons du Java, la c
 - un nom d'application (utile lorsque l'application est déployée en cluster)
 - la référence vers un cluster Spark à utiliser, en l'occurence "local" pour exécuter les traitements au sein de la JVM courante.
 
-{% highlight java %}
+```java
 SparkConf conf = new SparkConf()
         .setAppName("arbres-alignement")
         .setMaster("local");
 JavaSparkContext sc = new JavaSparkContext(conf);
-{% endhighlight %}
+```
 
 Nous pouvons ensuite écrire la suite de traitements et récupérer le résultat :
 
-{% highlight java %}
+```java
 long count = sc.textFile("arbresalignementparis2010.csv")
         .filter(line -> !line.startsWith("geom"))
         .map(line -> line.split(";"))
@@ -101,7 +101,7 @@ long count = sc.textFile("arbresalignementparis2010.csv")
         .filter(height -> height > 0)
         .count();
 System.out.println(count);
-{% endhighlight %}
+```
 
 Détaillons ce code :
 

@@ -20,12 +20,12 @@ Par ailleurs, la ligne de commande de Docker est assez complexe. Si on veut se s
 
 En l’occurence, nous avions créé un script Shell:
 
-{% highlight bash %}
+```bash
 #!/bin/bash
 docker build -t ippontech/rss2twitter:latest app
 docker run -p 0.0.0.0:6379:6379 -v /root/rss2twitter/data:/data -d --name redis redis redis-server --appendonly yes
 docker run --link redis:redis -d --name rss2twitter ippontech/rss2twitter
-{% endhighlight %}
+```
 
 <img src="/images/orchestration-docker/docker-ps.png">
 
@@ -39,7 +39,7 @@ Pour Docker Compose, un fichier `docker-compose.yml` doit être créé. Chaque c
 
 Voici le fichier équivalent à nos commandes Shell :
 
-{% highlight yaml %}
+```yaml
 redis:
   image: redis
   command: redis-server --appendonly yes
@@ -52,7 +52,7 @@ rss2twitter:
   build: app
   links:
   - redis
-{% endhighlight %}
+```
 
 Au premier lancement, le container _rss2twitter_ (l’application) sera buildé à partir du `Dockerfile` pour être réutilisé lors des prochaines exécutions.
 
@@ -76,7 +76,7 @@ Le principe de Crane est identique à celui de Docker Compose : un fichier de de
 
 Ici, nous avons créé un fichier `crane.yml` :
 
-{% highlight yaml %}
+```yaml
 containers:
 
   redis:
@@ -93,7 +93,7 @@ containers:
     run:
       link: ["redis:redis"]
       detach: true
-{% endhighlight %}
+```
 
 Deux différences :
 

@@ -23,7 +23,7 @@ La première version d'un playbook Ansible que j'ai écrite était la reproducti
 
 Voici un extrait du playbook Ansible résultant (sans variables pour simplifier la lecture) :
 
-{% highlight yaml %}
+```yaml
   - name: Test si une instance existe
     stat: path=/PROD/mywebapp/bin/catalina.sh
     register: p
@@ -62,7 +62,7 @@ Voici un extrait du playbook Ansible résultant (sans variables pour simplifier 
 
   - name: Attente du démarrage de l'instance
     wait_for: port=8080
-{% endhighlight %}
+```
 
 ## Défaut : le playbook n'est pas idempotent
 
@@ -102,7 +102,7 @@ Nous commençons donc par créer une liste de tâches repsonsables de l'installa
 
 La première étape vérifie si Tomcat est installé (module [stat](http://docs.ansible.com/stat_module.html)). Puis, s'il n'est pas installé (directive `when: not st.stat.exists`), Tomcat est téléchargé et installé.
 
-{% highlight yaml %}
+```yaml
   - name: check tomcat
     stat:
       path=/usr/share/tomcat7/bin
@@ -124,7 +124,7 @@ La première étape vérifie si Tomcat est installé (module [stat](http://docs.
   - name: copy tomcat
     shell: cp -r /tmp/apache-tomcat-7.0.56/* /usr/share/tomcat7 creates=/usr/share/tomcat7/bin
     when: not st.stat.exists
-{% endhighlight %}
+```
 
 ## Création d'une instance Tomcat
 
@@ -134,7 +134,7 @@ Nous créons l'arborescence nécessaire et nous déployons les fichiers de confi
 
 Ici, nous n'utilisons que les modules [file](http://docs.ansible.com/file_module.html) et [template](http://docs.ansible.com/template_module.html) qui n'effectuent des modifications que lorsque celles-ci sont nécessaires, garantissant ainsi l'idempotence.
 
-{% highlight yaml %}
+```yaml
 {% raw %}
   - name: create tomcat instance
     file:
@@ -173,17 +173,17 @@ Ici, nous n'utilisons que les modules [file](http://docs.ansible.com/file_module
       - register tomcat init script (add)
       - register tomcat init script (level)
 {% endraw %}
-{% endhighlight %}
+```
 
 Notez que les variables `CATALINA_HOME` et `CATALINA_BASE` sont définies dans le script d'init :
 
-{% highlight bash %}
+```bash
 #CATALINA_HOME is the location of the bin files of Tomcat  
 export CATALINA_HOME=/usr/share/tomcat7
  
 #CATALINA_BASE is the location of the configuration files of this instance of Tomcat
 export CATALINA_BASE=/PROD/mywebapp
-{% endhighlight %}
+```
 
 ## Déploiement de l'application
 
@@ -191,7 +191,7 @@ Enfin, nous pouvons déployer notre application. Pour rappel, nous souhaitons in
 
 Nous utilisons un [handler](http://docs.ansible.com/playbooks_intro.html#handlers-running-operations-on-change) pour redémarrer l'instance Tomcat dans le cas où le WAR est mis à jour (directive `notify: restart tomcat`).
 
-{% highlight yaml %}
+```yaml
   - name: get the WAR
     get_url:
       url=http://.../mywebapp-1.0.war
@@ -216,22 +216,22 @@ Nous utilisons un [handler](http://docs.ansible.com/playbooks_intro.html#handler
     shell: cp /tmp/mywebapp-1.0.war /PROD/mywebapp/webapps/mywebapp.war
     when: not app_war_stat.stat.md5 is defined or not tmp_war_stat.stat.md5 == app_war_stat.stat.md5
     notify: restart tomcat
-{% endhighlight %}
+```
 
 Le handler de (re)-démarrage de Tomcat :
 
-{% highlight yaml %}
+```yaml
   - name: restart tomcat
     service:
       name=tomcat-mywebapp
       state=restarted
-{% endhighlight %}
+```
 
 Notez que, pour éviter tout redémarrage de Tomcat lors de la modification du WAR, l'`autodeploy` est désactivé dans le `server.xml` :
 
-{% highlight yaml %}
+```yaml
       <Host ... autoDeploy="false">
-{% endhighlight %}
+```
 
 ## Exécution du playbook
 

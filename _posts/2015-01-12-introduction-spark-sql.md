@@ -25,14 +25,14 @@ Une étape de préparation des données est nécessaire pour permettre à l'inte
 
 Pour étudier ces deux options, nous allons utiliser un RDD constitué en lisant le fichier des arbres, en retirant la première ligne et découpant chaque ligne en champs :
 
-{% highlight java %}
+```java
 JavaSparkContext sc = new JavaSparkContext("local", "arbres");
 
 JavaRDD<String[]> trees = sc
         .textFile("data/arbresalignementparis2010.csv")
         .filter(line -> !line.startsWith("geom"))
         .map(line -> line.split(";", -1));
-{% endhighlight %}
+```
 
 ## Option 1 : description programmatique des données
 
@@ -42,34 +42,34 @@ L'objet `Row` peut contenir un nombre indéterminé de champs. Notez toutefois q
 
 Nous créons ainsi des records avec la hauteur (champs "hauteurenm" parsé en type flottant) et le type d'arbre (champs "espece") :
 
-{% highlight java %}
+```java
 JavaRDD<Row> rdd = trees.map(fields -> Row.create(Float.parseFloat(fields[3]), fields[4]));
-{% endhighlight %}
+```
 
 Nous pouvons ensuite construire un schéma en décrivant les champs. Il faut alors nommer les champs et indiquer leurs types en respectant l'ordre de leur présence dans le type `Row`.
 
 Les types de données disponibles sont : `BinaryType`, `BooleanType`, `ByteType`, `DateType`, `DoubleType`, `FloatType`, `IntegerType`, `LongType`, `ShortType` et `TimestampType`.
 
-{% highlight java %}
+```java
 List<StructField> fields = new ArrayList<StructField>();
 fields.add(DataType.createStructField("hauteurenm", DataType.FloatType, false));
 fields.add(DataType.createStructField("espece", DataType.StringType, false));
 
 StructType schema = DataType.createStructType(fields);
-{% endhighlight %}
+```
 
 Il faut ensuite appliquer le schéma à notre RDD en ayant, au préalable, construit un contexte d'exécution (type `JavaSQLContext`) :
 
-{% highlight java %}
+```java
 JavaSQLContext sqlContext = new JavaSQLContext(sc);
 JavaSchemaRDD schemaRDD = sqlContext.applySchema(rdd, schema);
-{% endhighlight %}
+```
 
 L'ultime étape consiste à nommer le `JavaSchemaRDD` pour qu'il puisse être utilisé en SQL :
 
-{% highlight java %}
+```java
 schemaRDD.registerTempTable("tree");
-{% endhighlight %}
+```
 
 ## Option 2 : inférence de schéma par réflexion
 
@@ -77,7 +77,7 @@ Spark SQL permet aussi de déterminer le schéma d'un RDD en découvrant les typ
 
 Nous créons un POJO `Tree` :
 
-{% highlight java %}
+```java
 public class Tree {
     private float hauteurenm;
     private String espece;
@@ -93,19 +93,19 @@ public class Tree {
     public String getEspece() { return espece; }
     public void setEspece(String espece) { this.espece = espece; }
 }
-{% endhighlight %}
+```
 
 L'opération de conversion est similaire à celle utilisée plus haut :
 
-{% highlight java %}
+```java
 JavaRDD<Tree> rdd = trees.map(fields -> new Tree(Float.parseFloat(fields[3]), fields[4]));
-{% endhighlight %}
+```
 
 On peut ensuite directement obtenir un `JavaSchemaRDD` en appliquant le schéma inféré à partir du type `Tree` :
 
-{% highlight java %}
+```java
 JavaSchemaRDD schemaRDD = sqlContext.applySchema(rdd, Tree.class);
-{% endhighlight %}
+```
 
 Dans ce cas, les noms des champs sont déterminés à partir des champs de la classe.
 
@@ -126,10 +126,10 @@ Nous pouvons manipuler ces données avec des requêtes SQL classiques. Le résul
 
 Il est ainsi possible d'obtenir la liste des espèces dans l'ordre alphabétique :
 
-{% highlight java %}
+```java
 sqlContext.sql("SELECT DISTINCT espece FROM tree WHERE espece <> '' ORDER BY espece")
         .foreach(row -> System.out.println(row.getString(0)));
-{% endhighlight %}
+```
 
     Acacia dealbata
     Acer acerifolius
@@ -141,10 +141,10 @@ Ici, on a itéré sur les éléments du RDD résultant (opération `foreach`) et
 
 Les opérations d'agrégations sont également possibles, comme pour compter le nombre d'arbres par espèce :
 
-{% highlight java %}
+```java
 sqlContext.sql("SELECT espece, COUNT(*) FROM tree WHERE espece <> '' GROUP BY espece ORDER BY espece")
         .foreach(row -> System.out.println(row.getString(0) + " : " + row.getLong(1)));
-{% endhighlight %}
+```
 
     Acacia dealbata : 2
     Acer acerifolius : 39
@@ -154,11 +154,11 @@ sqlContext.sql("SELECT espece, COUNT(*) FROM tree WHERE espece <> '' GROUP BY es
 
 Les opérations mathématiques de base sont aussi disponibles. On peut ainsi calculer la hauteur moyenne des arbres :
 
-{% highlight java %}
+```java
 double avgHeight = sqlContext.sql("SELECT AVG(hauteurenm) FROM tree WHERE hauteurenm > 0")
         .collect().get(0).getDouble(0);
 System.out.println(avgHeight);
-{% endhighlight %}
+```
 
     11.186036372695565
 

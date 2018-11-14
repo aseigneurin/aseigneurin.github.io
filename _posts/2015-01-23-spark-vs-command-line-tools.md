@@ -21,18 +21,18 @@ J'ai commencé par exécuter le traitement shell d'Adam. Attention, [le jeu de d
 
 Sur ma machine (MacBook Pro fin 2013, i7 à 2 GHz, 16 Go de Ram, disque SSD), le traitement prend 10 secondes soit un débit de 460 Mo/seconde :
 
-{% highlight bash %}
+```bash
 $ time find . -type f -name '*.pgn' -print0 | xargs -0 -n4 -P4 mawk '/Result/ { split($0, a, "-"); res = substr(a[1], length(a[1]), 1); if (res == 1) white++; if (res == 0) black++; if (res == 2) draw++ } END { print white+black+draw, white, black, draw }' | mawk '{games += $1; white += $2; black += $3; draw += $4; } END { print games, white, black, draw }'
 6829064 2602614 1974505 2251945
 
 real    0m10.218s
 user    0m17.589s
 sys     0m4.215s
-{% endhighlight %}
+```
 
 J'ai reproduit le traitement avec Spark 1.2.0 **sans chercher à optimiser l'exécution** :
 
-{% highlight java %}
+```java
 package com.seigneurin.spark;
 
 import org.apache.spark.api.java.JavaSparkContext;
@@ -60,7 +60,7 @@ public class Chess {
         sc.close();
     }
 }
-{% endhighlight %}
+```
 
 (Code complet disponible sur [mon GitHub](https://github.com/aseigneurin/spark-chess).)
 
@@ -77,12 +77,12 @@ Le traitement se découpe comme suit :
 
 Lors de l'exécution, c'est important, les résultats sont les mêmes que ceux obtenus avec les commandes shell. Le temps de traitement, lui, passe à 30 secondes, soit un débit de 153 Mo/seconde :
 
-{% highlight bash %}
+```bash
 0 -> 1974505
 1 -> 2602614
 1/2 -> 2251945
 Duration: 29964 ms
-{% endhighlight %}
+```
 
 # Peut-on faire mieux ?
 
@@ -103,18 +103,18 @@ Il me semble - et c'est à vérifier - que la lecture des fichiers est effectué
 
 Plutôt que de lire l'ensemble des fichiers du répertoire, on peut utiliser un pattern ne récupérant que les fichiers `.pgn` (suggestion fournie par mon collègue [Stéphane Trou](https://www.linkedin.com/pub/st%C3%A9phane-trou/1b/527/335)). On écrit donc :
 
-{% highlight java %}
+```java
         sc.textFile("ChessData-master/*/*.pgn")
-{% endhighlight %}
+```
 
 Le temps de traitement est alors presque divisé par deux : 16 secondes soit un débit de 287 Mo/seconde.
 
-{% highlight bash %}
+```bash
 0 -> 1974505
 1 -> 2602614
 1/2 -> 2251945
 Duration: 15869 ms
-{% endhighlight %}
+```
 
 Pourquoi une telle différence ? Pour l'instant, je ne l'explique pas. Les fichiers qui ne sont pas de type `.pgn` ne représentent que 8 ko ce qui ne peut pas en soit justifier la différence.
 

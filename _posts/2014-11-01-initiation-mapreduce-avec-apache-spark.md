@@ -26,38 +26,38 @@ Nous allons étudier l'opération `reduce()` dans ce post. L'opération `reduceB
 
 Dans notre [premier exemple de code](/2014/10/29/introduction-apache-spark.html), nous avions construit un RDD contenant les hauteurs des arbres de la commune de Paris. Nous utilisions ensuite l'opération `count()` pour compter les arbres ayant une hauteur définie.
 
-{% highlight java %}
+```java
 long count = sc.textFile("arbresalignementparis2010.csv")
         .filter(line -> !line.startsWith("geom"))
         .map(line -> line.split(";"))
         .map(fields -> Float.parseFloat(fields[3]))
         .filter(height -> height > 0)
         .count();
-{% endhighlight %}
+```
 
 Plutôt que de compter les hauteurs non nulles, nous pouvons utiliser une opération de réduction pour calculer la hauteur totale des arbres.
 
 Il nous faut une fonction qui va recevoir deux hauteurs et retourner la somme de ces deux hauteurs. Autrement dit, une fonction qui reçoit deux paramètres de type `Float` et qui retourne une valeur de type `Float` :
 
-{% highlight java %}
+```java
 private Float sum(Float x, Float y) {
     return x + y;
 }
-{% endhighlight %}
+```
 
 Cette fonction peut s'écrire sous la forme d'une expression lambda :
 
-{% highlight java %}
+```java
 (x, y) -> x + y
-{% endhighlight %}
+```
 
 Nous pouvons ainsi écrire :
 
-{% highlight java %}
+```java
 float totalHeight = sc.textFile("arbresalignementparis2010.csv")
         ...
         .reduce((x, y) -> x + y);
-{% endhighlight %}
+```
 
 Le framework va appeler notre fonction de réduction jusqu'à ce que toutes les valeurs aient été traitées.
 
@@ -74,20 +74,20 @@ Nous allons donc procéder en deux étapes :
 
 Nous écrivons ainsi :
 
-{% highlight java %}
+```java
 long count = sc.textFile("data/arbresalignementparis2010.csv")
         ...
         .map(item -> 1)
         .reduce((x, y) -> x + y);
-{% endhighlight %}
+```
 
 Notez que l'expression lamba utilisée dans la fonction `reduce()` est identique à celle utilisée plus tôt, mais que la fonction équivalente manipule des `Integer` :
 
-{% highlight java %}
+```java
 private Integer sum(Integer x, Integer y) {
     return x + y;
 }
-{% endhighlight %}
+```
 
 # Calcul de la hauteur moyenne des arbres
 
@@ -99,7 +99,7 @@ Nous pouvons calculer la hauteur moyenne des arbres de notre fichier en réalisa
 
 Puisque l'agrégation et le comptage se basent sur le même fichier et que les premières opérations de traitement sont identiques, nous pouvons réutiliser le même RDD. Nous allons utiliser l'opération `cache()` qui permet de mettre le RDD en cache en mémoire. Les calculs ne seront donc exécutés qu'une seule fois et le résultat intermédiaire sera directement utilisé pour les deux opérations d'agrégation et de comptage.
 
-{% highlight java %}
+```java
 JavaRDD<Float> rdd = sc.textFile("data/arbresalignementparis2010.csv")
         .filter(line -> !line.startsWith("geom"))
         .map(line -> line.split(";"))
@@ -114,7 +114,7 @@ long count = rdd.count();
 System.out.println("Total height: " + totalHeight);
 System.out.println("Count: " + count);
 System.out.println("Average height " + totalHeight / count);
-{% endhighlight %}
+```
 
 Le résultat obtenu est le suivant :
 

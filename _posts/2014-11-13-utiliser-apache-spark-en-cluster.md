@@ -44,14 +44,14 @@ Les options disponibles sont :
 
 Nous pouvons lancer le script sans options :
 
-{% highlight bash %}
+```bash
 $ sbin/start-master.sh
 starting org.apache.spark.deploy.master.Master, logging to /Users/aseigneurin/logiciels/spark-1.1.0-bin-hadoop2.4/sbin/../logs/spark-aseigneurin-org.apache.spark.deploy.master.Master-1-MacBook-Pro-de-Alexis.local.out
-{% endhighlight %}
+```
 
 Le programme se lance en daemon et il rend donc la main. Les logs sont écrits dans des fichiers tournants. On peut y voir que l'interface Web est disponible sur le port 8080. On peut également lire l'URL du cluster (`spark://MacBook-Pro-de-Alexis.local:7077`) que l'on devra indiquer pour démarrer les workers.
     
-{% highlight bash %}
+```bash
 $ tail -f logs/spark-aseigneurin-org.apache.spark.deploy.master.Master-1-MacBook-Pro-de-Alexis.local.out
 ...
 14/11/12 14:29:09 INFO Remoting: Starting remoting
@@ -61,7 +61,7 @@ $ tail -f logs/spark-aseigneurin-org.apache.spark.deploy.master.Master-1-MacBook
 14/11/12 14:29:09 INFO Utils: Successfully started service 'MasterUI' on port 8080.
 14/11/12 14:29:09 INFO MasterWebUI: Started MasterWebUI at http://10.10.200.112:8080
 14/11/12 14:29:09 INFO Master: I have been elected leader! New state: ALIVE
-{% endhighlight %}
+```
 
 Nous pouvons alors afficher l'interface Web du cluster :
 
@@ -80,7 +80,7 @@ Notez qu'un worker utilise par défaut toute la mémoire de la machine moins 1 G
 
 Ici, le programme ne rend pas la main et on voit le log s'afficher directement sur la console. On peut voir que le port de communication interne est choisi au hasard (ici, 64570), que l'interface Web est accessible sur le port 8081, et que la communication a été établi avec le master.
 
-{% highlight bash %}
+```bash
 $ bin/spark-class org.apache.spark.deploy.worker.Worker spark://MacBook-Pro-de-Alexis.local:7077 --cores 2 --memory 4G
 ...
 14/11/12 14:29:14 INFO Remoting: Starting remoting
@@ -92,13 +92,13 @@ $ bin/spark-class org.apache.spark.deploy.worker.Worker spark://MacBook-Pro-de-A
 14/11/12 14:29:14 INFO WorkerWebUI: Started WorkerWebUI at http://10.10.200.112:8081
 14/11/12 14:29:14 INFO Worker: Connecting to master spark://MacBook-Pro-de-Alexis.local:7077...
 14/11/12 14:29:15 INFO Worker: Successfully registered with master spark://MacBook-Pro-de-Alexis.local:7077
-{% endhighlight %}
+```
 
 Notez qu'une ligne supplémentaire apparait dans le log du master, confirmant ainsi la connexion entre le master et le worker :
 
-{% highlight bash %}
+```bash
 14/11/12 14:29:15 INFO Master: Registering worker 10.10.200.112:64570 with 2 cores, 4.0 GB RAM
-{% endhighlight %}
+```
 
 On peut voir apparaître le worker dans l'interface Web :
 
@@ -133,7 +133,7 @@ Deux précautions doivent être prises :
 
 Nous utilisons un exemple du [post précédent](/2014/11/06/mapreduce-et-manipulations-par-cles-avec-apache-spark.html) :
 
-{% highlight java %}
+```java
 public class WikipediaMapReduceByKey {
     public static void main(String[] args) {
         SparkConf conf = new SparkConf()
@@ -147,11 +147,11 @@ public class WikipediaMapReduceByKey {
                 .foreach(t -> System.out.println(t._1 + " -> " + t._2));
     }
 }
-{% endhighlight %}
+```
 
 Nous pouvons packager l'application avec Maven :
 
-{% highlight bash %}
+```bash
 $ mvn package
 [INFO] ------------------------------------------------------------------------
 [INFO] Building spark-sandbox 0.0.1-SNAPSHOT
@@ -160,7 +160,7 @@ $ mvn package
 [INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ spark-sandbox ---
 [INFO] Building jar: /Users/aseigneurin/dev/spark-sandbox/target/spark-sandbox-0.0.1-SNAPSHOT.jar
 ...
-{% endhighlight %}
+```
 
 L'application peut alors être soumise via la commande `bin/spark-submit` à laquelle il faut indiquer des options :
 
@@ -171,7 +171,7 @@ L'application peut alors être soumise via la commande `bin/spark-submit` à laq
 
 En mode `cluster`, le driver est soumis au cluster et le programme rend la main :
 
-{% highlight bash %}
+```bash
 $ bin/spark-submit --master spark://MacBook-Pro-de-Alexis.local:7077 --class com.seigneurin.spark.WikipediaMapReduceByKey --deploy-mode cluster .../target/spark-sandbox-0.0.1-SNAPSHOT.jar
 ...
 14/11/12 15:22:56 INFO Utils: Successfully started service 'driverClient' on port 65450.
@@ -181,7 +181,7 @@ Driver successfully submitted as driver-20141112152257-0000
 ... polling master for driver state
 State of driver-20141112152257-0000 is RUNNING
 Driver running on 10.10.200.112:64649 (worker-20141112144427-10.10.200.112-64649)
-{% endhighlight %}
+```
 
 ## Suivi de l'exécution
 
@@ -243,19 +243,19 @@ Une application utilise par défaut 512 Mo de mémoire **par nœud**. Dans notre
 
 Il est possible de régler cette valeur lors de la création de la configuration fournie au contexte Spark :
 
-{% highlight java %}
+```java
 new SparkConf()
         .set("spark.executor.memory", "2G")
         ...
-{% endhighlight %}
+```
 
 L'application ne sera déployée que sur les workers disposant de suffisant de mémoire libre. Sur notre cluster de 3 workers disposant chacun de 2 Go, un nœud exécutera le driver (512 Mo). Seuls deux nœuds seront alors utilisables.
 
 Attention à ne pas utiliser une valeur trop élevée : si aucun nœud ne répond à la contrainte, l'application ne pourra pas s'exécuter.
 
-{% highlight bash %}
+```bash
 14/11/12 18:38:07 WARN TaskSchedulerImpl: Initial job has not accepted any resources; check your cluster UI to ensure that workers are registered and have sufficient memory
-{% endhighlight %}
+```
 
 ## Résilience
 
@@ -265,7 +265,7 @@ Spark répond à ce problème en relançant sur d'autres nœuds les traitements 
 
 En pratique, lorsqu'on tue volontairement un worker, on peut voir dans le log du driver que le nœud en question est déconnecté et que les tâches sont soumises à d'autres workers :
 
-{% highlight bash %}
+```bash
 14/11/12 18:45:19 INFO TaskSetManager: Starting task 81.0 in stage 1.0 (TID 81, 10.10.200.112, PROCESS_LOCAL, 1313 bytes)
 14/11/12 18:45:19 INFO TaskSetManager: Finished task 75.0 in stage 1.0 (TID 75) in 1061 ms on 10.10.200.112 (76/281)
 14/11/12 18:45:19 INFO ConnectionManager: Removing ReceivingConnection to ConnectionManagerId(10.10.200.112,52569)
@@ -283,7 +283,7 @@ java.nio.channels.CancelledKeyException
 14/11/12 18:45:19 INFO DAGScheduler: Resubmitted ShuffleMapTask(1, 53), so marking it as still running
 14/11/12 18:45:19 INFO DAGScheduler: Resubmitted ShuffleMapTask(1, 26), so marking it as still running
 ...
-{% endhighlight %}
+```
 
 Dans l'interface Web, des items sont marqués comme "failed" :
 
