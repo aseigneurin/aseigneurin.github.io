@@ -8,7 +8,7 @@ language: EN
 
 Serverless technologies have become prevalent but they lack some tooling to make them easier to work with. The [Serverless Framework](https://github.com/serverless/serverless) comes to the rescue in the form of a CLI that automates deployment tasks. This post will be an introduction to using this tool.
 
-![](/images/serverless-framework.png)
+![](/images/serverless-framework.jpeg)
 
 # The use case
 
