@@ -169,7 +169,7 @@ In practice, I found that the [Serverless.yml Reference](https://serverless.com/
 
 Now, if we update the code of the Java application, we can easily update our stack through a `./gradlew build && serverless deploy` command. The Serverless CLI will update the AWS resources in a repeatable fashion, which is great.
 
-When we re done with this function and we want to destroy it, we can simply run `serverless remove`. All the AWS resources associated with our function will be removed: the IAM role, the temporary S3 bucket, and the Lambda function itself. Smooth.
+When we are done with this function and we want to destroy it, we can simply run `serverless remove`. All the AWS resources associated with our function will be removed: the IAM role, the temporary S3 bucket, and the Lambda function itself. Smooth.
 
 # The dashboard
 
